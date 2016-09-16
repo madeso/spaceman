@@ -6,6 +6,9 @@ import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 
+val WIDTH : Float = 2560f;
+val HEIGHT : Float = 1440f;
+
 class SpacemanGame : ApplicationAdapter() {
     internal lateinit var batch: SpriteBatch
     internal lateinit var img: Texture
