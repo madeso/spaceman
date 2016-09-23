@@ -1,27 +1,172 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="20" height="10" tilewidth="70" tileheight="70" nextobjectid="6">
- <tileset firstgid="1" name="tiles" tilewidth="70" tileheight="70" tilecount="196">
-  <image source="../../../kenney-platformer/tiles.png" width="1024" height="1024"/>
-  <tile id="94">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="20" height="10" tilewidth="70" tileheight="70" nextobjectid="12">
+ <tileset firstgid="1" name="new-tiles" tilewidth="70" tileheight="70" tilecount="841">
+  <image source="../../../kenney-platformer/new-tiles.png" width="2048" height="2048"/>
+  <terraintypes>
+   <terrain name="Grass" tile="377"/>
+   <terrain name="Purple" tile="464"/>
+   <terrain name="Sand" tile="551"/>
+   <terrain name="Cake" tile="29"/>
+   <terrain name="Choco" tile="116"/>
+   <terrain name="Castle" tile="203"/>
+   <terrain name="Dirt" tile="290"/>
+  </terraintypes>
+  <tile id="33" terrain=",,,3"/>
+  <tile id="34" terrain=",,3,3"/>
+  <tile id="35" terrain=",,3,"/>
+  <tile id="60" terrain="3,3,3,"/>
+  <tile id="61" terrain="3,3,,3"/>
+  <tile id="62" terrain=",3,,3"/>
+  <tile id="63" terrain="3,3,3,3"/>
+  <tile id="64" terrain="3,,3,"/>
+  <tile id="89" terrain="3,,3,3"/>
+  <tile id="90" terrain=",3,3,3"/>
+  <tile id="91" terrain=",3,,"/>
+  <tile id="92" terrain="3,3,,"/>
+  <tile id="93" terrain="3,,,"/>
+  <tile id="120" terrain=",,,4"/>
+  <tile id="121" terrain=",,4,4"/>
+  <tile id="122" terrain=",,4,"/>
+  <tile id="138">
    <animation>
-    <frame tileid="94" duration="250"/>
-    <frame tileid="95" duration="250"/>
+    <frame tileid="138" duration="250"/>
+    <frame tileid="167" duration="250"/>
    </animation>
   </tile>
+  <tile id="139">
+   <animation>
+    <frame tileid="139" duration="250"/>
+    <frame tileid="168" duration="250"/>
+   </animation>
+  </tile>
+  <tile id="140">
+   <animation>
+    <frame tileid="140" duration="250"/>
+    <frame tileid="169" duration="250"/>
+   </animation>
+  </tile>
+  <tile id="141">
+   <animation>
+    <frame tileid="141" duration="250"/>
+    <frame tileid="170" duration="250"/>
+   </animation>
+  </tile>
+  <tile id="147" terrain="4,4,4,"/>
+  <tile id="148" terrain="4,4,,4"/>
+  <tile id="149" terrain=",4,,4"/>
+  <tile id="150" terrain="4,4,4,4"/>
+  <tile id="151" terrain="4,,4,"/>
+  <tile id="176" terrain="4,,4,4"/>
+  <tile id="177" terrain=",4,4,4"/>
+  <tile id="178" terrain=",4,,"/>
+  <tile id="179" terrain="4,4,,"/>
+  <tile id="180" terrain="4,,,"/>
+  <tile id="207" terrain=",,,5"/>
+  <tile id="208" terrain=",,5,5"/>
+  <tile id="209" terrain=",,5,"/>
+  <tile id="234" terrain="5,5,5,"/>
+  <tile id="235" terrain="5,5,,5"/>
+  <tile id="236" terrain=",5,,5"/>
+  <tile id="237" terrain="5,5,5,5"/>
+  <tile id="238" terrain="5,,5,"/>
+  <tile id="263" terrain="5,,5,5"/>
+  <tile id="264" terrain=",5,5,5"/>
+  <tile id="265" terrain=",5,,"/>
+  <tile id="266" terrain="5,5,,"/>
+  <tile id="267" terrain="5,,,"/>
+  <tile id="294" terrain=",,,6"/>
+  <tile id="295" terrain=",,6,6"/>
+  <tile id="296" terrain=",,6,"/>
+  <tile id="302">
+   <properties>
+    <property name="type" value="alien-head"/>
+   </properties>
+  </tile>
+  <tile id="321" terrain="6,6,6,"/>
+  <tile id="322" terrain="6,6,,6"/>
+  <tile id="323" terrain=",6,,6"/>
+  <tile id="324" terrain="6,6,6,6"/>
+  <tile id="325" terrain="6,,6,"/>
+  <tile id="331">
+   <properties>
+    <property name="type" value="alien-body"/>
+   </properties>
+  </tile>
+  <tile id="350" terrain="6,,6,6"/>
+  <tile id="351" terrain=",6,6,6"/>
+  <tile id="352" terrain=",6,,"/>
+  <tile id="353" terrain="6,6,,"/>
+  <tile id="354" terrain="6,,,"/>
+  <tile id="381" terrain=",,,0"/>
+  <tile id="382" terrain=",,0,0"/>
+  <tile id="383" terrain=",,0,"/>
+  <tile id="408" terrain="0,0,0,"/>
+  <tile id="409" terrain="0,0,,0"/>
+  <tile id="410" terrain=",0,,0"/>
+  <tile id="411" terrain="0,0,0,0"/>
+  <tile id="412" terrain="0,,0,"/>
+  <tile id="437" terrain="0,,0,0"/>
+  <tile id="438" terrain=",0,0,0"/>
+  <tile id="439" terrain=",0,,"/>
+  <tile id="440" terrain="0,0,,"/>
+  <tile id="441" terrain="0,,,"/>
+  <tile id="468" terrain=",,,1"/>
+  <tile id="469" terrain=",,1,1"/>
+  <tile id="470" terrain=",,1,"/>
+  <tile id="495" terrain="1,1,1,"/>
+  <tile id="496" terrain="1,1,,1"/>
+  <tile id="497" terrain=",1,,1"/>
+  <tile id="498" terrain="1,1,1,1"/>
+  <tile id="499" terrain="1,,1,"/>
+  <tile id="524" terrain="1,,1,1"/>
+  <tile id="525" terrain=",1,1,1"/>
+  <tile id="526" terrain=",1,,"/>
+  <tile id="527" terrain="1,1,,"/>
+  <tile id="528" terrain="1,,,"/>
+  <tile id="555" terrain=",,,2"/>
+  <tile id="556" terrain=",,2,2"/>
+  <tile id="557" terrain=",,2,"/>
+  <tile id="582" terrain="2,2,2,"/>
+  <tile id="583" terrain="2,2,,2"/>
+  <tile id="584" terrain=",2,,2"/>
+  <tile id="585" terrain="2,2,2,2"/>
+  <tile id="586" terrain="2,,2,"/>
+  <tile id="611" terrain="2,,2,2"/>
+  <tile id="612" terrain=",2,2,2"/>
+  <tile id="613" terrain=",2,,"/>
+  <tile id="614" terrain="2,2,,"/>
+  <tile id="615" terrain="2,,,"/>
  </tileset>
- <layer name="Tile Layer 1" width="20" height="10">
+ <layer name="World" width="20" height="10" visible="0">
   <data encoding="csv">
-0,0,0,0,49,0,0,70,0,0,0,0,0,0,0,42,0,0,0,0,
-0,95,0,44,16,45,0,4,0,95,0,0,95,0,0,3,0,0,0,0,
-0,13,44,58,43,59,45,3,0,0,0,0,0,11,2,2,0,0,0,0,
-57,16,58,43,43,43,59,16,60,0,0,57,16,16,16,16,0,0,0,0,
-0,43,19,0,0,20,43,43,0,0,0,0,43,43,43,43,0,0,0,0,
-0,43,0,0,0,0,43,43,64,64,64,64,43,43,43,43,0,0,0,0,
-0,43,33,62,0,34,43,43,65,65,65,65,43,43,43,43,0,0,0,0,
-0,43,43,43,43,43,43,43,65,65,65,65,43,43,43,43,0,0,0,0,
-0,43,43,43,43,43,43,43,65,65,65,65,43,43,43,43,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <objectgroup name="obj"/>
+ <layer name="Tile Layer 1" width="20" height="10">
+  <data encoding="csv">
+0,0,139,140,141,142,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,469,470,470,470,471,0,0,0,0,0,160,0,0,0,0,277,0,277,0,
+0,498,499,499,499,525,471,0,0,34,35,36,0,0,0,0,306,0,306,0,
+0,498,499,499,499,499,500,0,0,63,64,65,121,122,123,0,335,130,335,0,
+0,527,497,499,499,499,500,0,0,63,64,65,150,151,177,122,122,122,122,123,
+0,0,527,528,497,499,500,0,0,63,64,65,150,151,151,151,151,151,151,152,
+0,0,0,0,527,528,529,0,0,63,64,65,150,151,148,180,180,180,180,181,
+0,0,0,0,0,0,0,0,0,63,64,65,150,151,152,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,63,64,65,150,151,152,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,92,93,94,179,180,181,0,0,0,0,0
+</data>
+ </layer>
+ <objectgroup name="obj">
+  <object id="9" gid="332" x="840" y="210" width="70" height="70"/>
+  <object id="11" gid="303" x="840" y="140" width="70" height="70"/>
+ </objectgroup>
 </map>

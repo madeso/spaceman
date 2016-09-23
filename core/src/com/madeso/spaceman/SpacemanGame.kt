@@ -80,6 +80,8 @@ class GameScreen(assets:Assets, var batch : SpriteBatch) : ScreenAdapter() {
   internal var map : OrthoMap = assets.mgr.orthoMap(dest, "test.tmx")
 
   init {
+    map.registerNullCreator("alien-body")
+    map.registerNullCreator("alien-head")
   }
 
   override fun render(delta: Float) {

@@ -6,6 +6,7 @@ import com.badlogic.gdx.maps.MapObject
 import com.badlogic.gdx.maps.objects.RectangleMapObject
 import com.badlogic.gdx.maps.tiled.TiledMap
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer
+import com.badlogic.gdx.maps.tiled.objects.TiledMapTileMapObject
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer
 import com.badlogic.gdx.math.Vector2
 import java.util.*
@@ -16,7 +17,7 @@ class OrthoMap(private val assetManager: AssetManager, private val path: String)
   private var map: TiledMap? = null
 
   interface ObjectCreator {
-    fun create(map: OrthoMap, x: Float, y: Float, properties: MapObject)
+    fun create(map: OrthoMap, x: Float, y: Float, tile: TiledMapTileMapObject)
   }
 
   init {
@@ -33,9 +34,14 @@ class OrthoMap(private val assetManager: AssetManager, private val path: String)
     val objs = layer.objects
     for (i in 0..objs.count - 1) {
       val obj = objs.get(i)
-      val tile = obj.properties.get("gid").toString()
-      val r = (obj as RectangleMapObject).rectangle
-      getCreator(tile).create(this, r.getX(), r.getY(), obj)
+      if( obj is TiledMapTileMapObject) {
+        var prop = obj.properties.get("type");
+        if( prop == null ) prop = obj.tile.properties.get("type")
+        if( prop != null ) {
+          val type = prop.toString()
+          getCreator(type).create(this, obj.x, obj.y, obj)
+        }
+      }
     }
   }
 
@@ -48,6 +54,13 @@ class OrthoMap(private val assetManager: AssetManager, private val path: String)
 
   internal fun registerCreator(tile: String, creator: ObjectCreator) {
     creators.put(tile, creator)
+  }
+
+  internal fun registerNullCreator(tile: String) {
+    registerCreator(tile, object : ObjectCreator {
+      override fun create(map: OrthoMap, x: Float, y: Float, tile: TiledMapTileMapObject) {
+      }
+    })
   }
 
   override fun dispose() {
