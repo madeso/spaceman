@@ -142,7 +142,7 @@ class WorldScreen(private val world : World) : ScreenAdapter() {
   override fun render(delta: Float) {
     super.render(delta)
     world.updateWorld.act(delta)
-    world.renderWorld.render()
+    world.renderWorld.render(delta)
   }
 
   override fun resize(width: Int, height: Int) {
@@ -188,7 +188,7 @@ class BasicLoaderScreen(path: String, creators: CreatorList, private val loader 
   }
 }
 
-class RenderWorld(private var renderer: OrthogonalTiledMapRenderer, private var batch: Batch) : Disposable {
+class RenderWorld(private var worldRenderer: OrthogonalTiledMapRenderer, private var batch: Batch) : Disposable {
   val layerBack = Layers(batch)
   val layerFront = Layers(batch)
 
@@ -200,12 +200,16 @@ class RenderWorld(private var renderer: OrthogonalTiledMapRenderer, private var 
     front.dispose()
   }
 
-  fun render() {
+  fun render(delta:Float) {
     ClearScreen()
+
+    layerBack.act(delta)
+    layerFront.act(delta)
+
     layerBack.render()
     layerFront.apply()
-    this.renderer.setView(layerFront.camera)
-    this.renderer.render()
+    worldRenderer.setView(layerFront.camera)
+    worldRenderer.render()
     layerFront.render()
   }
 

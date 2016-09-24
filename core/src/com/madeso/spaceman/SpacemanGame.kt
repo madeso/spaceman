@@ -41,11 +41,7 @@ class Alien(assets:Assets, private val startX : Float, private val startY : Floa
 
 class SpacemanGame : Game() {
   lateinit private var assets : Assets
-
   private val worldCreators = CreatorList()
-
-  init {
-  }
 
   override fun create() {
     assets = Assets()
