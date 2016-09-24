@@ -193,7 +193,7 @@ class RenderWorld(private var renderer: OrthogonalTiledMapRenderer, private var 
   val layerFront = Layers(batch)
 
   val back = layerBack.newStage()
-  public val front = layerFront.newStage()
+  val front = layerFront.newStage()
 
   override fun dispose() {
     back.dispose()
@@ -201,6 +201,7 @@ class RenderWorld(private var renderer: OrthogonalTiledMapRenderer, private var 
   }
 
   fun render() {
+    ClearScreen()
     layerBack.render()
     layerFront.apply()
     this.renderer.setView(layerFront.camera)
@@ -209,7 +210,7 @@ class RenderWorld(private var renderer: OrthogonalTiledMapRenderer, private var 
   }
 
   fun resize(width: Int, height:Int) {
-    layerFront.resize(width, height)
+    layerBack.resize(width, height)
     layerFront.resize(width, height)
   }
 }

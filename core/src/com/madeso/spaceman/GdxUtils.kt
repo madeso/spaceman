@@ -18,7 +18,7 @@ fun ClearScreen() {
   Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
 }
 
-class Layers(private val batch : Batch) {
+class Layers(val batch : Batch) {
   var camera = OrthographicCamera()
   var viewport = StretchViewport(WIDTH, HEIGHT, camera);
   var stages = Array<Stage>()
@@ -36,9 +36,9 @@ class Layers(private val batch : Batch) {
   }
 
   fun apply() {
-    batch.projectionMatrix = camera.combined;
     viewport.apply()
     camera.update();
+    batch.projectionMatrix = camera.combined;
   }
 
   fun render() {
