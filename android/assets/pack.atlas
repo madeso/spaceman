@@ -6,3025 +6,2961 @@ filter: Nearest,Nearest
 repeat: none
 enemies/barnacle
   rotate: false
-  xy: 642, 1119
-  size: 51, 57
-  orig: 51, 57
-  offset: 0, 0
-  index: -1
-enemies/barnacle_bite
-  rotate: false
-  xy: 1739, 1515
-  size: 51, 58
-  orig: 51, 58
-  offset: 0, 0
-  index: -1
-enemies/barnacle_dead
-  rotate: false
-  xy: 1859, 1462
-  size: 51, 57
-  orig: 51, 57
-  offset: 0, 0
-  index: -1
-enemies/barnacle_hit
-  rotate: false
-  xy: 1086, 1353
+  xy: 1785, 605
   size: 51, 57
   orig: 51, 57
   offset: 0, 0
   index: -1
 enemies/bat
   rotate: false
-  xy: 1254, 1562
+  xy: 1713, 618
   size: 70, 47
   orig: 70, 47
   offset: 0, 0
   index: -1
 enemies/bat_dead
   rotate: false
-  xy: 577, 1508
+  xy: 1564, 585
   size: 70, 47
   orig: 70, 47
   offset: 0, 0
   index: -1
 enemies/bat_fly
   rotate: false
-  xy: 566, 902
+  xy: 1633, 753
   size: 88, 37
   orig: 88, 37
   offset: 0, 0
   index: -1
 enemies/bat_hang
   rotate: false
-  xy: 1152, 1312
+  xy: 1524, 542
   size: 38, 48
   orig: 38, 48
   offset: 0, 0
   index: -1
 enemies/bat_hit
   rotate: false
-  xy: 944, 932
+  xy: 1636, 585
   size: 70, 47
   orig: 70, 47
   offset: 0, 0
   index: -1
 enemies/bee
   rotate: false
-  xy: 664, 854
+  xy: 2, 2
   size: 56, 48
   orig: 56, 48
   offset: 0, 0
   index: -1
 enemies/bee_dead
   rotate: false
-  xy: 1855, 1521
+  xy: 60, 2
   size: 56, 48
   orig: 56, 48
   offset: 0, 0
   index: -1
 enemies/bee_fly
   rotate: false
-  xy: 866, 890
+  xy: 1913, 996
   size: 61, 42
   orig: 61, 42
   offset: 0, 0
   index: -1
 enemies/bee_hit
   rotate: false
-  xy: 1139, 1362
+  xy: 118, 2
   size: 56, 48
   orig: 56, 48
   offset: 0, 0
   index: -1
 enemies/blockerBody
   rotate: false
-  xy: 856, 1485
+  xy: 1038, 758
   size: 51, 51
   orig: 51, 51
   offset: 0, 0
   index: -1
 enemies/blockerMad
   rotate: false
-  xy: 909, 1485
-  size: 51, 51
-  orig: 51, 51
-  offset: 0, 0
-  index: -1
-enemies/blockerSad
-  rotate: false
-  xy: 1197, 1359
+  xy: 1797, 739
   size: 51, 51
   orig: 51, 51
   offset: 0, 0
   index: -1
 enemies/fishGreen
   rotate: false
-  xy: 365, 938
+  xy: 1840, 977
   size: 60, 45
   orig: 60, 45
   offset: 0, 0
   index: -1
 enemies/fishGreen_dead
   rotate: false
-  xy: 1326, 1652
+  xy: 1914, 949
   size: 60, 45
   orig: 60, 45
-  offset: 0, 0
-  index: -1
-enemies/fishGreen_hit
-  rotate: false
-  xy: 1859, 1416
-  size: 57, 44
-  orig: 57, 44
-  offset: 0, 0
-  index: -1
-enemies/fishPink_hit
-  rotate: false
-  xy: 1859, 1416
-  size: 57, 44
-  orig: 57, 44
-  offset: 0, 0
-  index: -1
-enemies/fishGreen_swim
-  rotate: false
-  xy: 1403, 1347
-  size: 57, 44
-  orig: 57, 44
   offset: 0, 0
   index: -1
 enemies/fishPink
   rotate: false
-  xy: 972, 1461
+  xy: 1914, 902
   size: 60, 45
   orig: 60, 45
-  offset: 0, 0
-  index: -1
-enemies/fishPink_dead
-  rotate: false
-  xy: 972, 1414
-  size: 60, 45
-  orig: 60, 45
-  offset: 0, 0
-  index: -1
-enemies/fishPink_swim
-  rotate: false
-  xy: 1462, 1346
-  size: 57, 44
-  orig: 57, 44
-  offset: 0, 0
-  index: -1
-enemies/fly
-  rotate: false
-  xy: 1250, 1371
-  size: 57, 45
-  orig: 57, 45
-  offset: 0, 0
-  index: -1
-enemies/fly_dead
-  rotate: false
-  xy: 1309, 1371
-  size: 57, 45
-  orig: 57, 45
-  offset: 0, 0
-  index: -1
-enemies/fly_fly
-  rotate: false
-  xy: 664, 813
-  size: 65, 39
-  orig: 65, 39
-  offset: 0, 0
-  index: -1
-enemies/fly_hit
-  rotate: false
-  xy: 1192, 1312
-  size: 57, 45
-  orig: 57, 45
-  offset: 0, 0
-  index: -1
-enemies/frog
-  rotate: false
-  xy: 1521, 1351
-  size: 58, 39
-  orig: 58, 39
   offset: 0, 0
   index: -1
 enemies/frog_dead
   rotate: false
-  xy: 1792, 1520
-  size: 61, 54
-  orig: 61, 54
-  offset: 0, 0
-  index: -1
-enemies/frog_hit
-  rotate: false
-  xy: 1733, 1459
-  size: 61, 54
-  orig: 61, 54
-  offset: 0, 0
-  index: -1
-enemies/frog_leap
-  rotate: false
-  xy: 1796, 1464
+  xy: 1913, 1040
   size: 61, 54
   orig: 61, 54
   offset: 0, 0
   index: -1
 enemies/ghost
   rotate: false
-  xy: 556, 1646
+  xy: 1822, 1469
   size: 51, 73
   orig: 51, 73
   offset: 0, 0
   index: -1
 enemies/ghost_dead
   rotate: false
-  xy: 761, 1672
+  xy: 1528, 374
   size: 51, 73
   orig: 51, 73
   offset: 0, 0
   index: -1
 enemies/ghost_hit
   rotate: false
-  xy: 1201, 1625
+  xy: 1528, 299
   size: 51, 73
   orig: 51, 73
   offset: 0, 0
   index: -1
 enemies/ghost_normal
   rotate: false
-  xy: 923, 1584
+  xy: 1785, 664
   size: 51, 73
   orig: 51, 73
   offset: 0, 0
   index: -1
 enemies/grassBlock
   rotate: false
-  xy: 1128, 1628
+  xy: 1686, 1312
   size: 71, 70
   orig: 71, 70
   offset: 0, 0
   index: -1
 enemies/grassBlock_dead
   rotate: false
-  xy: 1047, 1564
+  xy: 1686, 1240
   size: 71, 70
   orig: 71, 70
   offset: 0, 0
   index: -1
 enemies/grassBlock_hit
   rotate: false
-  xy: 1120, 1556
+  xy: 1567, 681
   size: 71, 70
   orig: 71, 70
   offset: 0, 0
   index: -1
 enemies/grassBlock_jump
   rotate: false
-  xy: 1394, 1584
+  xy: 1640, 681
   size: 71, 70
   orig: 71, 70
   offset: 0, 0
   index: -1
-enemies/ladyBug
-  rotate: false
-  xy: 1462, 1310
-  size: 58, 34
-  orig: 58, 34
-  offset: 0, 0
-  index: -1
-enemies/ladyBug_fly
-  rotate: false
-  xy: 1962, 1520
-  size: 59, 42
-  orig: 59, 42
-  offset: 0, 0
-  index: -1
-enemies/ladyBug_hit
-  rotate: false
-  xy: 830, 244
-  size: 58, 34
-  orig: 58, 34
-  offset: 0, 0
-  index: -1
 enemies/ladyBug_walk
   rotate: false
-  xy: 1796, 1428
+  xy: 1688, 1051
   size: 61, 34
   orig: 61, 34
   offset: 0, 0
   index: -1
 enemies/laserDown
   rotate: false
-  xy: 1016, 909
+  xy: 1941, 321
   size: 70, 70
   orig: 70, 70
   offset: 0, 0
   index: -1
 enemies/laserDownShoot
   rotate: false
-  xy: 1088, 909
+  xy: 1941, 249
   size: 70, 70
   orig: 70, 70
   offset: 0, 0
   index: -1
 enemies/laserLeft
   rotate: false
-  xy: 1091, 837
+  xy: 1330, 24
   size: 70, 70
   orig: 70, 70
   offset: 0, 0
   index: -1
 enemies/laserLeftShoot
   rotate: false
-  xy: 1019, 765
+  xy: 1402, 22
   size: 70, 70
   orig: 70, 70
   offset: 0, 0
   index: -1
 enemies/laserRight
   rotate: false
-  xy: 1106, 1484
+  xy: 1688, 1087
   size: 70, 70
   orig: 70, 70
   offset: 0, 0
   index: -1
 enemies/laserRightShoot
   rotate: false
-  xy: 1034, 1420
+  xy: 1760, 1096
   size: 70, 70
   orig: 70, 70
   offset: 0, 0
   index: -1
 enemies/laserUp
   rotate: false
-  xy: 931, 674
+  xy: 1770, 899
   size: 70, 70
   orig: 70, 70
   offset: 0, 0
   index: -1
 enemies/laserUpShoot
   rotate: false
-  xy: 1003, 693
+  xy: 1842, 905
   size: 70, 70
   orig: 70, 70
   offset: 0, 0
   index: -1
-enemies/mouse
-  rotate: false
-  xy: 388, 1087
-  size: 59, 35
-  orig: 59, 35
-  offset: 0, 0
-  index: -1
-enemies/mouse_dead
-  rotate: false
-  xy: 882, 1538
-  size: 59, 35
-  orig: 59, 35
-  offset: 0, 0
-  index: -1
-enemies/mouse_hit
-  rotate: false
-  xy: 743, 39
-  size: 59, 35
-  orig: 59, 35
-  offset: 0, 0
-  index: -1
-enemies/mouse_walk
-  rotate: false
-  xy: 743, 2
-  size: 58, 35
-  orig: 58, 35
-  offset: 0, 0
-  index: -1
 enemies/piranha
   rotate: false
-  xy: 1058, 1279
+  xy: 1534, 237
   size: 45, 60
   orig: 45, 60
   offset: 0, 0
   index: -1
 enemies/piranha_dead
   rotate: false
-  xy: 1074, 1217
+  xy: 1996, 550
   size: 45, 60
   orig: 45, 60
   offset: 0, 0
   index: -1
 enemies/piranha_down
   rotate: false
-  xy: 1105, 1291
+  xy: 1996, 488
   size: 45, 60
   orig: 45, 60
   offset: 0, 0
   index: -1
 enemies/piranha_hit
   rotate: false
-  xy: 1251, 1309
+  xy: 1996, 43
   size: 45, 60
   orig: 45, 60
   offset: 0, 0
   index: -1
-enemies/player/beige/alienBeige
-  rotate: false
-  xy: 534, 170
-  size: 66, 92
-  orig: 66, 92
-  offset: 0, 0
-  index: -1
-enemies/player/beige/alienBeige_badge1
-  rotate: false
-  xy: 1913, 1522
-  size: 47, 47
-  orig: 47, 47
-  offset: 0, 0
-  index: -1
-enemies/player/beige/alienBeige_badge2
-  rotate: false
-  xy: 784, 335
-  size: 47, 47
-  orig: 47, 47
-  offset: 0, 0
-  index: -1
-enemies/player/beige/alienBeige_climb1
-  rotate: false
-  xy: 466, 165
-  size: 66, 95
-  orig: 66, 95
-  offset: 0, 0
-  index: -1
-enemies/player/beige/alienBeige_climb2
-  rotate: false
-  xy: 466, 68
-  size: 66, 95
-  orig: 66, 95
-  offset: 0, 0
-  index: -1
-enemies/player/beige/alienBeige_duck
-  rotate: false
-  xy: 534, 2
-  size: 67, 72
-  orig: 67, 72
-  offset: 0, 0
-  index: -1
-enemies/player/beige/alienBeige_hurt
-  rotate: false
-  xy: 1067, 1806
-  size: 67, 92
-  orig: 67, 92
-  offset: 0, 0
-  index: -1
-enemies/player/beige/alienBeige_jump
-  rotate: false
-  xy: 497, 992
-  size: 66, 93
-  orig: 66, 93
-  offset: 0, 0
-  index: -1
-enemies/player/beige/alienBeige_stand
-  rotate: false
-  xy: 534, 76
-  size: 66, 92
-  orig: 66, 92
-  offset: 0, 0
-  index: -1
-enemies/player/beige/alienBeige_swim1
-  rotate: false
-  xy: 303, 2
-  size: 69, 98
-  orig: 69, 98
-  offset: 0, 0
-  index: -1
-enemies/player/beige/alienBeige_swim2
-  rotate: false
-  xy: 1961, 1816
-  size: 70, 100
-  orig: 70, 100
-  offset: 0, 0
-  index: -1
-enemies/player/beige/alienBeige_walk1
-  rotate: false
-  xy: 396, 63
-  size: 68, 93
-  orig: 68, 93
-  offset: 0, 0
-  index: -1
-enemies/player/beige/alienBeige_walk2
-  rotate: false
-  xy: 2, 2
-  size: 70, 96
-  orig: 70, 96
-  offset: 0, 0
-  index: -1
-enemies/player/blue/alienBlue
-  rotate: false
-  xy: 576, 531
-  size: 66, 92
-  orig: 66, 92
-  offset: 0, 0
-  index: -1
-enemies/player/blue/alienBlue_badge1
-  rotate: false
-  xy: 839, 476
-  size: 47, 47
-  orig: 47, 47
-  offset: 0, 0
-  index: -1
-enemies/player/blue/alienBlue_badge2
-  rotate: false
-  xy: 839, 427
-  size: 47, 47
-  orig: 47, 47
-  offset: 0, 0
-  index: -1
-enemies/player/blue/alienBlue_climb1
-  rotate: false
-  xy: 576, 437
-  size: 66, 92
-  orig: 66, 92
-  offset: 0, 0
-  index: -1
-enemies/player/blue/alienBlue_climb2
-  rotate: false
-  xy: 576, 343
-  size: 66, 92
-  orig: 66, 92
-  offset: 0, 0
-  index: -1
-enemies/player/blue/alienBlue_duck
-  rotate: false
-  xy: 603, 2
-  size: 67, 72
-  orig: 67, 72
-  offset: 0, 0
-  index: -1
-enemies/player/blue/alienBlue_hurt
-  rotate: false
-  xy: 507, 328
-  size: 67, 92
-  orig: 67, 92
-  offset: 0, 0
-  index: -1
-enemies/player/blue/alienBlue_jump
-  rotate: false
-  xy: 498, 897
-  size: 66, 93
-  orig: 66, 93
-  offset: 0, 0
-  index: -1
-enemies/player/blue/alienBlue_stand
-  rotate: false
-  xy: 647, 719
-  size: 66, 92
-  orig: 66, 92
-  offset: 0, 0
-  index: -1
-enemies/player/blue/alienBlue_swim1
-  rotate: false
-  xy: 427, 889
-  size: 69, 95
-  orig: 69, 95
-  offset: 0, 0
-  index: -1
-enemies/player/blue/alienBlue_swim2
-  rotate: false
-  xy: 364, 362
-  size: 70, 97
-  orig: 70, 97
-  offset: 0, 0
-  index: -1
-enemies/player/blue/alienBlue_walk1
-  rotate: false
-  xy: 507, 802
-  size: 66, 93
-  orig: 66, 93
-  offset: 0, 0
-  index: -1
-enemies/player/blue/alienBlue_walk2
-  rotate: false
-  xy: 1791, 1576
-  size: 67, 96
-  orig: 67, 96
-  offset: 0, 0
-  index: -1
-enemies/player/green/alienGreen
-  rotate: false
-  xy: 647, 625
-  size: 66, 92
-  orig: 66, 92
-  offset: 0, 0
-  index: -1
-enemies/player/green/alienGreen_badge1
-  rotate: false
-  xy: 839, 378
-  size: 47, 47
-  orig: 47, 47
-  offset: 0, 0
-  index: -1
-enemies/player/green/alienGreen_badge2
-  rotate: false
-  xy: 883, 528
-  size: 47, 47
-  orig: 47, 47
-  offset: 0, 0
-  index: -1
-enemies/player/green/alienGreen_climb1
-  rotate: false
-  xy: 644, 531
-  size: 66, 92
-  orig: 66, 92
-  offset: 0, 0
-  index: -1
-enemies/player/green/alienGreen_climb2
-  rotate: false
-  xy: 644, 437
-  size: 66, 92
-  orig: 66, 92
-  offset: 0, 0
-  index: -1
-enemies/player/green/alienGreen_duck
-  rotate: false
-  xy: 672, 3
-  size: 69, 71
-  orig: 69, 71
-  offset: 0, 0
-  index: -1
-enemies/player/green/alienGreen_hurt
-  rotate: false
-  xy: 576, 719
-  size: 69, 92
-  orig: 69, 92
-  offset: 0, 0
-  index: -1
-enemies/player/green/alienGreen_jump
-  rotate: false
-  xy: 507, 707
-  size: 67, 93
-  orig: 67, 93
-  offset: 0, 0
-  index: -1
-enemies/player/green/alienGreen_stand
-  rotate: false
-  xy: 644, 343
-  size: 66, 92
-  orig: 66, 92
-  offset: 0, 0
-  index: -1
-enemies/player/green/alienGreen_swim1
-  rotate: false
-  xy: 436, 412
-  size: 69, 95
-  orig: 69, 95
-  offset: 0, 0
-  index: -1
-enemies/player/green/alienGreen_swim2
-  rotate: false
-  xy: 434, 608
-  size: 70, 97
-  orig: 70, 97
-  offset: 0, 0
-  index: -1
-enemies/player/green/alienGreen_walk1
-  rotate: false
-  xy: 506, 612
-  size: 68, 93
-  orig: 68, 93
-  offset: 0, 0
-  index: -1
-enemies/player/green/alienGreen_walk2
-  rotate: false
-  xy: 74, 2
-  size: 70, 96
-  orig: 70, 96
-  offset: 0, 0
-  index: -1
-enemies/player/pink/alienPink
-  rotate: false
-  xy: 602, 170
-  size: 66, 92
-  orig: 66, 92
-  offset: 0, 0
-  index: -1
-enemies/player/pink/alienPink_badge1
-  rotate: false
-  xy: 932, 528
-  size: 47, 47
-  orig: 47, 47
-  offset: 0, 0
-  index: -1
-enemies/player/pink/alienPink_badge2
-  rotate: false
-  xy: 888, 479
-  size: 47, 47
-  orig: 47, 47
-  offset: 0, 0
-  index: -1
-enemies/player/pink/alienPink_climb1
-  rotate: false
-  xy: 602, 76
-  size: 66, 92
-  orig: 66, 92
-  offset: 0, 0
-  index: -1
-enemies/player/pink/alienPink_climb2
-  rotate: false
-  xy: 670, 170
-  size: 66, 92
-  orig: 66, 92
-  offset: 0, 0
-  index: -1
-enemies/player/pink/alienPink_duck
-  rotate: false
-  xy: 976, 1580
-  size: 69, 71
-  orig: 69, 71
-  offset: 0, 0
-  index: -1
-enemies/player/pink/alienPink_hurt
-  rotate: false
-  xy: 576, 625
-  size: 69, 92
-  orig: 69, 92
-  offset: 0, 0
-  index: -1
-enemies/player/pink/alienPink_jump
-  rotate: false
-  xy: 507, 422
-  size: 67, 93
-  orig: 67, 93
-  offset: 0, 0
-  index: -1
-enemies/player/pink/alienPink_stand
-  rotate: false
-  xy: 670, 76
-  size: 66, 92
-  orig: 66, 92
-  offset: 0, 0
-  index: -1
-enemies/player/pink/alienPink_swim1
-  rotate: false
-  xy: 436, 315
-  size: 69, 95
-  orig: 69, 95
-  offset: 0, 0
-  index: -1
-enemies/player/pink/alienPink_swim2
-  rotate: false
-  xy: 434, 509
-  size: 70, 97
-  orig: 70, 97
-  offset: 0, 0
-  index: -1
-enemies/player/pink/alienPink_walk1
-  rotate: false
-  xy: 506, 517
-  size: 68, 93
-  orig: 68, 93
-  offset: 0, 0
-  index: -1
-enemies/player/pink/alienPink_walk2
-  rotate: false
-  xy: 146, 2
-  size: 70, 96
-  orig: 70, 96
-  offset: 0, 0
-  index: -1
-enemies/player/yellow/alienYellow
-  rotate: false
-  xy: 719, 1568
-  size: 66, 82
-  orig: 66, 82
-  offset: 0, 0
-  index: -1
-enemies/player/yellow/alienYellow_badge1
-  rotate: false
-  xy: 888, 430
-  size: 47, 47
-  orig: 47, 47
-  offset: 0, 0
-  index: -1
-enemies/player/yellow/alienYellow_badge2
-  rotate: false
-  xy: 888, 381
-  size: 47, 47
-  orig: 47, 47
-  offset: 0, 0
-  index: -1
-enemies/player/yellow/alienYellow_climb1
-  rotate: false
-  xy: 787, 1575
-  size: 66, 82
-  orig: 66, 82
-  offset: 0, 0
-  index: -1
-enemies/player/yellow/alienYellow_climb2
-  rotate: false
-  xy: 855, 1575
-  size: 66, 82
-  orig: 66, 82
-  offset: 0, 0
-  index: -1
-enemies/player/yellow/alienYellow_duck
-  rotate: false
-  xy: 649, 1498
-  size: 68, 67
-  orig: 68, 67
-  offset: 0, 0
-  index: -1
-enemies/player/yellow/alienYellow_hurt
-  rotate: false
-  xy: 690, 1652
-  size: 69, 81
-  orig: 69, 81
-  offset: 0, 0
-  index: -1
-enemies/player/yellow/alienYellow_jump
-  rotate: false
-  xy: 287, 102
-  size: 67, 83
-  orig: 67, 83
-  offset: 0, 0
-  index: -1
-enemies/player/yellow/alienYellow_stand
-  rotate: false
-  xy: 1326, 1568
-  size: 66, 82
-  orig: 66, 82
-  offset: 0, 0
-  index: -1
-enemies/player/yellow/alienYellow_swim1
-  rotate: false
-  xy: 976, 1653
-  size: 69, 85
-  orig: 69, 85
-  offset: 0, 0
-  index: -1
-enemies/player/yellow/alienYellow_swim2
-  rotate: false
-  xy: 577, 1557
-  size: 70, 87
-  orig: 70, 87
-  offset: 0, 0
-  index: -1
-enemies/player/yellow/alienYellow_walk1
-  rotate: false
-  xy: 649, 1567
-  size: 68, 83
-  orig: 68, 83
-  offset: 0, 0
-  index: -1
-enemies/player/yellow/alienYellow_walk2
-  rotate: false
-  xy: 1254, 1611
-  size: 70, 86
-  orig: 70, 86
-  offset: 0, 0
-  index: -1
 enemies/robot/robot_blueBody
   rotate: false
-  xy: 1876, 1918
+  xy: 1072, 891
   size: 157, 128
   orig: 157, 128
   offset: 0, 0
   index: -1
 enemies/robot/robot_blueDamage1
   rotate: false
-  xy: 2, 230
+  xy: 1012, 374
   size: 157, 128
   orig: 157, 128
   offset: 0, 0
   index: -1
 enemies/robot/robot_blueDamage2
   rotate: false
-  xy: 2, 100
+  xy: 1015, 244
   size: 157, 128
   orig: 157, 128
   offset: 0, 0
   index: -1
 enemies/robot/robot_blueDrive1
   rotate: false
-  xy: 2, 1162
+  xy: 1880, 1896
   size: 158, 150
   orig: 158, 150
   offset: 0, 0
   index: -1
 enemies/robot/robot_blueDrive2
   rotate: false
-  xy: 2, 1014
+  xy: 912, 868
   size: 158, 146
   orig: 158, 146
   offset: 0, 0
   index: -1
 enemies/robot/robot_blueHurt
   rotate: false
-  xy: 378, 1511
+  xy: 1015, 114
   size: 157, 128
   orig: 157, 128
   offset: 0, 0
   index: -1
 enemies/robot/robot_blueJump
   rotate: false
-  xy: 2, 1314
+  xy: 1492, 1694
   size: 178, 162
   orig: 178, 162
   offset: 0, 0
   index: -1
 enemies/robot/robot_greenBody
   rotate: false
-  xy: 342, 1325
+  xy: 782, 504
   size: 157, 104
   orig: 157, 104
   offset: 0, 0
   index: -1
 enemies/robot/robot_greenDamage1
   rotate: false
-  xy: 1484, 1812
+  xy: 1042, 1021
   size: 157, 104
   orig: 157, 104
   offset: 0, 0
   index: -1
 enemies/robot/robot_greenDamage2
   rotate: false
-  xy: 1643, 1812
+  xy: 941, 504
   size: 157, 104
   orig: 157, 104
   offset: 0, 0
   index: -1
 enemies/robot/robot_greenDrive1
   rotate: false
-  xy: 182, 1314
+  xy: 1488, 1492
   size: 158, 120
   orig: 158, 120
   offset: 0, 0
   index: -1
 enemies/robot/robot_greenDrive2
   rotate: false
-  xy: 162, 1196
+  xy: 1487, 1374
   size: 158, 116
   orig: 158, 116
   offset: 0, 0
   index: -1
 enemies/robot/robot_greenHurt
   rotate: false
-  xy: 1802, 1812
+  xy: 1487, 1268
   size: 157, 104
   orig: 157, 104
   offset: 0, 0
   index: -1
 enemies/robot/robot_greenJump
   rotate: false
-  xy: 2, 880
+  xy: 834, 370
   size: 176, 132
   orig: 176, 132
   offset: 0, 0
   index: -1
 enemies/robot/robot_redBody
   rotate: false
-  xy: 2, 750
+  xy: 834, 240
   size: 179, 128
   orig: 179, 128
   offset: 0, 0
   index: -1
 enemies/robot/robot_redDamage1
   rotate: false
-  xy: 2, 620
+  xy: 834, 110
   size: 179, 128
   orig: 179, 128
   offset: 0, 0
   index: -1
 enemies/robot/robot_redDamage2
   rotate: false
-  xy: 2, 490
+  xy: 1682, 1754
   size: 179, 128
   orig: 179, 128
   offset: 0, 0
   index: -1
 enemies/robot/robot_redDrive1
   rotate: false
-  xy: 586, 1896
+  xy: 652, 348
   size: 180, 150
   orig: 180, 150
   offset: 0, 0
   index: -1
 enemies/robot/robot_redDrive2
   rotate: false
-  xy: 954, 1900
+  xy: 652, 200
   size: 180, 146
   orig: 180, 146
   offset: 0, 0
   index: -1
 enemies/robot/robot_redHurt
   rotate: false
-  xy: 2, 360
+  xy: 1672, 1624
   size: 179, 128
   orig: 179, 128
   offset: 0, 0
   index: -1
 enemies/robot/robot_redJump
   rotate: false
-  xy: 382, 1721
+  xy: 1682, 1884
   size: 196, 162
   orig: 196, 162
   offset: 0, 0
   index: -1
 enemies/robot/robot_yellowBody
   rotate: false
-  xy: 1136, 1918
+  xy: 1302, 1386
   size: 183, 128
   orig: 183, 128
   offset: 0, 0
   index: -1
 enemies/robot/robot_yellowDamage1
   rotate: false
-  xy: 1321, 1918
+  xy: 1302, 1256
   size: 183, 128
   orig: 183, 128
   offset: 0, 0
   index: -1
 enemies/robot/robot_yellowDamage2
   rotate: false
-  xy: 1506, 1918
+  xy: 1298, 1126
   size: 183, 128
   orig: 183, 128
   offset: 0, 0
   index: -1
 enemies/robot/robot_yellowDrive1
   rotate: false
-  xy: 192, 1516
+  xy: 1302, 1516
   size: 184, 150
   orig: 184, 150
   offset: 0, 0
   index: -1
 enemies/robot/robot_yellowDrive2
   rotate: false
-  xy: 768, 1900
+  xy: 782, 610
   size: 184, 146
   orig: 184, 146
   offset: 0, 0
   index: -1
 enemies/robot/robot_yellowHurt
   rotate: false
-  xy: 1691, 1918
+  xy: 586, 70
   size: 183, 128
   orig: 183, 128
   offset: 0, 0
   index: -1
 enemies/robot/robot_yellowJump
   rotate: false
-  xy: 382, 1885
+  xy: 382, 79
   size: 202, 161
   orig: 202, 161
   offset: 0, 0
   index: -1
 enemies/robot/tracks_back1
   rotate: false
-  xy: 942, 1740
+  xy: 636, 2
   size: 103, 66
   orig: 103, 66
   offset: 0, 0
   index: -1
 enemies/robot/tracks_back2
   rotate: false
-  xy: 942, 1740
+  xy: 636, 2
   size: 103, 66
   orig: 103, 66
   offset: 0, 0
   index: -1
 enemies/robot/tracks_long1
   rotate: false
-  xy: 815, 1740
+  xy: 382, 11
   size: 125, 66
   orig: 125, 66
   offset: 0, 0
   index: -1
 enemies/robot/tracks_long2
   rotate: false
-  xy: 1136, 1770
+  xy: 509, 2
   size: 125, 66
   orig: 125, 66
   offset: 0, 0
   index: -1
 enemies/robot/tracks_short1
   rotate: false
-  xy: 1860, 1670
+  xy: 741, 2
   size: 103, 66
   orig: 103, 66
   offset: 0, 0
   index: -1
 enemies/robot/tracks_short2
   rotate: false
-  xy: 1482, 1610
+  xy: 1840, 1545
   size: 103, 66
   orig: 103, 66
   offset: 0, 0
   index: -1
 enemies/slime
   rotate: false
-  xy: 830, 176
-  size: 49, 34
-  orig: 49, 34
-  offset: 0, 0
-  index: -1
-enemies/slimeBlock
-  rotate: false
-  xy: 1033, 1341
-  size: 51, 50
-  orig: 51, 50
-  offset: 0, 0
-  index: -1
-enemies/slimeBlock_dead
-  rotate: false
-  xy: 1350, 1319
-  size: 51, 50
-  orig: 51, 50
-  offset: 0, 0
-  index: -1
-enemies/slimeBlock_hit
-  rotate: false
-  xy: 784, 525
-  size: 51, 50
-  orig: 51, 50
-  offset: 0, 0
-  index: -1
-enemies/slimeBlue
-  rotate: false
-  xy: 890, 255
-  size: 49, 34
-  orig: 49, 34
-  offset: 0, 0
-  index: -1
-enemies/slimeBlue_blue
-  rotate: false
-  xy: 1403, 1315
-  size: 57, 30
-  orig: 57, 30
-  offset: 0, 0
-  index: -1
-enemies/slimeBlue_dead
-  rotate: false
-  xy: 1724, 1408
-  size: 49, 34
-  orig: 49, 34
-  offset: 0, 0
-  index: -1
-enemies/slimeBlue_hit
-  rotate: false
-  xy: 1724, 1372
-  size: 49, 34
-  orig: 49, 34
-  offset: 0, 0
-  index: -1
-enemies/slimeGreen_hit
-  rotate: false
-  xy: 1724, 1372
-  size: 49, 34
-  orig: 49, 34
-  offset: 0, 0
-  index: -1
-enemies/slime_hit
-  rotate: false
-  xy: 1724, 1372
+  xy: 1728, 438
   size: 49, 34
   orig: 49, 34
   offset: 0, 0
   index: -1
 enemies/slimeBlue_squashed
   rotate: false
-  xy: 374, 11
+  xy: 1850, 739
   size: 57, 13
   orig: 57, 13
-  offset: 0, 0
-  index: -1
-enemies/slimeGreen
-  rotate: false
-  xy: 1775, 1392
-  size: 49, 34
-  orig: 49, 34
-  offset: 0, 0
-  index: -1
-enemies/slimeGreen_dead
-  rotate: false
-  xy: 1775, 1356
-  size: 49, 34
-  orig: 49, 34
   offset: 0, 0
   index: -1
 enemies/slimeGreen_squashed
   rotate: false
-  xy: 882, 291
+  xy: 968, 614
   size: 57, 13
   orig: 57, 13
-  offset: 0, 0
-  index: -1
-enemies/slimeGreen_walk
-  rotate: false
-  xy: 738, 76
-  size: 57, 30
-  orig: 57, 30
-  offset: 0, 0
-  index: -1
-enemies/slime_dead
-  rotate: false
-  xy: 1858, 1380
-  size: 49, 34
-  orig: 49, 34
   offset: 0, 0
   index: -1
 enemies/slime_squashed
   rotate: false
-  xy: 1733, 1444
+  xy: 1100, 510
   size: 57, 13
   orig: 57, 13
   offset: 0, 0
   index: -1
-enemies/slime_walk
-  rotate: false
-  xy: 830, 212
-  size: 57, 30
-  orig: 57, 30
-  offset: 0, 0
-  index: -1
-enemies/snail
-  rotate: false
-  xy: 929, 890
-  size: 55, 40
-  orig: 55, 40
-  offset: 0, 0
-  index: -1
-enemies/snail_hit
-  rotate: false
-  xy: 1522, 1309
-  size: 55, 40
-  orig: 55, 40
-  offset: 0, 0
-  index: -1
 enemies/snail_shell
   rotate: false
-  xy: 803, 2
+  xy: 1663, 476
   size: 43, 35
   orig: 43, 35
   offset: 0, 0
   index: -1
 enemies/snail_walk
   rotate: false
-  xy: 572, 264
+  xy: 586, 200
   size: 60, 40
   orig: 60, 40
   offset: 0, 0
   index: -1
 enemies/snake
   rotate: false
-  xy: 1152, 1287
+  xy: 1875, 1456
   size: 63, 23
   orig: 63, 23
   offset: 0, 0
   index: -1
 enemies/snakeLava
   rotate: false
-  xy: 287, 187
+  xy: 1171, 376
   size: 53, 147
   orig: 53, 147
   offset: 0, 0
   index: -1
 enemies/snakeLava_ani
   rotate: false
-  xy: 580, 1736
+  xy: 1174, 227
   size: 52, 147
   orig: 52, 147
   offset: 0, 0
   index: -1
 enemies/snakeLava_dead
   rotate: false
-  xy: 760, 1747
+  xy: 1231, 892
   size: 53, 147
   orig: 53, 147
   offset: 0, 0
   index: -1
 enemies/snakeLava_hit
   rotate: false
-  xy: 309, 510
+  xy: 1419, 977
   size: 53, 147
   orig: 53, 147
   offset: 0, 0
   index: -1
 enemies/snakeSlime_hit
   rotate: false
-  xy: 309, 510
+  xy: 1419, 977
   size: 53, 147
   orig: 53, 147
   offset: 0, 0
   index: -1
 enemies/snakeSlime
   rotate: false
-  xy: 309, 361
+  xy: 1220, 662
   size: 53, 147
   orig: 53, 147
   offset: 0, 0
   index: -1
 enemies/snakeSlime_ani
   rotate: false
-  xy: 342, 212
+  xy: 1174, 78
   size: 52, 147
   orig: 52, 147
   offset: 0, 0
   index: -1
 enemies/snakeSlime_dead
   rotate: false
-  xy: 310, 938
+  xy: 1474, 977
   size: 53, 147
   orig: 53, 147
   offset: 0, 0
   index: -1
 enemies/snake_dead
   rotate: false
-  xy: 787, 577
+  xy: 1492, 99
   size: 63, 23
   orig: 63, 23
   offset: 0, 0
   index: -1
 enemies/snake_hit
   rotate: false
-  xy: 852, 577
+  xy: 1762, 4
   size: 63, 23
   orig: 63, 23
   offset: 0, 0
   index: -1
 enemies/worm_hit
   rotate: false
-  xy: 852, 577
+  xy: 1762, 4
   size: 63, 23
   orig: 63, 23
   offset: 0, 0
   index: -1
 enemies/snake_walk
   rotate: false
-  xy: 917, 577
+  xy: 1852, 8
   size: 63, 23
   orig: 63, 23
   offset: 0, 0
   index: -1
 enemies/spider
   rotate: false
-  xy: 1394, 1537
+  xy: 1567, 634
   size: 71, 45
   orig: 71, 45
   offset: 0, 0
   index: -1
 enemies/spider_dead
   rotate: false
-  xy: 436, 262
+  xy: 1769, 971
   size: 69, 51
   orig: 69, 51
   offset: 0, 0
   index: -1
 enemies/spider_hit
   rotate: false
-  xy: 871, 934
+  xy: 1640, 634
   size: 71, 45
   orig: 71, 45
   offset: 0, 0
   index: -1
 enemies/spider_walk1
   rotate: false
-  xy: 782, 1485
+  xy: 1723, 739
   size: 72, 51
   orig: 72, 51
   offset: 0, 0
   index: -1
 enemies/spider_walk2
   rotate: false
-  xy: 313, 665
+  xy: 1529, 983
   size: 77, 53
   orig: 77, 53
   offset: 0, 0
   index: -1
 enemies/spinner
   rotate: false
-  xy: 507, 264
+  xy: 1875, 1481
   size: 63, 62
   orig: 63, 62
   offset: 0, 0
   index: -1
 enemies/spinnerHalf
   rotate: false
-  xy: 449, 1087
+  xy: 1663, 441
   size: 63, 31
   orig: 63, 31
   offset: 0, 0
   index: -1
 enemies/spinnerHalf_dead
   rotate: false
-  xy: 712, 276
+  xy: 1810, 794
   size: 63, 31
   orig: 63, 31
   offset: 0, 0
   index: -1
-enemies/spinnerHalf_hit
-  rotate: false
-  xy: 601, 1322
-  size: 61, 30
-  orig: 61, 30
-  offset: 0, 0
-  index: -1
-enemies/spinnerHalf_spin
-  rotate: false
-  xy: 664, 1322
-  size: 61, 30
-  orig: 61, 30
-  offset: 0, 0
-  index: -1
 enemies/spinner_dead
   rotate: false
-  xy: 469, 4
+  xy: 1526, 449
   size: 63, 62
   orig: 63, 62
   offset: 0, 0
   index: -1
 enemies/spinner_hit
   rotate: false
-  xy: 719, 1505
+  xy: 771, 137
   size: 61, 61
   orig: 61, 61
   offset: 0, 0
   index: -1
 enemies/spinner_spin
   rotate: false
-  xy: 1610, 1512
+  xy: 771, 74
   size: 61, 61
   orig: 61, 61
   offset: 0, 0
   index: -1
 enemies/worm
   rotate: false
-  xy: 888, 356
-  size: 63, 23
-  orig: 63, 23
-  offset: 0, 0
-  index: -1
-enemies/worm_dead
-  rotate: false
-  xy: 882, 331
-  size: 63, 23
-  orig: 63, 23
-  offset: 0, 0
-  index: -1
-enemies/worm_walk
-  rotate: false
-  xy: 882, 306
+  xy: 1917, 8
   size: 63, 23
   orig: 63, 23
   offset: 0, 0
   index: -1
 hud/hud
   rotate: false
-  xy: 986, 892
-  size: 28, 38
-  orig: 28, 38
-  offset: 0, 0
-  index: 3
-hud/hud
-  rotate: false
-  xy: 392, 665
+  xy: 1038, 826
   size: 32, 40
   orig: 32, 40
   offset: 0, 0
   index: 8
 hud/hud
   rotate: false
-  xy: 680, 303
-  size: 30, 38
-  orig: 30, 38
-  offset: 0, 0
-  index: 0
-hud/hud
-  rotate: false
-  xy: 680, 264
-  size: 26, 37
-  orig: 26, 37
-  offset: 0, 0
-  index: 1
-hud/hud
-  rotate: false
-  xy: 1826, 1388
-  size: 30, 38
-  orig: 30, 38
-  offset: 0, 0
-  index: 6
-hud/hud
-  rotate: false
-  xy: 1121, 1251
+  xy: 2017, 1664
   size: 29, 38
   orig: 29, 38
   offset: 0, 0
   index: 4
 hud/hud
   rotate: false
-  xy: 1191, 1247
-  size: 32, 38
-  orig: 32, 38
+  xy: 1850, 754
+  size: 30, 38
+  orig: 30, 38
   offset: 0, 0
-  index: 2
+  index: 0
 hud/hud
   rotate: false
-  xy: 1121, 1211
-  size: 28, 38
-  orig: 28, 38
-  offset: 0, 0
-  index: 5
-hud/hud
-  rotate: false
-  xy: 1188, 1206
+  xy: 2006, 1855
   size: 32, 39
   orig: 32, 39
   offset: 0, 0
   index: 7
 hud/hud
   rotate: false
-  xy: 797, 81
+  xy: 1996, 2
   size: 32, 39
   orig: 32, 39
   offset: 0, 0
   index: 9
+hud/hud
+  rotate: false
+  xy: 2017, 1624
+  size: 28, 38
+  orig: 28, 38
+  offset: 0, 0
+  index: 3
+hud/hud
+  rotate: false
+  xy: 2017, 1584
+  size: 28, 38
+  orig: 28, 38
+  offset: 0, 0
+  index: 5
+hud/hud
+  rotate: false
+  xy: 2017, 1545
+  size: 26, 37
+  orig: 26, 37
+  offset: 0, 0
+  index: 1
+hud/hud
+  rotate: false
+  xy: 2013, 425
+  size: 32, 38
+  orig: 32, 38
+  offset: 0, 0
+  index: 2
+hud/hud
+  rotate: false
+  xy: 2013, 385
+  size: 30, 38
+  orig: 30, 38
+  offset: 0, 0
+  index: 6
 hud/hud_coins
   rotate: false
-  xy: 937, 479
+  xy: 1226, 613
   size: 47, 47
   orig: 47, 47
-  offset: 0, 0
-  index: -1
-hud/hud_gem_blue
-  rotate: false
-  xy: 1562, 1537
-  size: 46, 36
-  orig: 46, 36
-  offset: 0, 0
-  index: -1
-hud/hud_gem_green
-  rotate: false
-  xy: 784, 122
-  size: 46, 36
-  orig: 46, 36
-  offset: 0, 0
-  index: -1
-hud/hud_gem_red
-  rotate: false
-  xy: 832, 138
-  size: 46, 36
-  orig: 46, 36
-  offset: 0, 0
-  index: -1
-hud/hud_gem_yellow
-  rotate: false
-  xy: 832, 100
-  size: 46, 36
-  orig: 46, 36
-  offset: 0, 0
-  index: -1
-hud/hud_heartEmpty
-  rotate: false
-  xy: 784, 478
-  size: 53, 45
-  orig: 53, 45
-  offset: 0, 0
-  index: -1
-hud/hud_heartFull
-  rotate: false
-  xy: 784, 431
-  size: 53, 45
-  orig: 53, 45
-  offset: 0, 0
-  index: -1
-hud/hud_heartHalf
-  rotate: false
-  xy: 784, 384
-  size: 53, 45
-  orig: 53, 45
-  offset: 0, 0
-  index: -1
-hud/hud_keyBlue
-  rotate: false
-  xy: 634, 264
-  size: 44, 40
-  orig: 44, 40
-  offset: 0, 0
-  index: -1
-hud/hud_keyBlue_disabled
-  rotate: false
-  xy: 738, 234
-  size: 44, 40
-  orig: 44, 40
-  offset: 0, 0
-  index: -1
-hud/hud_keyGreem_disabled
-  rotate: false
-  xy: 738, 192
-  size: 44, 40
-  orig: 44, 40
-  offset: 0, 0
-  index: -1
-hud/hud_keyGreen
-  rotate: false
-  xy: 738, 150
-  size: 44, 40
-  orig: 44, 40
-  offset: 0, 0
-  index: -1
-hud/hud_keyRed
-  rotate: false
-  xy: 738, 108
-  size: 44, 40
-  orig: 44, 40
-  offset: 0, 0
-  index: -1
-hud/hud_keyRed_disabled
-  rotate: false
-  xy: 784, 244
-  size: 44, 40
-  orig: 44, 40
-  offset: 0, 0
-  index: -1
-hud/hud_keyYellow
-  rotate: false
-  xy: 784, 202
-  size: 44, 40
-  orig: 44, 40
-  offset: 0, 0
-  index: -1
-hud/hud_keyYellow_disabled
-  rotate: false
-  xy: 784, 160
-  size: 44, 40
-  orig: 44, 40
   offset: 0, 0
   index: -1
 hud/hud_p1
   rotate: false
-  xy: 937, 430
-  size: 47, 47
-  orig: 47, 47
-  offset: 0, 0
-  index: -1
-hud/hud_p1Alt
-  rotate: false
-  xy: 833, 329
-  size: 47, 47
-  orig: 47, 47
-  offset: 0, 0
-  index: -1
-hud/hud_p2Alt
-  rotate: false
-  xy: 784, 286
-  size: 47, 47
-  orig: 47, 47
-  offset: 0, 0
-  index: -1
-hud/hud_p3
-  rotate: false
-  xy: 937, 381
-  size: 47, 47
-  orig: 47, 47
-  offset: 0, 0
-  index: -1
-hud/hud_p3Alt
-  rotate: false
-  xy: 833, 280
+  xy: 1515, 592
   size: 47, 47
   orig: 47, 47
   offset: 0, 0
   index: -1
 hud/hud_x
   rotate: false
-  xy: 1826, 1358
+  xy: 1462, 196
   size: 30, 28
   orig: 30, 28
   offset: 0, 0
   index: -1
 items/bomb
   rotate: false
-  xy: 540, 1436
+  xy: 1945, 1530
   size: 70, 70
   orig: 70, 70
   offset: 0, 0
   index: -1
 items/bombFlash
   rotate: false
-  xy: 612, 1426
+  xy: 1174, 6
   size: 70, 70
   orig: 70, 70
   offset: 0, 0
   index: -1
 items/boxCoin
   rotate: false
-  xy: 601, 1354
+  xy: 1759, 1312
   size: 70, 70
   orig: 70, 70
   offset: 0, 0
   index: -1
 items/boxCoinAlt
   rotate: false
-  xy: 626, 1250
+  xy: 1759, 1240
   size: 70, 70
   orig: 70, 70
   offset: 0, 0
   index: -1
 items/boxCoinAlt_disabled
   rotate: false
-  xy: 684, 1426
+  xy: 1713, 667
   size: 70, 70
   orig: 70, 70
   offset: 0, 0
   index: -1
 items/boxCoin_disabled
   rotate: false
-  xy: 673, 1354
+  xy: 1708, 546
   size: 70, 70
   orig: 70, 70
   offset: 0, 0
   index: -1
 items/boxExplosive
   rotate: false
-  xy: 756, 1413
+  xy: 1452, 514
   size: 70, 70
   orig: 70, 70
   offset: 0, 0
   index: -1
 items/boxExplosiveAlt
   rotate: false
-  xy: 745, 1341
+  xy: 1454, 442
   size: 70, 70
   orig: 70, 70
   offset: 0, 0
   index: -1
 items/boxExplosive_disabled
   rotate: false
-  xy: 698, 1250
+  xy: 1456, 370
   size: 70, 70
   orig: 70, 70
   offset: 0, 0
   index: -1
 items/boxItem
   rotate: false
-  xy: 642, 1178
+  xy: 1456, 298
   size: 70, 70
   orig: 70, 70
   offset: 0, 0
   index: -1
 items/boxItemAlt
   rotate: false
-  xy: 714, 1178
+  xy: 1462, 226
   size: 70, 70
   orig: 70, 70
   offset: 0, 0
   index: -1
 items/boxItemAlt_disabled
   rotate: false
-  xy: 695, 1106
+  xy: 1940, 1458
   size: 70, 70
   orig: 70, 70
   offset: 0, 0
   index: -1
 items/boxItem_disabled
   rotate: false
-  xy: 654, 1034
+  xy: 1821, 1384
   size: 70, 70
   orig: 70, 70
   offset: 0, 0
   index: -1
 items/buttonBlue
   rotate: false
-  xy: 655, 962
+  xy: 1831, 1312
   size: 70, 70
   orig: 70, 70
   offset: 0, 0
   index: -1
 items/buttonBlue_pressed
   rotate: false
-  xy: 726, 1034
+  xy: 1831, 1240
   size: 70, 70
   orig: 70, 70
   offset: 0, 0
   index: -1
 items/buttonGreen
   rotate: false
-  xy: 727, 962
+  xy: 1893, 1384
   size: 70, 70
   orig: 70, 70
   offset: 0, 0
   index: -1
 items/buttonGreen_pressed
   rotate: false
-  xy: 767, 1106
+  xy: 1903, 1312
   size: 70, 70
   orig: 70, 70
   offset: 0, 0
   index: -1
 items/buttonRed
   rotate: false
-  xy: 798, 1034
+  xy: 1903, 1240
   size: 70, 70
   orig: 70, 70
   offset: 0, 0
   index: -1
 items/buttonRed_pressed
   rotate: false
-  xy: 799, 962
+  xy: 1965, 1386
   size: 70, 70
   orig: 70, 70
   offset: 0, 0
   index: -1
 items/buttonYellow
   rotate: false
-  xy: 722, 890
+  xy: 1975, 1314
   size: 70, 70
   orig: 70, 70
   offset: 0, 0
   index: -1
 items/buttonYellow_pressed
   rotate: false
-  xy: 794, 890
+  xy: 1975, 1242
   size: 70, 70
   orig: 70, 70
   offset: 0, 0
   index: -1
 items/coinBronze
   rotate: false
-  xy: 731, 818
+  xy: 1564, 513
   size: 70, 70
   orig: 70, 70
   offset: 0, 0
   index: -1
 items/coinGold
   rotate: false
-  xy: 803, 818
+  xy: 1636, 513
   size: 70, 70
   orig: 70, 70
   offset: 0, 0
   index: -1
 items/coinSilver
   rotate: false
-  xy: 770, 1269
+  xy: 1708, 474
   size: 70, 70
   orig: 70, 70
   offset: 0, 0
   index: -1
 items/debries/debrisGlass
   rotate: false
-  xy: 1987, 1762
-  size: 59, 52
-  orig: 59, 52
-  offset: 0, 0
-  index: 3
-items/debries/debrisGlass
-  rotate: false
-  xy: 656, 904
+  xy: 1501, 695
   size: 64, 56
   orig: 64, 56
   offset: 0, 0
   index: 1
 items/debries/debrisGlass
   rotate: false
-  xy: 1610, 1391
+  xy: 1910, 675
   size: 55, 61
   orig: 55, 61
   offset: 0, 0
   index: 2
 items/debries/debrisStone
   rotate: false
-  xy: 1987, 1708
-  size: 59, 52
-  orig: 59, 52
-  offset: 0, 0
-  index: 3
-items/debries/debrisStone
-  rotate: false
-  xy: 1673, 1517
+  xy: 1838, 609
   size: 64, 56
   orig: 64, 56
   offset: 0, 0
   index: 1
 items/debries/debrisStone
   rotate: false
-  xy: 1676, 1454
+  xy: 1967, 675
   size: 55, 61
   orig: 55, 61
   offset: 0, 0
   index: 2
 items/debries/debrisWood
   rotate: false
-  xy: 1193, 1571
-  size: 59, 52
-  orig: 59, 52
-  offset: 0, 0
-  index: 3
-items/debries/debrisWood
-  rotate: false
-  xy: 1610, 1454
+  xy: 1904, 609
   size: 64, 56
   orig: 64, 56
   offset: 0, 0
   index: 1
 items/debries/debrisWood
   rotate: false
-  xy: 1667, 1391
+  xy: 1970, 612
   size: 55, 61
   orig: 55, 61
   offset: 0, 0
   index: 2
 items/fireball
   rotate: false
-  xy: 786, 1197
+  xy: 1591, 441
   size: 70, 70
   orig: 70, 70
   offset: 0, 0
   index: -1
 items/flagBlue
   rotate: false
-  xy: 817, 1341
+  xy: 1581, 369
   size: 70, 70
   orig: 70, 70
   offset: 0, 0
   index: -1
 items/flagBlue2
   rotate: false
-  xy: 828, 1413
+  xy: 1581, 297
   size: 70, 70
   orig: 70, 70
   offset: 0, 0
   index: -1
 items/flagBlueHanging
   rotate: false
-  xy: 842, 1269
+  xy: 1581, 225
   size: 70, 70
   orig: 70, 70
   offset: 0, 0
   index: -1
 items/flagGreen
   rotate: false
-  xy: 858, 1197
+  xy: 1780, 533
   size: 70, 70
   orig: 70, 70
   offset: 0, 0
   index: -1
 items/flagGreen2
   rotate: false
-  xy: 839, 1125
+  xy: 1780, 461
   size: 70, 70
   orig: 70, 70
   offset: 0, 0
   index: -1
 items/flagGreenHanging
   rotate: false
-  xy: 889, 1341
+  xy: 1838, 667
   size: 70, 70
   orig: 70, 70
   offset: 0, 0
   index: -1
 items/flagRed
   rotate: false
-  xy: 900, 1413
+  xy: 1852, 537
   size: 70, 70
   orig: 70, 70
   offset: 0, 0
   index: -1
 items/flagRed2
   rotate: false
-  xy: 914, 1269
+  xy: 1852, 465
   size: 70, 70
   orig: 70, 70
   offset: 0, 0
   index: -1
 items/flagRedHanging
   rotate: false
-  xy: 930, 1197
+  xy: 1924, 537
   size: 70, 70
   orig: 70, 70
   offset: 0, 0
   index: -1
 items/flagYellow
   rotate: false
-  xy: 911, 1125
+  xy: 1924, 465
   size: 70, 70
   orig: 70, 70
   offset: 0, 0
   index: -1
 items/flagYellow2
   rotate: false
-  xy: 870, 1053
+  xy: 1653, 369
   size: 70, 70
   orig: 70, 70
   offset: 0, 0
   index: -1
 items/flagYellowHanging
   rotate: false
-  xy: 871, 981
+  xy: 1653, 297
   size: 70, 70
   orig: 70, 70
   offset: 0, 0
   index: -1
 items/gemBlue
   rotate: false
-  xy: 942, 1053
+  xy: 1653, 225
   size: 70, 70
   orig: 70, 70
   offset: 0, 0
   index: -1
 items/gemGreen
   rotate: false
-  xy: 943, 981
+  xy: 1725, 366
   size: 70, 70
   orig: 70, 70
   offset: 0, 0
   index: -1
 items/gemRed
   rotate: false
-  xy: 983, 1125
+  xy: 1725, 294
   size: 70, 70
   orig: 70, 70
   offset: 0, 0
   index: -1
 items/gemYellow
   rotate: false
-  xy: 1014, 1053
+  xy: 1725, 222
   size: 70, 70
   orig: 70, 70
   offset: 0, 0
   index: -1
 items/keyBlue
   rotate: false
-  xy: 1015, 981
+  xy: 1797, 389
   size: 70, 70
   orig: 70, 70
   offset: 0, 0
   index: -1
 items/keyGreen
   rotate: false
-  xy: 961, 1341
+  xy: 1797, 317
   size: 70, 70
   orig: 70, 70
   offset: 0, 0
   index: -1
 items/keyRed
   rotate: false
-  xy: 986, 1269
+  xy: 1797, 245
   size: 70, 70
   orig: 70, 70
   offset: 0, 0
   index: -1
 items/keyYellow
   rotate: false
-  xy: 1002, 1197
+  xy: 1869, 393
   size: 70, 70
   orig: 70, 70
   offset: 0, 0
   index: -1
 items/laserBlueBurst
   rotate: false
-  xy: 1055, 1125
+  xy: 1869, 321
   size: 70, 70
   orig: 70, 70
   offset: 0, 0
   index: -1
 items/laserBlueHorizontal
   rotate: false
-  xy: 1086, 1053
+  xy: 1869, 249
   size: 70, 70
   orig: 70, 70
   offset: 0, 0
   index: -1
 items/laserBlueVertical
   rotate: false
-  xy: 1087, 981
+  xy: 1941, 393
   size: 70, 70
   orig: 70, 70
   offset: 0, 0
   index: -1
 items/laserGreenBurst
   rotate: false
-  xy: 875, 818
+  xy: 1797, 173
   size: 70, 70
   orig: 70, 70
   offset: 0, 0
   index: -1
 items/laserGreenHorizontal
   rotate: false
-  xy: 947, 818
+  xy: 1869, 177
   size: 70, 70
   orig: 70, 70
   offset: 0, 0
   index: -1
 items/laserGreenVertical
   rotate: false
-  xy: 1019, 837
+  xy: 1941, 177
   size: 70, 70
   orig: 70, 70
   offset: 0, 0
   index: -1
 items/laserPurple
   rotate: false
-  xy: 1091, 765
+  xy: 1474, 22
   size: 70, 70
   orig: 70, 70
   offset: 0, 0
   index: -1
 items/laserPurpleDot
   rotate: false
-  xy: 1965, 1636
+  xy: 1671, 1159
   size: 70, 70
   orig: 70, 70
   offset: 0, 0
   index: -1
 items/laserRedBurst
   rotate: false
-  xy: 1962, 1564
+  xy: 1743, 1168
   size: 70, 70
   orig: 70, 70
   offset: 0, 0
   index: -1
 items/laserRedHorizontal
   rotate: false
-  xy: 962, 1508
+  xy: 1815, 1168
   size: 70, 70
   orig: 70, 70
   offset: 0, 0
   index: -1
 items/laserRedVertical
   rotate: false
-  xy: 1034, 1492
+  xy: 1887, 1168
   size: 70, 70
   orig: 70, 70
   offset: 0, 0
   index: -1
 items/laserSwitchBlueOff
   rotate: false
-  xy: 1106, 1412
+  xy: 1832, 1096
   size: 70, 70
   orig: 70, 70
   offset: 0, 0
   index: -1
 items/laserSwitchBlueOn
   rotate: false
-  xy: 715, 741
+  xy: 1904, 1096
   size: 70, 70
   orig: 70, 70
   offset: 0, 0
   index: -1
 items/laserSwitchGreenOff
   rotate: false
-  xy: 715, 669
+  xy: 1976, 1170
   size: 70, 70
   orig: 70, 70
   offset: 0, 0
   index: -1
 items/laserSwitchGreenOn
   rotate: false
-  xy: 787, 746
+  xy: 1976, 1098
   size: 70, 70
   orig: 70, 70
   offset: 0, 0
   index: -1
 items/laserSwitchRedOff
   rotate: false
-  xy: 787, 674
+  xy: 1976, 1026
   size: 70, 70
   orig: 70, 70
   offset: 0, 0
   index: -1
 items/laserSwitchRedOn
   rotate: false
-  xy: 859, 746
+  xy: 1697, 979
   size: 70, 70
   orig: 70, 70
   offset: 0, 0
   index: -1
 items/laserSwitchYellowOff
   rotate: false
-  xy: 859, 674
+  xy: 1769, 1024
   size: 70, 70
   orig: 70, 70
   offset: 0, 0
   index: -1
 items/laserSwitchYellowOn
   rotate: false
-  xy: 931, 746
+  xy: 1841, 1024
   size: 70, 70
   orig: 70, 70
   offset: 0, 0
   index: -1
 items/laserYellowBurst
   rotate: false
-  xy: 1075, 693
+  xy: 1976, 954
   size: 70, 70
   orig: 70, 70
   offset: 0, 0
   index: -1
 items/laserYellowHorizontal
   rotate: false
-  xy: 715, 597
+  xy: 1976, 882
   size: 70, 70
   orig: 70, 70
   offset: 0, 0
   index: -1
 items/laserYellowVertical
   rotate: false
-  xy: 787, 602
+  xy: 1810, 827
   size: 70, 70
   orig: 70, 70
   offset: 0, 0
   index: -1
 items/particleBrick1a
   rotate: false
-  xy: 1775, 1428
+  xy: 846, 2
   size: 19, 14
   orig: 19, 14
   offset: 0, 0
   index: -1
 items/particleBrick1b
   rotate: false
-  xy: 309, 338
+  xy: 2006, 1832
   size: 21, 21
   orig: 21, 21
   offset: 0, 0
   index: -1
 items/particleBrick2a
   rotate: false
-  xy: 322, 1196
+  xy: 867, 2
   size: 19, 14
   orig: 19, 14
   offset: 0, 0
   index: -1
 items/particleBrick2b
   rotate: false
-  xy: 1562, 1587
+  xy: 1996, 465
   size: 21, 21
   orig: 21, 21
   offset: 0, 0
   index: -1
 items/particleCartoonStar
   rotate: false
-  xy: 1086, 1341
+  xy: 834, 98
   size: 10, 10
   orig: 10, 10
   offset: 0, 0
   index: -1
 items/particleSmallStar
   rotate: false
-  xy: 1105, 1279
+  xy: 1501, 753
   size: 10, 10
   orig: 10, 10
   offset: 0, 0
   index: -1
 items/particleStar
   rotate: false
-  xy: 161, 337
+  xy: 2026, 859
   size: 20, 21
   orig: 20, 21
   offset: 0, 0
   index: -1
 items/raygun
   rotate: false
-  xy: 859, 602
+  xy: 1882, 830
   size: 70, 70
   orig: 70, 70
   offset: 0, 0
   index: -1
 items/raygunBig
   rotate: false
-  xy: 931, 602
+  xy: 1954, 810
   size: 70, 70
   orig: 70, 70
   offset: 0, 0
   index: -1
 items/raygunPurple
   rotate: false
-  xy: 1003, 621
+  xy: 1882, 758
   size: 70, 70
   orig: 70, 70
   offset: 0, 0
   index: -1
 items/raygunPurpleBig
   rotate: false
-  xy: 1075, 621
+  xy: 1954, 738
   size: 70, 70
   orig: 70, 70
   offset: 0, 0
   index: -1
 items/shieldBronze
   rotate: false
-  xy: 712, 525
+  xy: 1869, 105
   size: 70, 70
   orig: 70, 70
   offset: 0, 0
   index: -1
 items/shieldGold
   rotate: false
-  xy: 712, 453
+  xy: 1941, 105
   size: 70, 70
   orig: 70, 70
   offset: 0, 0
   index: -1
 items/shieldSilver
   rotate: false
-  xy: 712, 381
+  xy: 1492, 124
   size: 70, 70
   orig: 70, 70
   offset: 0, 0
   index: -1
 items/spikes
   rotate: false
-  xy: 712, 309
+  xy: 1564, 153
   size: 70, 70
   orig: 70, 70
   offset: 0, 0
   index: -1
 items/springboardDown
   rotate: false
-  xy: 1003, 549
+  xy: 1636, 153
   size: 70, 70
   orig: 70, 70
   offset: 0, 0
   index: -1
 items/springboardUp
   rotate: false
-  xy: 1075, 549
+  xy: 1708, 150
   size: 70, 70
   orig: 70, 70
   offset: 0, 0
   index: -1
 items/star
   rotate: false
-  xy: 1147, 693
+  xy: 1564, 81
   size: 70, 70
   orig: 70, 70
   offset: 0, 0
   index: -1
 items/starBronze
   rotate: false
-  xy: 1147, 621
+  xy: 1636, 81
   size: 70, 70
   orig: 70, 70
   offset: 0, 0
   index: -1
 items/starDiamond
   rotate: false
-  xy: 1147, 549
+  xy: 1708, 78
   size: 70, 70
   orig: 70, 70
   offset: 0, 0
   index: -1
 items/starGold
   rotate: false
-  xy: 1178, 1484
+  xy: 1780, 101
   size: 70, 70
   orig: 70, 70
   offset: 0, 0
   index: -1
 items/starSilver
   rotate: false
-  xy: 1178, 1412
+  xy: 1546, 9
   size: 70, 70
   orig: 70, 70
   offset: 0, 0
   index: -1
 items/switchLeft
   rotate: false
-  xy: 1250, 1490
+  xy: 1618, 9
   size: 70, 70
   orig: 70, 70
   offset: 0, 0
   index: -1
 items/switchMid
   rotate: false
-  xy: 1250, 1418
+  xy: 1690, 6
   size: 70, 70
   orig: 70, 70
   offset: 0, 0
   index: -1
 items/switchRight
   rotate: false
-  xy: 1322, 1490
+  xy: 1780, 29
   size: 70, 70
   orig: 70, 70
   offset: 0, 0
   index: -1
 items/swordBronze
   rotate: false
-  xy: 1322, 1418
+  xy: 1852, 33
   size: 70, 70
   orig: 70, 70
   offset: 0, 0
   index: -1
 items/swordGold
   rotate: false
-  xy: 1394, 1465
-  size: 70, 70
-  orig: 70, 70
-  offset: 0, 0
-  index: -1
-items/swordSilver
-  rotate: false
-  xy: 1466, 1464
+  xy: 1924, 33
   size: 70, 70
   orig: 70, 70
   offset: 0, 0
   index: -1
 items/torch1
   rotate: false
-  xy: 180, 919
+  xy: 1172, 1402
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
 items/torch2
   rotate: false
-  xy: 183, 789
+  xy: 1172, 1272
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
 items/torchOff
   rotate: false
-  xy: 183, 659
+  xy: 1168, 1142
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
 items/ufo/dome
   rotate: false
-  xy: 218, 2
+  xy: 1327, 810
   size: 83, 98
   orig: 83, 98
   offset: 0, 0
   index: -1
 items/ufo/laserBeige1
   rotate: false
-  xy: 365, 985
+  xy: 1422, 196
   size: 38, 100
   orig: 38, 100
   offset: 0, 0
   index: -1
 items/ufo/laserBeige2
   rotate: false
-  xy: 364, 563
+  xy: 1422, 94
   size: 68, 100
   orig: 68, 100
   offset: 0, 0
   index: -1
 items/ufo/laserBeige3
   rotate: false
-  xy: 576, 306
+  xy: 176, 15
   size: 93, 35
   orig: 93, 35
   offset: 0, 0
   index: -1
 items/ufo/laserBeige_burst
   rotate: false
-  xy: 2, 1858
+  xy: 2, 52
   size: 188, 188
   orig: 188, 188
   offset: 0, 0
   index: -1
 items/ufo/laserBeige_groundBurst
   rotate: false
-  xy: 382, 1641
+  xy: 1492, 1614
   size: 172, 78
   orig: 172, 78
   offset: 0, 0
   index: -1
 items/ufo/laserBlue1
   rotate: false
-  xy: 396, 260
+  xy: 1134, 12
   size: 38, 100
   orig: 38, 100
   offset: 0, 0
   index: -1
 items/ufo/laserBlue2
   rotate: false
-  xy: 364, 461
+  xy: 972, 8
   size: 68, 100
   orig: 68, 100
   offset: 0, 0
   index: -1
 items/ufo/laserBlue3
   rotate: false
-  xy: 374, 26
+  xy: 271, 15
   size: 93, 35
   orig: 93, 35
   offset: 0, 0
   index: -1
 items/ufo/laserBlue_burst
   rotate: false
-  xy: 2, 1668
+  xy: 1302, 1858
   size: 188, 188
   orig: 188, 188
   offset: 0, 0
   index: -1
 items/ufo/laserBlue_groundBurst
   rotate: false
-  xy: 192, 1436
+  xy: 1072, 811
   size: 172, 78
   orig: 172, 78
   offset: 0, 0
   index: -1
 items/ufo/laserGreen1
   rotate: false
-  xy: 322, 1212
+  xy: 1475, 593
   size: 38, 100
   orig: 38, 100
   offset: 0, 0
   index: -1
 items/ufo/laserGreen2
   rotate: false
-  xy: 556, 1220
+  xy: 1947, 1602
   size: 68, 100
   orig: 68, 100
   offset: 0, 0
   index: -1
 items/ufo/laserGreen3
   rotate: false
-  xy: 1467, 1573
+  xy: 1487, 1231
   size: 93, 35
   orig: 93, 35
   offset: 0, 0
   index: -1
 items/ufo/laserGreen_burst
   rotate: false
-  xy: 192, 1858
+  xy: 192, 52
   size: 188, 188
   orig: 188, 188
   offset: 0, 0
   index: -1
 items/ufo/laserGreen_groundBurst
   rotate: false
-  xy: 366, 1431
+  xy: 1666, 1544
   size: 172, 78
   orig: 172, 78
   offset: 0, 0
   index: -1
 items/ufo/laserPink1
   rotate: false
-  xy: 537, 1539
+  xy: 1989, 1730
   size: 38, 100
   orig: 38, 100
   offset: 0, 0
   index: -1
 items/ufo/laserPink2
   rotate: false
-  xy: 388, 1124
+  xy: 1529, 1038
   size: 68, 100
   orig: 68, 100
   offset: 0, 0
   index: -1
 items/ufo/laserPink3
   rotate: false
-  xy: 787, 1538
+  xy: 1538, 753
   size: 93, 35
   orig: 93, 35
   offset: 0, 0
   index: -1
 items/ufo/laserPink_burst
   rotate: false
-  xy: 2, 1478
+  xy: 1302, 1668
   size: 188, 188
   orig: 188, 188
   offset: 0, 0
   index: -1
 items/ufo/laserPink_groundBurst
   rotate: false
-  xy: 1136, 1838
+  xy: 1648, 1464
   size: 172, 78
   orig: 172, 78
   offset: 0, 0
   index: -1
 items/ufo/laserYellow1
   rotate: false
-  xy: 356, 110
+  xy: 1646, 1272
   size: 38, 100
   orig: 38, 100
   offset: 0, 0
   index: -1
 items/ufo/laserYellow2
   rotate: false
-  xy: 396, 158
+  xy: 1538, 881
   size: 68, 100
   orig: 68, 100
   offset: 0, 0
   index: -1
 items/ufo/laserYellow3
   rotate: false
-  xy: 1467, 1536
+  xy: 1582, 1231
   size: 93, 35
   orig: 93, 35
   offset: 0, 0
   index: -1
 items/ufo/laserYellow_burst
   rotate: false
-  xy: 192, 1668
+  xy: 1492, 1858
   size: 188, 188
   orig: 188, 188
   offset: 0, 0
   index: -1
 items/ufo/laserYellow_groundBurst
   rotate: false
-  xy: 1310, 1838
+  xy: 1647, 1384
   size: 172, 78
   orig: 172, 78
   offset: 0, 0
   index: -1
 items/ufo/shipBeige
   rotate: false
-  xy: 183, 336
+  xy: 1094, 617
   size: 124, 67
   orig: 124, 67
   offset: 0, 0
   index: -1
 items/ufo/shipBeige_damage1
   rotate: false
-  xy: 634, 1735
+  xy: 1412, 908
   size: 124, 67
   orig: 124, 67
   offset: 0, 0
   index: -1
 items/ufo/shipBeige_damage2
   rotate: false
-  xy: 1263, 1769
+  xy: 1412, 765
   size: 124, 67
   orig: 124, 67
   offset: 0, 0
   index: -1
 items/ufo/shipBeige_manned
   rotate: false
-  xy: 161, 212
+  xy: 1293, 1002
   size: 124, 122
   orig: 124, 122
   offset: 0, 0
   index: -1
 items/ufo/shipBlue
   rotate: false
-  xy: 634, 1804
+  xy: 1100, 525
   size: 124, 90
   orig: 124, 90
   offset: 0, 0
   index: -1
 items/ufo/shipBlue_damage1
   rotate: false
-  xy: 815, 1808
+  xy: 1286, 910
   size: 124, 90
   orig: 124, 90
   offset: 0, 0
   index: -1
 items/ufo/shipBlue_damage2
   rotate: false
-  xy: 941, 1808
+  xy: 846, 18
   size: 124, 90
   orig: 124, 90
   offset: 0, 0
   index: -1
 items/ufo/shipBlue_manned
   rotate: false
-  xy: 162, 1049
+  xy: 1042, 1127
   size: 124, 145
   orig: 124, 145
   offset: 0, 0
   index: -1
 items/ufo/shipGreen
   rotate: false
-  xy: 1136, 1700
+  xy: 1375, 695
   size: 124, 68
   orig: 124, 68
   offset: 0, 0
   index: -1
 items/ufo/shipGreen_damage1
   rotate: false
-  xy: 1262, 1699
+  xy: 1330, 368
   size: 124, 68
   orig: 124, 68
   offset: 0, 0
   index: -1
 items/ufo/shipGreen_damage2
   rotate: false
-  xy: 1483, 1742
+  xy: 1330, 298
   size: 124, 68
   orig: 124, 68
   offset: 0, 0
   index: -1
 items/ufo/shipGreen_manned
   rotate: false
-  xy: 183, 405
+  xy: 1094, 686
   size: 124, 123
   orig: 124, 123
   offset: 0, 0
   index: -1
 items/ufo/shipPink
   rotate: false
-  xy: 1609, 1738
+  xy: 1412, 834
   size: 124, 72
   orig: 124, 72
   offset: 0, 0
   index: -1
 items/ufo/shipPink_damage
   rotate: false
-  xy: 1735, 1738
+  xy: 1326, 512
   size: 124, 72
   orig: 124, 72
   offset: 0, 0
   index: -1
 items/ufo/shipPink_damage1
   rotate: false
-  xy: 1861, 1738
+  xy: 1328, 438
   size: 124, 72
   orig: 124, 72
   offset: 0, 0
   index: -1
 items/ufo/shipPink_manned
   rotate: false
-  xy: 183, 530
+  xy: 968, 629
   size: 124, 127
   orig: 124, 127
   offset: 0, 0
   index: -1
 items/ufo/shipYellow
   rotate: false
-  xy: 1482, 1678
+  xy: 1880, 1832
   size: 124, 62
   orig: 124, 62
   offset: 0, 0
   index: -1
 items/ufo/shipYellow_damage1
   rotate: false
-  xy: 1608, 1674
+  xy: 1863, 1768
   size: 124, 62
   orig: 124, 62
   offset: 0, 0
   index: -1
 items/ufo/shipYellow_damage2
   rotate: false
-  xy: 1734, 1674
+  xy: 1863, 1704
   size: 124, 62
   orig: 124, 62
   offset: 0, 0
   index: -1
 items/ufo/shipYellow_manned
   rotate: false
-  xy: 161, 102
+  xy: 912, 758
   size: 124, 108
   orig: 124, 108
   offset: 0, 0
   index: -1
-items/umbrellaClosed
+player/alienBeige_climb1
   rotate: false
-  xy: 1394, 1393
-  size: 70, 70
-  orig: 70, 70
+  xy: 2, 1790
+  size: 128, 256
+  orig: 128, 256
   offset: 0, 0
   index: -1
-items/umbrellaOpen
+player/alienBeige_climb2
   rotate: false
-  xy: 1466, 1392
-  size: 70, 70
-  orig: 70, 70
+  xy: 2, 1532
+  size: 128, 256
+  orig: 128, 256
   offset: 0, 0
   index: -1
-items/weight
+player/alienBeige_duck
   rotate: false
-  xy: 1538, 1464
-  size: 70, 70
-  orig: 70, 70
+  xy: 132, 1790
+  size: 128, 256
+  orig: 128, 256
   offset: 0, 0
   index: -1
-items/weightChained
+player/alienBeige_front
   rotate: false
-  xy: 1538, 1392
-  size: 70, 70
-  orig: 70, 70
+  xy: 2, 1274
+  size: 128, 256
+  orig: 128, 256
+  offset: 0, 0
+  index: -1
+player/alienBeige_hit
+  rotate: false
+  xy: 132, 1532
+  size: 128, 256
+  orig: 128, 256
+  offset: 0, 0
+  index: -1
+player/alienBeige_jump
+  rotate: false
+  xy: 262, 1790
+  size: 128, 256
+  orig: 128, 256
+  offset: 0, 0
+  index: -1
+player/alienBeige_stand
+  rotate: false
+  xy: 2, 1016
+  size: 128, 256
+  orig: 128, 256
+  offset: 0, 0
+  index: -1
+player/alienBeige_swim1
+  rotate: false
+  xy: 132, 1274
+  size: 128, 256
+  orig: 128, 256
+  offset: 0, 0
+  index: -1
+player/alienBeige_swim2
+  rotate: false
+  xy: 262, 1532
+  size: 128, 256
+  orig: 128, 256
+  offset: 0, 0
+  index: -1
+player/alienBeige_walk1
+  rotate: false
+  xy: 392, 1790
+  size: 128, 256
+  orig: 128, 256
+  offset: 0, 0
+  index: -1
+player/alienBeige_walk2
+  rotate: false
+  xy: 2, 758
+  size: 128, 256
+  orig: 128, 256
+  offset: 0, 0
+  index: -1
+player/alienBlue_climb1
+  rotate: false
+  xy: 132, 1016
+  size: 128, 256
+  orig: 128, 256
+  offset: 0, 0
+  index: -1
+player/alienBlue_climb2
+  rotate: false
+  xy: 262, 1274
+  size: 128, 256
+  orig: 128, 256
+  offset: 0, 0
+  index: -1
+player/alienBlue_duck
+  rotate: false
+  xy: 392, 1532
+  size: 128, 256
+  orig: 128, 256
+  offset: 0, 0
+  index: -1
+player/alienBlue_front
+  rotate: false
+  xy: 522, 1790
+  size: 128, 256
+  orig: 128, 256
+  offset: 0, 0
+  index: -1
+player/alienBlue_hit
+  rotate: false
+  xy: 2, 500
+  size: 128, 256
+  orig: 128, 256
+  offset: 0, 0
+  index: -1
+player/alienBlue_jump
+  rotate: false
+  xy: 132, 758
+  size: 128, 256
+  orig: 128, 256
+  offset: 0, 0
+  index: -1
+player/alienBlue_stand
+  rotate: false
+  xy: 262, 1016
+  size: 128, 256
+  orig: 128, 256
+  offset: 0, 0
+  index: -1
+player/alienBlue_swim1
+  rotate: false
+  xy: 392, 1274
+  size: 128, 256
+  orig: 128, 256
+  offset: 0, 0
+  index: -1
+player/alienBlue_swim2
+  rotate: false
+  xy: 522, 1532
+  size: 128, 256
+  orig: 128, 256
+  offset: 0, 0
+  index: -1
+player/alienBlue_walk1
+  rotate: false
+  xy: 652, 1790
+  size: 128, 256
+  orig: 128, 256
+  offset: 0, 0
+  index: -1
+player/alienBlue_walk2
+  rotate: false
+  xy: 2, 242
+  size: 128, 256
+  orig: 128, 256
+  offset: 0, 0
+  index: -1
+player/alienGreen_climb1
+  rotate: false
+  xy: 132, 500
+  size: 128, 256
+  orig: 128, 256
+  offset: 0, 0
+  index: -1
+player/alienGreen_climb2
+  rotate: false
+  xy: 262, 758
+  size: 128, 256
+  orig: 128, 256
+  offset: 0, 0
+  index: -1
+player/alienGreen_duck
+  rotate: false
+  xy: 392, 1016
+  size: 128, 256
+  orig: 128, 256
+  offset: 0, 0
+  index: -1
+player/alienGreen_front
+  rotate: false
+  xy: 522, 1274
+  size: 128, 256
+  orig: 128, 256
+  offset: 0, 0
+  index: -1
+player/alienGreen_hit
+  rotate: false
+  xy: 652, 1532
+  size: 128, 256
+  orig: 128, 256
+  offset: 0, 0
+  index: -1
+player/alienGreen_jump
+  rotate: false
+  xy: 782, 1790
+  size: 128, 256
+  orig: 128, 256
+  offset: 0, 0
+  index: -1
+player/alienGreen_stand
+  rotate: false
+  xy: 132, 242
+  size: 128, 256
+  orig: 128, 256
+  offset: 0, 0
+  index: -1
+player/alienGreen_swim1
+  rotate: false
+  xy: 262, 500
+  size: 128, 256
+  orig: 128, 256
+  offset: 0, 0
+  index: -1
+player/alienGreen_swim2
+  rotate: false
+  xy: 392, 758
+  size: 128, 256
+  orig: 128, 256
+  offset: 0, 0
+  index: -1
+player/alienGreen_walk1
+  rotate: false
+  xy: 522, 1016
+  size: 128, 256
+  orig: 128, 256
+  offset: 0, 0
+  index: -1
+player/alienGreen_walk2
+  rotate: false
+  xy: 652, 1274
+  size: 128, 256
+  orig: 128, 256
+  offset: 0, 0
+  index: -1
+player/alienPink_climb1
+  rotate: false
+  xy: 782, 1532
+  size: 128, 256
+  orig: 128, 256
+  offset: 0, 0
+  index: -1
+player/alienPink_climb2
+  rotate: false
+  xy: 912, 1790
+  size: 128, 256
+  orig: 128, 256
+  offset: 0, 0
+  index: -1
+player/alienPink_duck
+  rotate: false
+  xy: 262, 242
+  size: 128, 256
+  orig: 128, 256
+  offset: 0, 0
+  index: -1
+player/alienPink_front
+  rotate: false
+  xy: 392, 500
+  size: 128, 256
+  orig: 128, 256
+  offset: 0, 0
+  index: -1
+player/alienPink_hit
+  rotate: false
+  xy: 522, 758
+  size: 128, 256
+  orig: 128, 256
+  offset: 0, 0
+  index: -1
+player/alienPink_jump
+  rotate: false
+  xy: 652, 1016
+  size: 128, 256
+  orig: 128, 256
+  offset: 0, 0
+  index: -1
+player/alienPink_stand
+  rotate: false
+  xy: 782, 1274
+  size: 128, 256
+  orig: 128, 256
+  offset: 0, 0
+  index: -1
+player/alienPink_swim1
+  rotate: false
+  xy: 912, 1532
+  size: 128, 256
+  orig: 128, 256
+  offset: 0, 0
+  index: -1
+player/alienPink_swim2
+  rotate: false
+  xy: 1042, 1790
+  size: 128, 256
+  orig: 128, 256
+  offset: 0, 0
+  index: -1
+player/alienPink_walk1
+  rotate: false
+  xy: 392, 242
+  size: 128, 256
+  orig: 128, 256
+  offset: 0, 0
+  index: -1
+player/alienPink_walk2
+  rotate: false
+  xy: 522, 500
+  size: 128, 256
+  orig: 128, 256
+  offset: 0, 0
+  index: -1
+player/alienYellow_climb1
+  rotate: false
+  xy: 652, 758
+  size: 128, 256
+  orig: 128, 256
+  offset: 0, 0
+  index: -1
+player/alienYellow_climb2
+  rotate: false
+  xy: 782, 1016
+  size: 128, 256
+  orig: 128, 256
+  offset: 0, 0
+  index: -1
+player/alienYellow_duck
+  rotate: false
+  xy: 912, 1274
+  size: 128, 256
+  orig: 128, 256
+  offset: 0, 0
+  index: -1
+player/alienYellow_front
+  rotate: false
+  xy: 1042, 1532
+  size: 128, 256
+  orig: 128, 256
+  offset: 0, 0
+  index: -1
+player/alienYellow_hit
+  rotate: false
+  xy: 1172, 1790
+  size: 128, 256
+  orig: 128, 256
+  offset: 0, 0
+  index: -1
+player/alienYellow_jump
+  rotate: false
+  xy: 522, 242
+  size: 128, 256
+  orig: 128, 256
+  offset: 0, 0
+  index: -1
+player/alienYellow_stand
+  rotate: false
+  xy: 652, 500
+  size: 128, 256
+  orig: 128, 256
+  offset: 0, 0
+  index: -1
+player/alienYellow_swim1
+  rotate: false
+  xy: 782, 758
+  size: 128, 256
+  orig: 128, 256
+  offset: 0, 0
+  index: -1
+player/alienYellow_swim2
+  rotate: false
+  xy: 912, 1016
+  size: 128, 256
+  orig: 128, 256
+  offset: 0, 0
+  index: -1
+player/alienYellow_walk1
+  rotate: false
+  xy: 1042, 1274
+  size: 128, 256
+  orig: 128, 256
+  offset: 0, 0
+  index: -1
+player/alienYellow_walk2
+  rotate: false
+  xy: 1172, 1532
+  size: 128, 256
+  orig: 128, 256
   offset: 0, 0
   index: -1
 smoke/smokeGrey0
   rotate: false
-  xy: 1047, 1717
+  xy: 1599, 1051
   size: 87, 87
   orig: 87, 87
   offset: 0, 0
   index: -1
 smoke/smokeGrey1
   rotate: false
-  xy: 1389, 1747
+  xy: 1853, 1613
   size: 92, 89
   orig: 92, 89
   offset: 0, 0
   index: -1
 smoke/smokeGrey2
   rotate: false
-  xy: 464, 1221
+  xy: 1201, 1041
   size: 90, 99
   orig: 90, 99
   offset: 0, 0
   index: -1
 smoke/smokeGrey3
   rotate: false
-  xy: 609, 1654
+  xy: 1246, 811
   size: 79, 79
   orig: 79, 79
   offset: 0, 0
   index: -1
 smoke/smokeGrey4
   rotate: false
-  xy: 1587, 1575
+  xy: 1226, 384
   size: 100, 97
   orig: 100, 97
   offset: 0, 0
   index: -1
 smoke/smokeGrey5
   rotate: false
-  xy: 501, 1322
+  xy: 1275, 701
   size: 98, 107
   orig: 98, 107
   offset: 0, 0
   index: -1
 smoke/smokeOrange0
   rotate: false
-  xy: 565, 1030
+  xy: 1608, 962
   size: 87, 87
   orig: 87, 87
   offset: 0, 0
   index: -1
 smoke/smokeOrange1
   rotate: false
-  xy: 1388, 1656
+  xy: 1483, 1140
   size: 92, 89
   orig: 92, 89
   offset: 0, 0
   index: -1
 smoke/smokeOrange2
   rotate: false
-  xy: 458, 1120
+  xy: 1330, 197
   size: 90, 99
   orig: 90, 99
   offset: 0, 0
   index: -1
 smoke/smokeOrange3
   rotate: false
-  xy: 814, 1659
+  xy: 1246, 6
   size: 79, 79
   orig: 79, 79
   offset: 0, 0
   index: -1
 smoke/smokeOrange4
   rotate: false
-  xy: 1689, 1575
+  xy: 1228, 285
   size: 100, 97
   orig: 100, 97
   offset: 0, 0
   index: -1
 smoke/smokeOrange5
   rotate: false
-  xy: 288, 1087
+  xy: 1275, 592
   size: 98, 107
   orig: 98, 107
   offset: 0, 0
   index: -1
 smoke/smokeWhite0
   rotate: false
-  xy: 413, 798
+  xy: 1538, 790
   size: 92, 89
   orig: 92, 89
   offset: 0, 0
   index: -1
 smoke/smokeWhite1
   rotate: false
-  xy: 550, 1119
+  xy: 1330, 96
   size: 90, 99
   orig: 90, 99
   offset: 0, 0
   index: -1
 smoke/smokeWhite2
   rotate: false
-  xy: 895, 1659
+  xy: 1608, 881
   size: 79, 79
   orig: 79, 79
   offset: 0, 0
   index: -1
 smoke/smokeWhite3
   rotate: false
-  xy: 1860, 1571
+  xy: 1228, 186
   size: 100, 97
   orig: 100, 97
   offset: 0, 0
   index: -1
 smoke/smokeWhite4
   rotate: false
-  xy: 313, 829
+  xy: 1375, 586
   size: 98, 107
   orig: 98, 107
   offset: 0, 0
   index: -1
 smoke/smokeWhite5
   rotate: false
-  xy: 566, 941
+  xy: 1632, 792
   size: 87, 87
   orig: 87, 87
   offset: 0, 0
   index: -1
 smoke/smokeYellow0
   rotate: false
-  xy: 575, 813
+  xy: 1721, 792
   size: 87, 87
   orig: 87, 87
   offset: 0, 0
   index: -1
 smoke/smokeYellow1
   rotate: false
-  xy: 413, 707
+  xy: 1577, 1140
   size: 92, 89
   orig: 92, 89
   offset: 0, 0
   index: -1
 smoke/smokeYellow2
   rotate: false
-  xy: 405, 986
+  xy: 1042, 13
   size: 90, 99
   orig: 90, 99
   offset: 0, 0
   index: -1
 smoke/smokeYellow3
   rotate: false
-  xy: 1047, 1636
+  xy: 1689, 881
   size: 79, 79
   orig: 79, 79
   offset: 0, 0
   index: -1
 smoke/smokeYellow4
   rotate: false
-  xy: 362, 1226
+  xy: 1228, 87
   size: 100, 97
   orig: 100, 97
   offset: 0, 0
   index: -1
 smoke/smokeYellow5
   rotate: false
-  xy: 313, 720
+  xy: 1226, 483
   size: 98, 107
   orig: 98, 107
   offset: 0, 0
   index: -1
 smoke/spaceEffects
   rotate: false
-  xy: 1298, 1317
-  size: 50, 52
-  orig: 50, 52
-  offset: 0, 0
-  index: 16
-smoke/spaceEffects
-  rotate: false
-  xy: 837, 525
-  size: 44, 50
-  orig: 44, 50
-  offset: 0, 0
-  index: 15
-smoke/spaceEffects
-  rotate: false
-  xy: 1152, 1249
-  size: 37, 36
-  orig: 37, 36
-  offset: 0, 0
-  index: 13
-smoke/spaceEffects
-  rotate: false
-  xy: 1151, 1211
+  xy: 1375, 772
   size: 35, 36
   orig: 35, 36
   offset: 0, 0
   index: 14
 smoke/spaceEffects
   rotate: false
-  xy: 514, 1090
-  size: 30, 28
-  orig: 30, 28
+  xy: 1515, 641
+  size: 50, 52
+  orig: 50, 52
   offset: 0, 0
-  index: 10
+  index: 16
 smoke/spaceEffects
   rotate: false
-  xy: 537, 1511
-  size: 26, 26
-  orig: 26, 26
-  offset: 0, 0
-  index: 11
-smoke/spaceEffects
-  rotate: false
-  xy: 953, 347
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: 12
-smoke/spaceEffects
-  rotate: false
-  xy: 1858, 1354
+  xy: 1989, 1704
   size: 28, 24
   orig: 28, 24
   offset: 0, 0
   index: 9
 smoke/spaceEffects
   rotate: false
-  xy: 1368, 1395
+  xy: 1494, 196
+  size: 30, 28
+  orig: 30, 28
+  offset: 0, 0
+  index: 10
+smoke/spaceEffects
+  rotate: false
+  xy: 1524, 514
+  size: 26, 26
+  orig: 26, 26
+  offset: 0, 0
+  index: 11
+smoke/spaceEffects
+  rotate: false
+  xy: 2019, 465
   size: 21, 21
   orig: 21, 21
   offset: 0, 0
   index: 8
+smoke/spaceEffects
+  rotate: false
+  xy: 2013, 351
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 12
+
+pack2.png
+size: 2048,128
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+enemies/barnacle_bite
+  rotate: false
+  xy: 488, 68
+  size: 51, 58
+  orig: 51, 58
+  offset: 0, 0
+  index: -1
+enemies/barnacle_dead
+  rotate: false
+  xy: 541, 69
+  size: 51, 57
+  orig: 51, 57
+  offset: 0, 0
+  index: -1
+enemies/barnacle_hit
+  rotate: false
+  xy: 594, 69
+  size: 51, 57
+  orig: 51, 57
+  offset: 0, 0
+  index: -1
+enemies/blockerSad
+  rotate: false
+  xy: 365, 19
+  size: 51, 51
+  orig: 51, 51
+  offset: 0, 0
+  index: -1
+enemies/fishGreen_hit
+  rotate: false
+  xy: 775, 82
+  size: 57, 44
+  orig: 57, 44
+  offset: 0, 0
+  index: -1
+enemies/fishPink_hit
+  rotate: false
+  xy: 775, 82
+  size: 57, 44
+  orig: 57, 44
+  offset: 0, 0
+  index: -1
+enemies/fishGreen_swim
+  rotate: false
+  xy: 834, 82
+  size: 57, 44
+  orig: 57, 44
+  offset: 0, 0
+  index: -1
+enemies/fishPink_dead
+  rotate: false
+  xy: 185, 9
+  size: 60, 45
+  orig: 60, 45
+  offset: 0, 0
+  index: -1
+enemies/fishPink_swim
+  rotate: false
+  xy: 893, 82
+  size: 57, 44
+  orig: 57, 44
+  offset: 0, 0
+  index: -1
+enemies/fly
+  rotate: false
+  xy: 247, 9
+  size: 57, 45
+  orig: 57, 45
+  offset: 0, 0
+  index: -1
+enemies/fly_dead
+  rotate: false
+  xy: 306, 9
+  size: 57, 45
+  orig: 57, 45
+  offset: 0, 0
+  index: -1
+enemies/fly_fly
+  rotate: false
+  xy: 647, 87
+  size: 65, 39
+  orig: 65, 39
+  offset: 0, 0
+  index: -1
+enemies/fly_hit
+  rotate: false
+  xy: 952, 81
+  size: 57, 45
+  orig: 57, 45
+  offset: 0, 0
+  index: -1
+enemies/frog
+  rotate: false
+  xy: 1176, 87
+  size: 58, 39
+  orig: 58, 39
+  offset: 0, 0
+  index: -1
+enemies/frog_hit
+  rotate: false
+  xy: 362, 72
+  size: 61, 54
+  orig: 61, 54
+  offset: 0, 0
+  index: -1
+enemies/frog_leap
+  rotate: false
+  xy: 425, 72
+  size: 61, 54
+  orig: 61, 54
+  offset: 0, 0
+  index: -1
+enemies/ladyBug
+  rotate: false
+  xy: 1479, 92
+  size: 58, 34
+  orig: 58, 34
+  offset: 0, 0
+  index: -1
+enemies/ladyBug_fly
+  rotate: false
+  xy: 714, 84
+  size: 59, 42
+  orig: 59, 42
+  offset: 0, 0
+  index: -1
+enemies/ladyBug_hit
+  rotate: false
+  xy: 1539, 92
+  size: 58, 34
+  orig: 58, 34
+  offset: 0, 0
+  index: -1
+enemies/mouse
+  rotate: false
+  xy: 1236, 91
+  size: 59, 35
+  orig: 59, 35
+  offset: 0, 0
+  index: -1
+enemies/mouse_dead
+  rotate: false
+  xy: 1297, 91
+  size: 59, 35
+  orig: 59, 35
+  offset: 0, 0
+  index: -1
+enemies/mouse_hit
+  rotate: false
+  xy: 1358, 91
+  size: 59, 35
+  orig: 59, 35
+  offset: 0, 0
+  index: -1
+enemies/mouse_walk
+  rotate: false
+  xy: 1419, 91
+  size: 58, 35
+  orig: 58, 35
+  offset: 0, 0
+  index: -1
+enemies/slimeBlock
+  rotate: false
+  xy: 418, 20
+  size: 51, 50
+  orig: 51, 50
+  offset: 0, 0
+  index: -1
+enemies/slimeBlock_dead
+  rotate: false
+  xy: 471, 16
+  size: 51, 50
+  orig: 51, 50
+  offset: 0, 0
+  index: -1
+enemies/slimeBlock_hit
+  rotate: false
+  xy: 761, 30
+  size: 51, 50
+  orig: 51, 50
+  offset: 0, 0
+  index: -1
+enemies/slimeBlue
+  rotate: false
+  xy: 951, 45
+  size: 49, 34
+  orig: 49, 34
+  offset: 0, 0
+  index: -1
+enemies/slimeBlue_blue
+  rotate: false
+  xy: 1725, 96
+  size: 57, 30
+  orig: 57, 30
+  offset: 0, 0
+  index: -1
+enemies/slimeBlue_dead
+  rotate: false
+  xy: 1002, 45
+  size: 49, 34
+  orig: 49, 34
+  offset: 0, 0
+  index: -1
+enemies/slimeBlue_hit
+  rotate: false
+  xy: 1053, 45
+  size: 49, 34
+  orig: 49, 34
+  offset: 0, 0
+  index: -1
+enemies/slimeGreen_hit
+  rotate: false
+  xy: 1053, 45
+  size: 49, 34
+  orig: 49, 34
+  offset: 0, 0
+  index: -1
+enemies/slime_hit
+  rotate: false
+  xy: 1053, 45
+  size: 49, 34
+  orig: 49, 34
+  offset: 0, 0
+  index: -1
+enemies/slimeGreen
+  rotate: false
+  xy: 1104, 45
+  size: 49, 34
+  orig: 49, 34
+  offset: 0, 0
+  index: -1
+enemies/slimeGreen_dead
+  rotate: false
+  xy: 1902, 67
+  size: 49, 34
+  orig: 49, 34
+  offset: 0, 0
+  index: -1
+enemies/slimeGreen_walk
+  rotate: false
+  xy: 1784, 96
+  size: 57, 30
+  orig: 57, 30
+  offset: 0, 0
+  index: -1
+enemies/slime_dead
+  rotate: false
+  xy: 1953, 67
+  size: 49, 34
+  orig: 49, 34
+  offset: 0, 0
+  index: -1
+enemies/slime_walk
+  rotate: false
+  xy: 1843, 96
+  size: 57, 30
+  orig: 57, 30
+  offset: 0, 0
+  index: -1
+enemies/snail
+  rotate: false
+  xy: 647, 45
+  size: 55, 40
+  orig: 55, 40
+  offset: 0, 0
+  index: -1
+enemies/snail_hit
+  rotate: false
+  xy: 704, 42
+  size: 55, 40
+  orig: 55, 40
+  offset: 0, 0
+  index: -1
+enemies/spinnerHalf_hit
+  rotate: false
+  xy: 1599, 96
+  size: 61, 30
+  orig: 61, 30
+  offset: 0, 0
+  index: -1
+enemies/spinnerHalf_spin
+  rotate: false
+  xy: 1662, 96
+  size: 61, 30
+  orig: 61, 30
+  offset: 0, 0
+  index: -1
+enemies/worm_dead
+  rotate: false
+  xy: 1902, 103
+  size: 63, 23
+  orig: 63, 23
+  offset: 0, 0
+  index: -1
+enemies/worm_walk
+  rotate: false
+  xy: 1967, 103
+  size: 63, 23
+  orig: 63, 23
+  offset: 0, 0
+  index: -1
+hud/hud_gem_blue
+  rotate: false
+  xy: 1155, 43
+  size: 46, 36
+  orig: 46, 36
+  offset: 0, 0
+  index: -1
+hud/hud_gem_green
+  rotate: false
+  xy: 1142, 5
+  size: 46, 36
+  orig: 46, 36
+  offset: 0, 0
+  index: -1
+hud/hud_gem_red
+  rotate: false
+  xy: 1390, 53
+  size: 46, 36
+  orig: 46, 36
+  offset: 0, 0
+  index: -1
+hud/hud_gem_yellow
+  rotate: false
+  xy: 1438, 53
+  size: 46, 36
+  orig: 46, 36
+  offset: 0, 0
+  index: -1
+hud/hud_heartEmpty
+  rotate: false
+  xy: 1011, 81
+  size: 53, 45
+  orig: 53, 45
+  offset: 0, 0
+  index: -1
+hud/hud_heartFull
+  rotate: false
+  xy: 1066, 81
+  size: 53, 45
+  orig: 53, 45
+  offset: 0, 0
+  index: -1
+hud/hud_heartHalf
+  rotate: false
+  xy: 1121, 81
+  size: 53, 45
+  orig: 53, 45
+  offset: 0, 0
+  index: -1
+hud/hud_keyBlue
+  rotate: false
+  xy: 912, 2
+  size: 44, 40
+  orig: 44, 40
+  offset: 0, 0
+  index: -1
+hud/hud_keyBlue_disabled
+  rotate: false
+  xy: 958, 3
+  size: 44, 40
+  orig: 44, 40
+  offset: 0, 0
+  index: -1
+hud/hud_keyGreem_disabled
+  rotate: false
+  xy: 1004, 3
+  size: 44, 40
+  orig: 44, 40
+  offset: 0, 0
+  index: -1
+hud/hud_keyGreen
+  rotate: false
+  xy: 1050, 3
+  size: 44, 40
+  orig: 44, 40
+  offset: 0, 0
+  index: -1
+hud/hud_keyRed
+  rotate: false
+  xy: 1096, 3
+  size: 44, 40
+  orig: 44, 40
+  offset: 0, 0
+  index: -1
+hud/hud_keyRed_disabled
+  rotate: false
+  xy: 1252, 49
+  size: 44, 40
+  orig: 44, 40
+  offset: 0, 0
+  index: -1
+hud/hud_keyYellow
+  rotate: false
+  xy: 1298, 49
+  size: 44, 40
+  orig: 44, 40
+  offset: 0, 0
+  index: -1
+hud/hud_keyYellow_disabled
+  rotate: false
+  xy: 1344, 49
+  size: 44, 40
+  orig: 44, 40
+  offset: 0, 0
+  index: -1
+hud/hud_p1Alt
+  rotate: false
+  xy: 863, 33
+  size: 47, 47
+  orig: 47, 47
+  offset: 0, 0
+  index: -1
+hud/hud_p2Alt
+  rotate: false
+  xy: 570, 20
+  size: 47, 47
+  orig: 47, 47
+  offset: 0, 0
+  index: -1
+hud/hud_p3
+  rotate: false
+  xy: 814, 33
+  size: 47, 47
+  orig: 47, 47
+  offset: 0, 0
+  index: -1
+hud/hud_p3Alt
+  rotate: false
+  xy: 1203, 38
+  size: 47, 47
+  orig: 47, 47
+  offset: 0, 0
+  index: -1
+items/debries/debrisGlass
+  rotate: false
+  xy: 2, 2
+  size: 59, 52
+  orig: 59, 52
+  offset: 0, 0
+  index: 3
+items/debries/debrisStone
+  rotate: false
+  xy: 63, 2
+  size: 59, 52
+  orig: 59, 52
+  offset: 0, 0
+  index: 3
+items/debries/debrisWood
+  rotate: false
+  xy: 124, 2
+  size: 59, 52
+  orig: 59, 52
+  offset: 0, 0
+  index: 3
+items/swordSilver
+  rotate: false
+  xy: 2, 56
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+items/umbrellaClosed
+  rotate: false
+  xy: 74, 56
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+items/umbrellaOpen
+  rotate: false
+  xy: 146, 56
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+items/weight
+  rotate: false
+  xy: 218, 56
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+items/weightChained
+  rotate: false
+  xy: 290, 56
+  size: 70, 70
+  orig: 70, 70
+  offset: 0, 0
+  index: -1
+smoke/spaceEffects
+  rotate: false
+  xy: 912, 44
+  size: 37, 36
+  orig: 37, 36
+  offset: 0, 0
+  index: 13
+smoke/spaceEffects
+  rotate: false
+  xy: 524, 16
+  size: 44, 50
+  orig: 44, 50
+  offset: 0, 0
+  index: 15

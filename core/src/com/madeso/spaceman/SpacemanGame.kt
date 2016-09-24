@@ -7,10 +7,8 @@ import com.badlogic.gdx.ScreenAdapter
 import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.Texture
-import com.badlogic.gdx.graphics.g2d.Animation
-import com.badlogic.gdx.graphics.g2d.Batch
-import com.badlogic.gdx.graphics.g2d.SpriteBatch
-import com.badlogic.gdx.graphics.g2d.TextureRegion
+import com.badlogic.gdx.graphics.g2d.*
+import com.badlogic.gdx.maps.tiled.objects.TiledMapTileMapObject
 import com.badlogic.gdx.scenes.scene2d.Actor
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.ui.Image
@@ -27,10 +25,19 @@ val HEIGHT: Float = 1440f;
 class Assets : Disposable {
   var mgr = SmartAssetManager()
   var blue_grass = Texture(Gdx.files.internal("blue_grass.png"))
+  var pack = TextureAtlas(Gdx.files.internal("pack.atlas"))
 
   override fun dispose() {
     mgr.dispose()
   }
+}
+
+fun TextureAtlas.newSprite(path : String): Sprite {
+  val s = createSprite(path)
+  if( s == null ) {
+    throw Exception("Unable to load " + path)
+  }
+  return s
 }
 
 class Layers(var batch : SpriteBatch) {
@@ -80,6 +87,23 @@ class ImageActor(var img: Texture) : Actor() {
   }
 }
 
+class Alien(assets:Assets, x : Float, y : Float) : Actor() {
+  init {
+    width = 70f
+    height = 70f * 2
+    setOrigin(Align.bottom)
+    setPosition(x, y, Align.bottomLeft)
+  }
+
+  val stand = assets.pack.newSprite("player/alienGreen_stand")
+
+  override fun draw(batch: Batch?, parentAlpha: Float) {
+    super.draw(batch, parentAlpha)
+    batch?.draw(stand, x, y, width, height)
+  }
+
+}
+
 class GameScreen(assets:Assets, var batch : SpriteBatch) : ScreenAdapter() {
   internal var layersBackground = Layers(batch)
   internal var backgroundLayer = layersBackground.newStage()
@@ -101,7 +125,12 @@ class GameScreen(assets:Assets, var batch : SpriteBatch) : ScreenAdapter() {
     background.setPosition(HEIGHT, 0f, Align.bottomLeft)
     backgroundLayer.addActor(background)
 
-    map.registerNullCreator("alien-body")
+    // map.registerNullCreator("alien-body")
+    map.registerCreator("alien-body", object: OrthoMap.ObjectCreator {
+      override fun create(map: OrthoMap, x: Float, y: Float, tile: TiledMapTileMapObject) {
+        foreground.addActor(Alien(assets, x, y))
+      }
+    })
     map.registerNullCreator("alien-head")
   }
 
