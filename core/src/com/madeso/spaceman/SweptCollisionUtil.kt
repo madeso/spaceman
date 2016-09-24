@@ -7,6 +7,16 @@ import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.Pool
 import com.badlogic.gdx.utils.Array
 
+private val ONE = 0.99f
+
+interface CollisionMap {
+  fun cellAt(x:Int, y:Int):Boolean
+  val width : Int
+  val height : Int
+  val tileWidth : Float
+  val tileHeight : Float
+}
+
 // stole from http://www.gamedev.net/page/resources/_/technical/game-programming/swept-aabb-collision-detection-and-response-r3084
 object SweptCollisionUtil {
   class Box {
@@ -162,16 +172,13 @@ object SweptCollisionUtil {
   }
 }
 
-
 object BasicCollision {
-  private fun getTiles(map: TiledMap, startX: Int, startY: Int, endX: Int, endY: Int, tiles: Array<Rectangle>) {
-    val layer = map.getLayers().get("col") as TiledMapTileLayer
+  private fun getTiles(map: CollisionMap, startX: Int, startY: Int, endX: Int, endY: Int, tiles: Array<Rectangle>) {
     rectPool.freeAll(tiles)
     tiles.clear()
     for (y in startY..endY) {
       for (x in startX..endX) {
-        val cell = layer.getCell(x, y)
-        if (cell != null) {
+        if (map.cellAt(x,y)) {
           val rect = rectPool.obtain()
           rect.set(x.toFloat(), y.toFloat(), 1f, 1f)
           tiles.add(rect)
@@ -182,14 +189,14 @@ object BasicCollision {
 
 
   private val rectPool = object : Pool<Rectangle>() {
-    protected override fun newObject(): Rectangle {
+    override fun newObject(): Rectangle {
       return Rectangle()
     }
   }
 
   private val tiles = Array<Rectangle>()
 
-  private fun SubSimple(map: TiledMap, position: Vector2, velocity: Vector2, width: Float, height: Float): CollisionFlags {
+  private fun SubSimple(map: CollisionMap, position: Vector2, velocity: Vector2, width: Float, height: Float): CollisionFlags {
     val flags = CollisionFlags()
     // perform collision detection & response, on each axis, separately
     // if the koala is moving right, check the tiles to the right of it's
@@ -204,16 +211,16 @@ object BasicCollision {
     var right = true
 
     if (velocity.x > 0) {
-      endX = (position.x + width + velocity.x) as Int
+      endX = (position.x + width + velocity.x).toInt()
       startX = endX
       right = true
     } else {
-      endX = (position.x + velocity.x) as Int
+      endX = (position.x + velocity.x).toInt()
       startX = endX
       right = false
     }
-    startY = position.y as Int
-    endY = (position.y + height) as Int
+    startY = position.y.toInt()
+    endY = (position.y + height).toInt()
     getTiles(map, startX, startY, endX, endY, tiles)
     koalaRect.x += velocity.x
     for (tile in tiles) {
@@ -232,14 +239,14 @@ object BasicCollision {
     // if the koala is moving upwards, check the tiles to the top of it's
     // top bounding box edge, otherwise check the ones to the bottom
     if (velocity.y > 0) {
-      endY = (position.y + height + velocity.y) as Int
+      endY = (position.y + height + velocity.y).toInt()
       startY = endY
     } else {
-      endY = (position.y + velocity.y) as Int
+      endY = (position.y + velocity.y).toInt()
       startY = endY
     }
-    startX = position.x as Int
-    endX = (position.x + width) as Int
+    startX = position.x.toInt()
+    endX = (position.x + width).toInt()
     getTiles(map, startX, startY, endX, endY, tiles)
     koalaRect.y += velocity.y
     for (tile in tiles) {
@@ -267,7 +274,7 @@ object BasicCollision {
     return flags
   }
 
-  fun Simple(map: TiledMap, position: Vector2, velocity: Vector2, width: Float, height: Float): CollisionFlags {
+  fun Simple(map: CollisionMap, position: Vector2, velocity: Vector2, width: Float, height: Float): CollisionFlags {
     val tw = 64f
     val th = 64f
     position.x /= tw
@@ -324,4 +331,51 @@ class CollisionFlags {
   fun x(): Boolean {
     return left || right
   }
+}
+
+fun Collision_sweptAABB(map: CollisionMap, px: Float, py: Float, tx: Float, ty: Float, w: Float, h: Float): SweptCollisionUtil.ColResult {
+  for (x in 0..map.width - 1) {
+    for (y in 0..map.height - 1) {
+      if (map.cellAt(x,y)) {
+        val box = SweptCollisionUtil.Box(px, py, tx, ty, w, h)
+        val res = SweptCollisionUtil.Simple(box, SweptCollisionUtil.Box(x * map.tileWidth, y * map.tileHeight, map.tileWidth, map.tileHeight))
+        if (res.ret < ONE) {
+          return res
+        }
+      }
+    }
+  }
+
+  return SweptCollisionUtil.ColResult(tx, ty)
+}
+
+fun Collison_basic(map:CollisionMap, x: Float, y: Float, tx: Float, ty: Float, w: Float, h: Float): CollisionData {
+  val p = Vector2(x, y)
+  val d = Vector2(tx - x, ty - y)
+  val flags = BasicCollision.Simple(map, p, d, w, h)
+  return CollisionData(p.x, p.y, flags)
+}
+
+fun Collision_slide(map: CollisionMap, px: Float, py: Float, ptx: Float, pty: Float, w: Float, h: Float): CollisionData {
+  var fx = px
+  var fy = py
+  val tx = ptx
+  val ty = pty
+  for (i in 0..0) {
+    val res = Collision_sweptAABB(map, fx, fy, tx, ty, w, h)
+    fx = res.x
+    fy = res.y
+    if (res.ret >= ONE)
+      break
+    else {
+      val remainingtime = 1 - res.ret
+      val dotprod = (res.vx * res.normaly + res.vy * res.normalx) * remainingtime
+      val vx = dotprod * res.normaly
+      val vy = dotprod * res.normalx
+      //tx = fx + vx;
+      //ty = fy + vy;
+    }
+  }
+
+  return CollisionData(fx, fy)
 }

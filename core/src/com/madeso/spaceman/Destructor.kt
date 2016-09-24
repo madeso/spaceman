@@ -11,6 +11,11 @@ class Destructor : Disposable {
     return this
   }
 
+  fun <T : Disposable> ret(t:T) : T {
+    add(t)
+    return t
+  }
+
   override fun dispose() {
     for (d in disposables) {
       d.dispose()
