@@ -18,47 +18,53 @@ import com.badlogic.gdx.scenes.scene2d.utils.Drawable
 import com.badlogic.gdx.utils.Align
 import com.badlogic.gdx.utils.Disposable
 import com.badlogic.gdx.utils.viewport.StretchViewport
+import com.badlogic.gdx.utils.Array
+import javax.swing.GroupLayout
 
 val WIDTH: Float = 2560f;
 val HEIGHT: Float = 1440f;
 
 class Assets : Disposable {
   var mgr = SmartAssetManager()
+  var blue_grass = Texture(Gdx.files.internal("blue_grass.png"))
 
   override fun dispose() {
     mgr.dispose()
   }
 }
 
-class SharedRendering(var batch : SpriteBatch) {
+class Layers(var batch : SpriteBatch) {
   var camera = OrthographicCamera()
   var viewport = StretchViewport(WIDTH, HEIGHT, camera);
-  var stage = Stage(viewport, batch)
+  var stages = Array<Stage>()
 
-  var uicamera = OrthographicCamera()
-  var uiviewport = StretchViewport(WIDTH, HEIGHT, uicamera);
-  var uistage = Stage(uiviewport, batch)
+  fun newStage(): Stage {
+    val stage = Stage(viewport, batch)
+    stages.add(stage)
+    return stage
+  }
 
   fun act(delta: Float) {
-    stage.act(delta)
-    uistage.act(delta)
+    for(stage in stages) {
+      stage.act(delta)
+    }
+  }
+
+  fun apply() {
+    viewport.apply()
+    camera.update();
+    batch.projectionMatrix = camera.combined;
   }
 
   fun render() {
-    camera.update();
-    batch.projectionMatrix = camera.combined;
-    stage.draw()
-  }
-
-  fun uirender() {
-    uicamera.update()
-    batch.projectionMatrix = uicamera.combined;
-    uistage.draw()
+    apply();
+    for( stage in stages) {
+      stage.draw()
+    }
   }
 
   fun resize(width: Int, height: Int) {
     viewport.update(width, height)
-    uiviewport.update(width, height)
   }
 }
 
@@ -75,25 +81,43 @@ class ImageActor(var img: Texture) : Actor() {
 }
 
 class GameScreen(assets:Assets, var batch : SpriteBatch) : ScreenAdapter() {
-  internal var d = SharedRendering(batch)
+  internal var layersBackground = Layers(batch)
+  internal var backgroundLayer = layersBackground.newStage()
+
+  internal var layersWorld = Layers(batch)
+  internal var foreground = layersWorld.newStage()
+
   internal var dest = Destructor()
   internal var map : OrthoMap = assets.mgr.orthoMap(dest, "test.tmx")
 
   init {
+    var background = ImageActor(assets.blue_grass)
+    background.setSize(HEIGHT, HEIGHT)
+    background.setPosition(0f, 0f, Align.bottomLeft)
+    backgroundLayer.addActor(background)
+
+    background = ImageActor(assets.blue_grass)
+    background.setSize(HEIGHT, HEIGHT)
+    background.setPosition(HEIGHT, 0f, Align.bottomLeft)
+    backgroundLayer.addActor(background)
+
     map.registerNullCreator("alien-body")
     map.registerNullCreator("alien-head")
   }
 
   override fun render(delta: Float) {
-    d.act(delta)
+    layersBackground.act(delta)
+    layersBackground.act(delta)
     ClearScreen()
-    map.render(d.camera)
-    d.render()
-    d.uirender()
+    layersBackground.render()
+    layersWorld.apply()
+    map.render(layersWorld.camera)
+    layersWorld.render()
   }
 
   override fun resize(width: Int, height: Int) {
-    d.resize(width, height)
+    layersBackground.resize(width, height)
+    layersWorld.resize(width, height)
   }
 }
 

@@ -13,6 +13,7 @@ import java.util.*
 
 
 class OrthoMap(private val assetManager: AssetManager, private val path: String) : SuperAsset {
+  private val ONE = 0.99f
   private var renderer: OrthogonalTiledMapRenderer? = null
   private var map: TiledMap? = null
 
@@ -122,10 +123,5 @@ class OrthoMap(private val assetManager: AssetManager, private val path: String)
     }
 
     return CollisionData(fx, fy)
-  }
-
-  companion object {
-
-    private val ONE = 0.99f
   }
 }
