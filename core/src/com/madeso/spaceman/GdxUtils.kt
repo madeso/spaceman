@@ -1,4 +1,4 @@
-package com.madeso.spaceman
+package com.madeso.engine
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.graphics.GL20
@@ -12,6 +12,8 @@ import com.badlogic.gdx.utils.Align
 import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.viewport.StretchViewport
 
+val WIDTH: Float = 2560f;
+val HEIGHT: Float = 1440f;
 
 fun ClearScreen() {
   Gdx.gl.glClearColor(0f, 0f, 0f, 1f)
@@ -53,7 +55,6 @@ class Layers(val batch : Batch) {
     viewport.update(width, height)
   }
 }
-
 
 fun TextureAtlas.newSprite(path : String): TextureAtlas.AtlasRegion {
   return this.findRegion(path) ?: throw Exception("Unable to load " + path)

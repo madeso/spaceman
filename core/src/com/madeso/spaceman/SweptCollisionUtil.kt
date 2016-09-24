@@ -1,4 +1,4 @@
-package com.madeso.spaceman
+package com.madeso.engine.collision
 
 import com.badlogic.gdx.maps.tiled.TiledMap
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer

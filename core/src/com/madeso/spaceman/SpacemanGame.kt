@@ -9,8 +9,7 @@ import com.badlogic.gdx.maps.tiled.objects.TiledMapTileMapObject
 import com.badlogic.gdx.utils.Align
 import com.badlogic.gdx.utils.Disposable
 
-val WIDTH: Float = 2560f;
-val HEIGHT: Float = 1440f;
+import com.madeso.engine.*
 
 class Assets : Disposable {
   var dest = Destructor()

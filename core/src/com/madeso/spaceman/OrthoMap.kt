@@ -1,4 +1,4 @@
-package com.madeso.spaceman
+package com.madeso.engine
 
 import com.badlogic.gdx.ScreenAdapter
 import com.badlogic.gdx.assets.AssetManager
@@ -17,6 +17,9 @@ import com.badlogic.gdx.scenes.scene2d.Actor
 import com.badlogic.gdx.utils.Align
 import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.Disposable
+import com.madeso.engine.collision.CollisionFlags
+import com.madeso.engine.collision.CollisionMap
+import com.madeso.engine.collision.Collison_basic
 import java.util.*
 
 
