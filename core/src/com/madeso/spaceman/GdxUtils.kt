@@ -75,8 +75,6 @@ class ImageActor(var img: Texture) : Actor() {
 }
 
 abstract class SuperGame(private var game: Game) {
-  protected val buttons = ButtonList()
-
   fun setScreen(screen : Screen) {
     game.screen = screen;
   }

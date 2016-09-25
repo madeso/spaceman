@@ -23,9 +23,9 @@ class Assets : Disposable {
   }
 }
 
-class Alien(assets:Assets, private val game: SpacemanSuperGame, private val startX : Float, private val startY : Float) : ObjectController {
+class Alien(assets:Assets, private val world: SpacemanWorld, private val startX : Float, private val startY : Float) : ObjectController {
   override fun act(delta: Float, remote: ObjectRemote) {
-    remote.move( PlusMinus(game.controls.right.isDown, game.controls.left.isDown).toFloat() * 70f, 0f )
+    remote.move( PlusMinus(world.controls.right.isDown, world.controls.left.isDown).toFloat() * 70f * delta * 5f, 0f )
   }
 
   override fun dispose() {
@@ -48,16 +48,15 @@ class GameControls(buttons: ButtonList) : BaseGameControls() {
 }
 
 class SpacemanWorld(args:WorldArg) : World(args) {
-
+  val controls = GameControls(buttons)
 }
 
 class SpacemanSuperGame(game:Game) : SuperGame(game) {
-  val controls = GameControls(buttons)
   private val assets = Assets()
   private val worldCreators = CreatorList<SpacemanSuperGame, SpacemanWorld>(this)
       .registerCreator("alien-body", object: ObjectCreator<SpacemanSuperGame, SpacemanWorld> {
         override fun create(game: SpacemanSuperGame, world: SpacemanWorld, map: ObjectCreatorDispatcher, x: Float, y: Float, tile: TiledMapTileMapObject) {
-          val alien = Alien(assets, game, x, y)
+          val alien = Alien(assets, world, x, y)
           map.addObject(alien.stand, alien)
         }
       })

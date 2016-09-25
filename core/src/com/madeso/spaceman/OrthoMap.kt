@@ -147,10 +147,12 @@ class WorldArg(val renderWorld : RenderWorld, val updateWorld : UpdateWorld) {
 }
 
 abstract class World(args:WorldArg) {
-  public val renderWorld = args.renderWorld
-  public val updateWorld = args.updateWorld
+  val renderWorld = args.renderWorld
+  val updateWorld = args.updateWorld
+  protected val buttons = ButtonList()
 
   fun update(delta:Float) {
+    buttons.act(delta)
   }
 }
 
