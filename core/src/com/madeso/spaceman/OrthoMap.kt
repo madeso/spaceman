@@ -43,30 +43,30 @@ interface ObjectCreatorDispatcher {
   fun addObject(ani: Animation, obj: ObjectController)
 }
 
-interface ObjectCreator<T: SuperGame> {
-  fun create(game: T, world: World, map: ObjectCreatorDispatcher, x: Float, y: Float, tile: TiledMapTileMapObject)
+interface ObjectCreator<TGame : SuperGame, TWorld:World> {
+  fun create(game: TGame, world: TWorld, map: ObjectCreatorDispatcher, x: Float, y: Float, tile: TiledMapTileMapObject)
 }
 
-interface CreatorMap {
-  fun getCreator(tileName: String, world: World, map: ObjectCreatorDispatcher, x: Float, y: Float, tile: TiledMapTileMapObject)
+interface CreatorMap<TWorld:World> {
+  fun getCreator(tileName: String, world: TWorld, map: ObjectCreatorDispatcher, x: Float, y: Float, tile: TiledMapTileMapObject)
 }
 
-class CreatorList<T: SuperGame>(private var game:T) : CreatorMap {
-  private var creators = HashMap<String, ObjectCreator<T>>()
+class CreatorList<TGame : SuperGame, TWorld:World>(private var game: TGame) : CreatorMap<TWorld> {
+  private var creators = HashMap<String, ObjectCreator<TGame, TWorld>>()
 
-  override fun getCreator(tileName: String, world: World, map: ObjectCreatorDispatcher, x: Float, y: Float, tile: TiledMapTileMapObject) {
+  override fun getCreator(tileName: String, world: TWorld, map: ObjectCreatorDispatcher, x: Float, y: Float, tile: TiledMapTileMapObject) {
     val creator = creators.get(tileName) ?: throw NullPointerException("Missing creator for " + tileName)
     creator.create(game, world, map, x, y, tile)
   }
 
-  fun registerCreator(tile: String, creator: ObjectCreator<T>) : CreatorList<T> {
+  fun registerCreator(tile: String, creator: ObjectCreator<TGame, TWorld>) : CreatorList<TGame, TWorld> {
     creators.put(tile, creator)
     return this
   }
 
-  fun registerNullCreator(tile: String) : CreatorList<T> {
-    return registerCreator(tile, object : ObjectCreator<T> {
-      override fun create(game: T, world: World, map: ObjectCreatorDispatcher, x: Float, y: Float, tile: TiledMapTileMapObject) {
+  fun registerNullCreator(tile: String) : CreatorList<TGame, TWorld> {
+    return registerCreator(tile, object : ObjectCreator<TGame, TWorld> {
+      override fun create(game: TGame, world: TWorld, map: ObjectCreatorDispatcher, x: Float, y: Float, tile: TiledMapTileMapObject) {
       }
     })
   }
@@ -91,7 +91,7 @@ interface WorldCreator<TWorld:World> {
 /**
  * The is responsible for loading the map and passing its data along to the world renderer and updator
  */
-class LoadingMap<TWorld:World>(private val assetManager: AssetManager, private val creators : CreatorMap, private val path: String) : Disposable {
+class LoadingMap<TWorld:World>(private val assetManager: AssetManager, private val creators : CreatorMap<TWorld>, private val path: String) : Disposable {
   init {
     this.assetManager.load(path, TiledMap::class.java)
   }
@@ -174,7 +174,7 @@ class WorldScreen(private val world : World) : ScreenAdapter() {
 
 }
 
-class BasicLoaderScreen<TWorld:World>(path: String, creators: CreatorMap, private val worldCreator : WorldCreator<TWorld>, private val loader : Loader<TWorld>) : ScreenAdapter() {
+class BasicLoaderScreen<TWorld:World>(path: String, creators: CreatorMap<TWorld>, private val worldCreator : WorldCreator<TWorld>, private val loader : Loader<TWorld>) : ScreenAdapter() {
   private var loaded = false
   private val assetManager = AssetManager()
   private val map : LoadingMap<TWorld>

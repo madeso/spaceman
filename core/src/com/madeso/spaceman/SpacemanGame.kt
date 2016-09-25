@@ -54,9 +54,9 @@ class SpacemanWorld(args:WorldArg) : World(args) {
 class SpacemanSuperGame(game:Game) : SuperGame(game) {
   val controls = GameControls(buttons)
   private val assets = Assets()
-  private val worldCreators = CreatorList<SpacemanSuperGame>(this)
-      .registerCreator("alien-body", object: ObjectCreator<SpacemanSuperGame> {
-        override fun create(game: SpacemanSuperGame, world: World, map: ObjectCreatorDispatcher, x: Float, y: Float, tile: TiledMapTileMapObject) {
+  private val worldCreators = CreatorList<SpacemanSuperGame, SpacemanWorld>(this)
+      .registerCreator("alien-body", object: ObjectCreator<SpacemanSuperGame, SpacemanWorld> {
+        override fun create(game: SpacemanSuperGame, world: SpacemanWorld, map: ObjectCreatorDispatcher, x: Float, y: Float, tile: TiledMapTileMapObject) {
           val alien = Alien(assets, game, x, y)
           map.addObject(alien.stand, alien)
         }
