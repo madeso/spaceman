@@ -84,15 +84,19 @@ class NoCollisions : CollisionMap {
 
 }
 
+interface WorldCreator<TWorld:World> {
+  fun createWorld(args:WorldArg) : TWorld
+}
+
 /**
- * The map is responsible for rendering stuff in the right order.
+ * The is responsible for loading the map and passing its data along to the world renderer and updator
  */
-class LoadingMap(private val assetManager: AssetManager, private val creators : CreatorMap, private val path: String) : Disposable {
+class LoadingMap<TWorld:World>(private val assetManager: AssetManager, private val creators : CreatorMap, private val path: String) : Disposable {
   init {
     this.assetManager.load(path, TiledMap::class.java)
   }
 
-  fun postLoad() : World {
+  fun postLoad(worldCreator:WorldCreator<TWorld>) : TWorld {
     val map : TiledMap = this.assetManager.get(path)
     val unitScale = 1f
 
@@ -104,7 +108,7 @@ class LoadingMap(private val assetManager: AssetManager, private val creators : 
         else
           NoCollisions()
     )
-    val world = World(rw, objects)
+    val world = worldCreator.createWorld(WorldArg(rw, objects))
 
     val dispatcher = object : ObjectCreatorDispatcher {
       override fun addObject(ani: Animation, controller: ObjectController) {
@@ -139,18 +143,26 @@ class LoadingMap(private val assetManager: AssetManager, private val creators : 
   }
 }
 
-class World(val renderWorld : RenderWorld, val updateWorld : UpdateWorld) {
+class WorldArg(val renderWorld : RenderWorld, val updateWorld : UpdateWorld) {
 }
 
-interface Loader {
-  fun worldLoaded(map:World)
+abstract class World(args:WorldArg) {
+  public val renderWorld = args.renderWorld
+  public val updateWorld = args.updateWorld
+
+  fun update(delta:Float) {
+  }
+}
+
+interface Loader<TWorld:World> {
+  fun worldLoaded(map:TWorld)
   // functions for rendering?
 }
 
 class WorldScreen(private val world : World) : ScreenAdapter() {
-
   override fun render(delta: Float) {
     super.render(delta)
+    world.update(delta)
     world.updateWorld.act(delta)
     world.renderWorld.render(delta)
   }
@@ -162,14 +174,14 @@ class WorldScreen(private val world : World) : ScreenAdapter() {
 
 }
 
-class BasicLoaderScreen(path: String, creators: CreatorMap, private val loader : Loader) : ScreenAdapter() {
+class BasicLoaderScreen<TWorld:World>(path: String, creators: CreatorMap, private val worldCreator : WorldCreator<TWorld>, private val loader : Loader<TWorld>) : ScreenAdapter() {
   private var loaded = false
   private val assetManager = AssetManager()
-  private val map : LoadingMap
+  private val map : LoadingMap<TWorld>
 
   init {
     assetManager.setLoader(TiledMap::class.java, TmxMapLoader(InternalFileHandleResolver()))
-    map = LoadingMap(assetManager, creators, path)
+    map = LoadingMap<TWorld>(assetManager, creators, path)
   }
 
   override fun render(delta: Float) {
@@ -179,7 +191,7 @@ class BasicLoaderScreen(path: String, creators: CreatorMap, private val loader :
       if (true) { // Gdx.input.isTouched()) {
         assetManager.finishLoading()
 
-        loader.worldLoaded( map.postLoad() )
+        loader.worldLoaded( map.postLoad(worldCreator) )
       }
     } else {
       if (assetManager.update()) {

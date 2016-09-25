@@ -47,6 +47,10 @@ class GameControls(buttons: ButtonList) : BaseGameControls() {
   val down = buttons.newButton().addKeyboard(Input.Keys.DOWN).addKeyboard(Input.Keys.S)
 }
 
+class SpacemanWorld(args:WorldArg) : World(args) {
+
+}
+
 class SpacemanSuperGame(game:Game) : SuperGame(game) {
   val controls = GameControls(buttons)
   private val assets = Assets()
@@ -65,22 +69,28 @@ class SpacemanSuperGame(game:Game) : SuperGame(game) {
 
   fun loadWorld(path:String) {
     val self = this
-    setScreen(BasicLoaderScreen("test.tmx", worldCreators, object:Loader {
-      override fun worldLoaded(map: World) {
-        var background = ImageActor(assets.blue_grass)
-        background.setSize(HEIGHT, HEIGHT)
-        background.setPosition(0f, 0f, Align.bottomLeft)
-        map.renderWorld.back.addActor(background)
+    setScreen(BasicLoaderScreen<SpacemanWorld>("test.tmx", worldCreators,
+        object:WorldCreator<SpacemanWorld> {
+          override fun createWorld(args: WorldArg): SpacemanWorld {
+            return SpacemanWorld(args)
+          }
+        },
+        object:Loader<SpacemanWorld> {
+          override fun worldLoaded(map: SpacemanWorld) {
+            var background = ImageActor(assets.blue_grass)
+            background.setSize(HEIGHT, HEIGHT)
+            background.setPosition(0f, 0f, Align.bottomLeft)
+            map.renderWorld.back.addActor(background)
+            background = ImageActor(assets.blue_grass)
+            background.setSize(HEIGHT, HEIGHT)
+            background.setPosition(HEIGHT, 0f, Align.bottomLeft)
+            map.renderWorld.back.addActor(background)
 
-        background = ImageActor(assets.blue_grass)
-        background.setSize(HEIGHT, HEIGHT)
-        background.setPosition(HEIGHT, 0f, Align.bottomLeft)
-        map.renderWorld.back.addActor(background)
-
-        self.setScreen(WorldScreen(map))
-      }
-
-    }))
+            self.setScreen(WorldScreen(map))
+          }
+        }
+      )
+    )
   }
 }
 
