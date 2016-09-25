@@ -2,6 +2,7 @@ package com.madeso.spaceman
 
 import com.badlogic.gdx.Game
 import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.Input
 import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.Animation
 import com.badlogic.gdx.graphics.g2d.TextureAtlas
@@ -22,8 +23,9 @@ class Assets : Disposable {
   }
 }
 
-class Alien(assets:Assets, private val startX : Float, private val startY : Float) : ObjectController {
-  override fun act(delta: Float, remove: ObjectRemote) {
+class Alien(assets:Assets, private val game: SpacemanSuperGame, private val startX : Float, private val startY : Float) : ObjectController {
+  override fun act(delta: Float, remote: ObjectRemote) {
+    remote.move( PlusMinus(game.controls.right.isDown, game.controls.left.isDown).toFloat() * 70f, 0f )
   }
 
   override fun dispose() {
@@ -38,21 +40,26 @@ class Alien(assets:Assets, private val startX : Float, private val startY : Floa
   val stand = Animation(1.0f, assets.pack.newSprite("player/alienGreen_stand"))
 }
 
-class SpacemanGame : Game() {
-  lateinit private var assets : Assets
-  private val worldCreators = CreatorList()
+class GameControls(buttons: ButtonList) : BaseGameControls() {
+  val left = buttons.newButton().addKeyboard(Input.Keys.LEFT).addKeyboard(Input.Keys.A)
+  val right = buttons.newButton().addKeyboard(Input.Keys.RIGHT).addKeyboard(Input.Keys.D)
+  val up = buttons.newButton().addKeyboard(Input.Keys.UP).addKeyboard(Input.Keys.W)
+  val down = buttons.newButton().addKeyboard(Input.Keys.DOWN).addKeyboard(Input.Keys.S)
+}
 
-  override fun create() {
-    assets = Assets()
+class SpacemanSuperGame(game:Game) : SuperGame(game) {
+  val controls = GameControls(buttons)
+  private val assets = Assets()
+  private val worldCreators = CreatorList<SpacemanSuperGame>(this)
+      .registerCreator("alien-body", object: ObjectCreator<SpacemanSuperGame> {
+        override fun create(game: SpacemanSuperGame, world: World, map: ObjectCreatorDispatcher, x: Float, y: Float, tile: TiledMapTileMapObject) {
+          val alien = Alien(assets, game, x, y)
+          map.addObject(alien.stand, alien)
+        }
+      })
+      .registerNullCreator("alien-head")
 
-    worldCreators.registerCreator("alien-body", object: ObjectCreator {
-      override fun create(map: ObjectCreatorDispatcher, x: Float, y: Float, tile: TiledMapTileMapObject) {
-        val alien = Alien(assets, x, y)
-        map.addObject(alien.stand, alien)
-      }
-    })
-    worldCreators.registerNullCreator("alien-head")
-
+  init {
     loadWorld("test.tmx")
   }
 
@@ -75,8 +82,12 @@ class SpacemanGame : Game() {
 
     }))
   }
+}
 
-  override fun dispose() {
-    assets.dispose()
+class SpacemanGame : Game() {
+  lateinit var game : SpacemanSuperGame
+
+  override fun create() {
+    game = SpacemanSuperGame(this)
   }
 }

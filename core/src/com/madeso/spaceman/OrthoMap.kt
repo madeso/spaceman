@@ -43,27 +43,30 @@ interface ObjectCreatorDispatcher {
   fun addObject(ani: Animation, obj: ObjectController)
 }
 
-interface ObjectCreator {
-  fun create(map: ObjectCreatorDispatcher, x: Float, y: Float, tile: TiledMapTileMapObject)
+interface ObjectCreator<T: SuperGame> {
+  fun create(game: T, world: World, map: ObjectCreatorDispatcher, x: Float, y: Float, tile: TiledMapTileMapObject)
 }
 
+interface CreatorMap {
+  fun getCreator(tileName: String, world: World, map: ObjectCreatorDispatcher, x: Float, y: Float, tile: TiledMapTileMapObject)
+}
 
+class CreatorList<T: SuperGame>(private var game:T) : CreatorMap {
+  private var creators = HashMap<String, ObjectCreator<T>>()
 
-class CreatorList {
-  private var creators = HashMap<String, ObjectCreator>()
-
-  fun getCreator(tile: String): ObjectCreator {
-    val c = creators.get(tile) ?: throw NullPointerException("Missing creator for " + tile)
-    return c
+  override fun getCreator(tileName: String, world: World, map: ObjectCreatorDispatcher, x: Float, y: Float, tile: TiledMapTileMapObject) {
+    val creator = creators.get(tileName) ?: throw NullPointerException("Missing creator for " + tileName)
+    creator.create(game, world, map, x, y, tile)
   }
 
-  fun registerCreator(tile: String, creator: ObjectCreator) {
+  fun registerCreator(tile: String, creator: ObjectCreator<T>) : CreatorList<T> {
     creators.put(tile, creator)
+    return this
   }
 
-  fun registerNullCreator(tile: String) {
-    registerCreator(tile, object : ObjectCreator {
-      override fun create(map: ObjectCreatorDispatcher, x: Float, y: Float, tile: TiledMapTileMapObject) {
+  fun registerNullCreator(tile: String) : CreatorList<T> {
+    return registerCreator(tile, object : ObjectCreator<T> {
+      override fun create(game: T, world: World, map: ObjectCreatorDispatcher, x: Float, y: Float, tile: TiledMapTileMapObject) {
       }
     })
   }
@@ -84,7 +87,7 @@ class NoCollisions : CollisionMap {
 /**
  * The map is responsible for rendering stuff in the right order.
  */
-class LoadingMap(private val assetManager: AssetManager, private val creators : CreatorList, private val path: String) : Disposable {
+class LoadingMap(private val assetManager: AssetManager, private val creators : CreatorMap, private val path: String) : Disposable {
   init {
     this.assetManager.load(path, TiledMap::class.java)
   }
@@ -101,6 +104,7 @@ class LoadingMap(private val assetManager: AssetManager, private val creators : 
         else
           NoCollisions()
     )
+    val world = World(rw, objects)
 
     val dispatcher = object : ObjectCreatorDispatcher {
       override fun addObject(ani: Animation, controller: ObjectController) {
@@ -122,17 +126,20 @@ class LoadingMap(private val assetManager: AssetManager, private val creators : 
         if( prop == null ) prop = obj.tile.properties.get("type")
         if( prop != null ) {
           val type = prop.toString()
-          creators.getCreator(type).create(dispatcher, obj.x, obj.y, obj)
+          creators.getCreator(type, world, dispatcher, obj.x, obj.y, obj)
         }
       }
     }
 
-    return World(rw, objects)
+    return world
   }
 
   override fun dispose() {
     this.assetManager.unload(path)
   }
+}
+
+class World(val renderWorld : RenderWorld, val updateWorld : UpdateWorld) {
 }
 
 interface Loader {
@@ -155,7 +162,7 @@ class WorldScreen(private val world : World) : ScreenAdapter() {
 
 }
 
-class BasicLoaderScreen(path: String, creators: CreatorList, private val loader : Loader) : ScreenAdapter() {
+class BasicLoaderScreen(path: String, creators: CreatorMap, private val loader : Loader) : ScreenAdapter() {
   private var loaded = false
   private val assetManager = AssetManager()
   private val map : LoadingMap
@@ -234,9 +241,6 @@ class TiledCollisionMap(maplayer: MapLayer) : CollisionMap {
     val cell = layer.getCell(x, y)
     return cell != null
   }
-}
-
-class World(val renderWorld : RenderWorld, val updateWorld : UpdateWorld) {
 }
 
 abstract class WorldObject : Disposable {

@@ -1,6 +1,8 @@
 package com.madeso.engine
 
+import com.badlogic.gdx.Game
 import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.Screen
 import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.Texture
@@ -72,3 +74,10 @@ class ImageActor(var img: Texture) : Actor() {
   }
 }
 
+abstract class SuperGame(private var game: Game) {
+  protected val buttons = ButtonList()
+
+  fun setScreen(screen : Screen) {
+    game.screen = screen;
+  }
+}
