@@ -275,8 +275,8 @@ object BasicCollision {
   }
 
   fun Simple(map: CollisionMap, position: Vector2, velocity: Vector2, width: Float, height: Float): CollisionFlags {
-    val tw = 64f
-    val th = 64f
+    val tw = map.tileWidth
+    val th = map.tileHeight
     position.x /= tw
     position.y /= th
     velocity.x /= tw
