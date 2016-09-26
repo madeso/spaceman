@@ -137,7 +137,7 @@
   <tile id="614" terrain="2,2,,"/>
   <tile id="615" terrain="2,,,"/>
  </tileset>
- <layer name="world-back" width="20" height="10" visible="0">
+ <layer name="world-back" width="20" height="10">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,390,0,0,0,
