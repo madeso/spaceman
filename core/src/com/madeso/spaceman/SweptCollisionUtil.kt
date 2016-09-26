@@ -228,8 +228,10 @@ object BasicCollision {
         velocity.x = 0f
         if (right) {
           flags.right = true
+          position.x = tile.x-width
         } else {
           flags.left = true
+          position.x = tile.x+tile.width
         }
         break
       }
