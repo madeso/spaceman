@@ -25,7 +25,9 @@ class Assets : Disposable {
 
 class Alien(assets:Assets, private val world: SpacemanWorld, private val startX : Float, private val startY : Float) : ObjectController {
   override fun act(delta: Float, remote: ObjectRemote) {
-    remote.move( PlusMinus(world.controls.right.isDown, world.controls.left.isDown).toFloat() * 70f * delta * 5f, 0f )
+    remote.move(
+        PlusMinus(world.controls.right.isDown, world.controls.left.isDown).toFloat() * 70f * delta * 10f,
+        PlusMinus(world.controls.up.isDown, world.controls.down.isDown).toFloat() * 70f * delta * 10f )
   }
 
   override fun dispose() {
