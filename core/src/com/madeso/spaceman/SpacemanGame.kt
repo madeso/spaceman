@@ -28,13 +28,15 @@ class Alien(assets:Assets, private val world: SpacemanWorld, private val startX 
     remote.move(
         PlusMinus(world.controls.right.isDown, world.controls.left.isDown).toFloat() * 70f * delta * 10f,
         PlusMinus(world.controls.up.isDown, world.controls.down.isDown).toFloat() * 70f * delta * 10f )
+
+    remote.debug = remote.lastCollision.collided
   }
 
   override fun dispose() {
   }
 
   override fun init(remote: ObjectRemote) {
-    remote.setDebug()
+    remote.debug = true
     remote.setRenderSize(70f, 70f * 2)
     remote.teleport(startX, startY)
     // setPosition(x, y, Align.bottomLeft)

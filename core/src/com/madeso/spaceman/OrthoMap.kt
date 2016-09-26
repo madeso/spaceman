@@ -31,7 +31,9 @@ interface ObjectRemote {
   fun teleport(x:Float, y:Float)
   fun move(dx:Float, dy:Float)
   fun setRenderSize(width : Float, height : Float)
-  fun setDebug()
+  var debug : Boolean
+
+  val lastCollision : CollisionFlags
 
   var facingRight : Boolean
 }
@@ -366,9 +368,16 @@ class PhysicalWorldObject(private var animation : Animation, private var control
   init {
     val self = this
     remote = object : ObjectRemote {
-      override fun setDebug() {
-        renderObject.debug = true
-      }
+      override var debug : Boolean
+        get() {
+          return renderObject.debug
+        }
+        set(value) {
+          renderObject.debug = value
+        }
+
+      override val lastCollision: CollisionFlags
+        get() = latestFlags
 
       override fun setRenderSize(width: Float, height: Float) {
         self.renderObject.width = width

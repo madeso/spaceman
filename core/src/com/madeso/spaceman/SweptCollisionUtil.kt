@@ -322,17 +322,9 @@ class CollisionFlags {
   var right = false
   var left = false
 
-  fun collided(): Boolean {
-    return x() || y()
-  }
-
-  fun y(): Boolean {
-    return up || down
-  }
-
-  fun x(): Boolean {
-    return left || right
-  }
+  val collided : Boolean get() = x || y
+  val y: Boolean get() = up || down
+  val x: Boolean get() = left || right
 }
 
 fun Collision_sweptAABB(map: CollisionMap, px: Float, py: Float, tx: Float, ty: Float, w: Float, h: Float): SweptCollisionUtil.ColResult {
