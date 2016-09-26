@@ -17,6 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor
 import com.badlogic.gdx.utils.Align
 import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.Disposable
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.madeso.engine.collision.CollisionFlags
 import com.madeso.engine.collision.CollisionMap
 import com.madeso.engine.collision.Collison_basic
@@ -30,6 +31,7 @@ interface ObjectRemote {
   fun teleport(x:Float, y:Float)
   fun move(dx:Float, dy:Float)
   fun setRenderSize(width : Float, height : Float)
+  fun setDebug()
 
   var facingRight : Boolean
 }
@@ -328,6 +330,20 @@ class PhysicalWorldObjectRenderer : Actor() {
     if( master == null ) throw Exception("master was null")
     master.render(batch ?: throw Exception("batch was null"), width, height)
   }
+
+  override fun drawDebug(shapes: ShapeRenderer?) {
+    super.drawDebug(shapes)
+    val master = this.master
+    if( master == null ) throw Exception("master was null")
+    master.renderDebug(shapes?: throw Exception("shape render was null"))
+  }
+}
+
+class CollisionRect {
+  var dx = 0f
+  var dy = 0f
+  var width = 64f
+  var height = 64f
 }
 
 class PhysicalWorldObject(private var animation : Animation, private var controller: ObjectController, val renderObject: PhysicalWorldObjectRenderer) : MoveableObject() {
@@ -343,11 +359,17 @@ class PhysicalWorldObject(private var animation : Animation, private var control
   private val collideWithWorld = true
   var animationTime = 0f
 
+  protected var collisionRect = CollisionRect()
+
   val remote : ObjectRemote
 
   init {
     val self = this
     remote = object : ObjectRemote {
+      override fun setDebug() {
+        renderObject.debug = true
+      }
+
       override fun setRenderSize(width: Float, height: Float) {
         self.renderObject.width = width
         self.renderObject.height = height
@@ -450,13 +472,17 @@ class PhysicalWorldObject(private var animation : Animation, private var control
     }
   }
 
+  fun renderDebug(d:ShapeRenderer) {
+    d.rect(x + collisionRect.dx, y + collisionRect.dy, collisionRect.width, collisionRect.height)
+  }
+
   val isFlickering: Boolean
     get() = this.flickertimer > 0
 
   override fun applyMovement(map: CollisionMap) {
-    val cd = Collison_basic(map, x, y, targetX, targetY, 64f, 64f)
-    suggestedX = cd.x
-    suggestedY = cd.y
+    val cd = Collison_basic(map, x+collisionRect.dx, y+collisionRect.dy, targetX+collisionRect.dx, targetY+collisionRect.dy, collisionRect.width, collisionRect.height)
+    suggestedX = cd.x - collisionRect.dx
+    suggestedY = cd.y - collisionRect.dy
     this.latestFlags = cd.flags
 
     // update position
