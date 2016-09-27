@@ -50,10 +50,19 @@ class Alien(assets:Assets, private val world: SpacemanWorld, private val startX 
 
     jumpTime += delta
 
+    val hor_move = PlusMinus(world.controls.right.isDown, world.controls.left.isDown)
 
-    remote.move(
-        PlusMinus(world.controls.right.isDown, world.controls.left.isDown).toFloat() * delta * MOVE_SPEED,
-        jumpMove * delta)
+    remote.move(hor_move.toFloat() * delta * MOVE_SPEED, jumpMove * delta)
+
+    if( jumpTime > 0f) {
+      remote.setAnimation(jump)
+    }
+    else if (hor_move != 0) {
+      remote.setAnimation(walk)
+    }
+    else {
+      remote.setAnimation(stand)
+    }
 
     remote.debug = world.controls.jump.isClicked
   }
@@ -69,6 +78,12 @@ class Alien(assets:Assets, private val world: SpacemanWorld, private val startX 
   }
 
   val stand = Animation(1.0f, assets.pack.newSprite("player/alienGreen_stand"))
+  val jump = Animation(1.0f, assets.pack.newSprite("player/alienGreen_jump"))
+  val walk = Animation(0.2f, assets.pack.newSprite("player/alienGreen_walk1"), assets.pack.newSprite("player/alienGreen_walk2"))
+
+  init {
+    walk.playMode = Animation.PlayMode.LOOP
+  }
 }
 
 class GameControls(buttons: ButtonList) : BaseGameControls() {

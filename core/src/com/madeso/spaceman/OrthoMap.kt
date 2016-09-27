@@ -452,6 +452,8 @@ class PhysicalWorldObject(private var animation : Animation, private var control
     }
 
     controller.act(dt, remote)
+
+    animationTime += dt
   }
 
   override fun dispose() {
