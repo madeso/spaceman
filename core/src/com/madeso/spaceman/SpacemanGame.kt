@@ -57,11 +57,20 @@ class Alien(assets:Assets, private val world: SpacemanWorld, private val startX 
     if( jumpTime > 0f) {
       remote.setAnimation(jump)
     }
-    else if (hor_move != 0) {
+    else if (hor_move != 0 && !remote.lastCollision.x) {
       remote.setAnimation(walk)
     }
     else {
       remote.setAnimation(stand)
+    }
+
+    if( !remote.lastCollision.x ) {
+      if( hor_move == 1 ) {
+        remote.facingRight = true
+      }
+      else if( hor_move == -1){
+        remote.facingRight = false
+      }
     }
 
     remote.debug = world.controls.jump.isClicked
