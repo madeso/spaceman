@@ -23,13 +23,39 @@ class Assets : Disposable {
   }
 }
 
-class Alien(assets:Assets, private val world: SpacemanWorld, private val startX : Float, private val startY : Float) : ObjectController {
-  override fun act(delta: Float, remote: ObjectRemote) {
-    remote.move(
-        PlusMinus(world.controls.right.isDown, world.controls.left.isDown).toFloat() * 70f * delta * 10f,
-        PlusMinus(world.controls.up.isDown, world.controls.down.isDown).toFloat() * 70f * delta * 10f )
+val MIN_JUMP_TIME = 0.1f
+val MAX_JUMP_TIME = 0.4f
+val MOVE_SPEED = 70f * 3f
 
-    remote.debug = remote.lastCollision.collided
+val JUMP_SPEED = 70f * 8f
+val GRAVITY = 70f * -10f
+
+class Alien(assets:Assets, private val world: SpacemanWorld, private val startX : Float, private val startY : Float) : ObjectController {
+  private var jumpTime = 0f
+  override fun act(delta: Float, remote: ObjectRemote) {
+    if( remote.lastCollision.down) {
+      jumpTime = -1f
+    }
+
+    if( world.controls.jump.isClicked && remote.lastCollision.down) {
+      jumpTime = 0f
+    }
+
+    val jumpMove =
+    if( (jumpTime >= 0f && jumpTime <= MIN_JUMP_TIME) || (jumpTime >= 0f && jumpTime <= MAX_JUMP_TIME && world.controls.jump.isDown) ) {
+      JUMP_SPEED
+    }
+    else
+      GRAVITY
+
+    jumpTime += delta
+
+
+    remote.move(
+        PlusMinus(world.controls.right.isDown, world.controls.left.isDown).toFloat() * delta * MOVE_SPEED,
+        jumpMove * delta)
+
+    remote.debug = world.controls.jump.isClicked
   }
 
   override fun dispose() {
@@ -50,6 +76,7 @@ class GameControls(buttons: ButtonList) : BaseGameControls() {
   val right = buttons.newButton().addKeyboard(Input.Keys.RIGHT).addKeyboard(Input.Keys.D)
   val up = buttons.newButton().addKeyboard(Input.Keys.UP).addKeyboard(Input.Keys.W)
   val down = buttons.newButton().addKeyboard(Input.Keys.DOWN).addKeyboard(Input.Keys.S)
+  val jump = buttons.newButton().addKeyboard(Input.Keys.X).addKeyboard(Input.Keys.SPACE)
 }
 
 class SpacemanWorld(args:WorldArg) : World(args) {
