@@ -23,38 +23,41 @@ class Assets : Disposable {
   }
 }
 
-val MIN_JUMP_TIME = 0.1f
-val MAX_JUMP_TIME = 0.4f
-val MOVE_SPEED = 70f * 3f
+val MOVE_SPEED = 70f * 4f
 
-val JUMP_SPEED = 70f * 8f
-val GRAVITY = 70f * -10f
+val JUMP_SPEED = 70f * 4
+val GRAVITY = 70f * 18
+val MAX_JUMP_TIME = 0.8f
 
 class Alien(assets:Assets, private val world: SpacemanWorld, private val startX : Float, private val startY : Float) : ObjectController {
+  private var vy = 0f
   private var jumpTime = 0f
   override fun act(delta: Float, remote: ObjectRemote) {
-    if( remote.lastCollision.down) {
-      jumpTime = -1f
-    }
-
-    if( world.controls.jump.isClicked && remote.lastCollision.down) {
+    if( remote.lastCollision.down && world.controls.jump.isDown == false) {
+      vy = 0f
       jumpTime = 0f
     }
 
-    val jumpMove =
-    if( (jumpTime >= 0f && jumpTime <= MIN_JUMP_TIME) || (jumpTime >= 0f && jumpTime <= MAX_JUMP_TIME && world.controls.jump.isDown) ) {
-      JUMP_SPEED
+    if( world.controls.jump.isClicked && remote.lastCollision.down ) {
+      vy = JUMP_SPEED
     }
-    else
-      GRAVITY
+
+    if( vy > 0f && world.controls.jump.isDown && jumpTime < MAX_JUMP_TIME) {
+      // val exp = ( MAX_JUMP_TIME - jumpTime ) / MAX_JUMP_TIME
+      // vy = JUMP_SPEED * exp*exp
+      vy -= GRAVITY * delta * (jumpTime / MAX_JUMP_TIME) * (jumpTime / MAX_JUMP_TIME)
+    }
+    else {
+      vy -= GRAVITY * delta
+    }
 
     jumpTime += delta
 
     val hor_move = PlusMinus(world.controls.right.isDown, world.controls.left.isDown)
 
-    remote.move(hor_move.toFloat() * delta * MOVE_SPEED, jumpMove * delta)
+    remote.move(hor_move.toFloat() * delta * MOVE_SPEED, vy * delta)
 
-    if( jumpTime > 0f) {
+    if( remote.lastCollision.down == false) {
       remote.setAnimation(jump)
     }
     else if (hor_move != 0 && !remote.lastCollision.x) {
