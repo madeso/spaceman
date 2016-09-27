@@ -25,9 +25,11 @@ class Assets : Disposable {
 
 val MOVE_SPEED = 70f * 4f
 
-val JUMP_SPEED = 70f * 4
-val GRAVITY = 70f * 18
-val MAX_JUMP_TIME = 0.8f
+val JUMP_SPEED = 70f * 6
+val GRAVITY = 70f * 32
+val MAX_JUMP_TIME = 0.5f
+
+val MAX_Y_SPEED = JUMP_SPEED * 2
 
 class Alien(assets:Assets, private val world: SpacemanWorld, private val startX : Float, private val startY : Float) : ObjectController {
   private var vy = 0f
@@ -50,6 +52,8 @@ class Alien(assets:Assets, private val world: SpacemanWorld, private val startX 
     else {
       vy -= GRAVITY * delta
     }
+
+    if( vy < -MAX_Y_SPEED) vy = -MAX_Y_SPEED
 
     jumpTime += delta
 
