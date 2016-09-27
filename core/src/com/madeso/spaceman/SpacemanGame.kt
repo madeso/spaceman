@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.Animation
 import com.badlogic.gdx.graphics.g2d.TextureAtlas
 import com.badlogic.gdx.maps.tiled.objects.TiledMapTileMapObject
+import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.utils.Align
 import com.badlogic.gdx.utils.Disposable
 
@@ -23,22 +24,29 @@ class Assets : Disposable {
   }
 }
 
-val MOVE_SPEED = 70f * 4f
+val MOVE_SPEED = 70f * 6f
 
 val JUMP_SPEED = 70f * 6
 val GRAVITY = 70f * 32
 val MAX_JUMP_TIME = 0.5f
 val GHOST_JUMP = 0.1f
+val MOVEMENT_ACCELERATION_GROUND = 0.6f
+val MOVEMENT_ACCELERATION_AIR = 0.1f
 
 val MAX_Y_SPEED = JUMP_SPEED * 2
 
 class Alien(assets:Assets, private val world: SpacemanWorld, private val startX : Float, private val startY : Float) : ObjectController {
   private var vy = 0f
   private var jumpTime = 0f
+  private var curSpeed = 0f
   override fun act(delta: Float, remote: ObjectRemote) {
     if( remote.lastCollision.down && world.controls.jump.isDown == false) {
       vy = 0f
       jumpTime = 0f
+    }
+
+    if( remote.lastCollision.x ) {
+      curSpeed = 0f
     }
 
     if( world.controls.jump.isClicked && jumpTime < GHOST_JUMP ) {
@@ -60,7 +68,21 @@ class Alien(assets:Assets, private val world: SpacemanWorld, private val startX 
 
     val hor_move = PlusMinus(world.controls.right.isDown, world.controls.left.isDown)
 
-    remote.move(hor_move.toFloat() * delta * MOVE_SPEED, vy * delta)
+    val targetSpeed = hor_move.toFloat() * MOVE_SPEED
+
+    val acc = if (remote.lastCollision.down) {
+      MOVEMENT_ACCELERATION_GROUND
+    }
+    else {
+      MOVEMENT_ACCELERATION_AIR
+    }
+
+    curSpeed = acc * targetSpeed + (1-acc) * curSpeed;
+    if( MathUtils.isZero(curSpeed) ) {
+      curSpeed = 0f
+    }
+
+    remote.move(curSpeed * delta, vy * delta)
 
     if( remote.lastCollision.down == false) {
       remote.setAnimation(jump)
@@ -96,7 +118,7 @@ class Alien(assets:Assets, private val world: SpacemanWorld, private val startX 
 
   val stand = Animation(1.0f, assets.pack.newSprite("player/alienGreen_stand"))
   val jump = Animation(1.0f, assets.pack.newSprite("player/alienGreen_jump"))
-  val walk = Animation(0.2f, assets.pack.newSprite("player/alienGreen_walk1"), assets.pack.newSprite("player/alienGreen_walk2"))
+  val walk = Animation(0.1f, assets.pack.newSprite("player/alienGreen_walk1"), assets.pack.newSprite("player/alienGreen_walk2"))
 
   init {
     walk.playMode = Animation.PlayMode.LOOP
