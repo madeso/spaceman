@@ -482,11 +482,13 @@ class PhysicalWorldObject(private var animation : Animation, private val world: 
     remote = object : ObjectRemote {
       override val outside: CollisionFlags
         get() {
-          if( x+renderObject.width < 0 ) return CollisionFlags.LEFT
-          if( x >  world.width ) return CollisionFlags.RIGHT
-          if( y+renderObject.height < 0 ) return CollisionFlags.DOWN
-          if( y >  world.height) return CollisionFlags.UP
-          return CollisionFlags()
+          val flags = CollisionFlags()
+
+          if( x+renderObject.width < 0 ) flags.left = true
+          if( x >  world.width ) flags.right = true
+          if( y+renderObject.height < 0 ) flags.down = true
+          if( y >  world.height) flags.up = true
+          return flags
         }
       override var debug : Boolean
         get() {

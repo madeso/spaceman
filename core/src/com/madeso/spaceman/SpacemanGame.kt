@@ -103,6 +103,11 @@ class Alien(assets:Assets, private val world: SpacemanWorld, private val startX 
       }
     }
 
+    if( remote.outside.down ) {
+      vy = 0f
+      remote.teleport(startX, startY)
+    }
+
     remote.debug = remote.outside.up
   }
 
