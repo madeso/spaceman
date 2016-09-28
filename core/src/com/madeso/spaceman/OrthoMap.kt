@@ -117,17 +117,19 @@ class LoadingMap<TWorld:World>(private val assetManager: AssetManager, private v
         else
           NoCollisions()
     )
-    val world = worldCreator.createWorld(WorldArg(rw, objects))
+
+    val renderLayerArgs = RenderLayerArgs(rw.batch, rw.viewport, rw.camera)
+    val world = worldCreator.createWorld(WorldArg(rw, objects, "", renderLayerArgs))
 
     for(layer in map.layers) {
       // cast layers
       if( layer is TiledMapTileLayer ) {
         // is tile layer...
-        rw.layers.add(TileRenderLayer( map, layer, rw.batch, rw.viewport, rw.camera))
+        rw.layers.add(TileRenderLayer( map, layer, renderLayerArgs))
       }
       else {
         // is object layer
-        val objectRenderLayer = ObjectRenderLayer(rw.batch, rw.viewport, rw.camera)
+        val objectRenderLayer = ObjectRenderLayer(renderLayerArgs)
         rw.layers.add(objectRenderLayer)
 
         val dispatcher = object : ObjectCreatorDispatcher {
@@ -165,7 +167,7 @@ class LoadingMap<TWorld:World>(private val assetManager: AssetManager, private v
   }
 }
 
-class WorldArg(val renderWorld : RenderWorld, val updateWorld : UpdateWorld) {
+class WorldArg(val renderWorld : RenderWorld, val updateWorld : UpdateWorld, val backgroundName : String, val renderLayerArgs:RenderLayerArgs) {
 }
 
 abstract class World(args:WorldArg) {
@@ -175,6 +177,10 @@ abstract class World(args:WorldArg) {
 
   fun update(delta:Float) {
     buttons.act(delta)
+  }
+
+  fun addLayer(layer:RenderLayer) {
+    renderWorld.layers.add(layer)
   }
 }
 
@@ -236,23 +242,63 @@ class BasicLoaderScreen<TWorld:World>(path: String, creators: CreatorMap<TWorld>
 
 interface RenderLayer : Disposable  {
   fun render(delta:Float)
+  fun resize(width: Int, height: Int)
 }
 
-class ObjectRenderLayer(private val batch: Batch, private val viewport: Viewport, private val camera: OrthographicCamera) : RenderLayer{
+class RenderLayerArgs(val batch: Batch, val viewport: Viewport, val camera: OrthographicCamera) {
+}
+
+class StaticRenderLayer(args:RenderLayerArgs) : RenderLayer {
+  private val batch = args.batch
+  private val camera = OrthographicCamera()
+  private val viewport = StretchViewport(WIDTH, HEIGHT, camera)
+
+  val stage = Stage(viewport, batch)
+
   override fun dispose() {
     stage.dispose()
   }
 
+  override fun render(delta: Float) {
+    viewport.apply()
+    batch.projectionMatrix = camera.combined;
+    stage.act(delta)
+    stage.draw()
+  }
+
+  override fun resize(width: Int, height: Int) {
+    viewport.update(width, height)
+  }
+}
+
+class ObjectRenderLayer(args: RenderLayerArgs) : RenderLayer{
+  private val batch = args.batch
+  private val camera = args.camera
+  private val viewport = args.viewport
+
   val stage = Stage(viewport, batch)
 
+  override fun dispose() {
+    stage.dispose()
+  }
+
   override fun render(delta: Float) {
+    stage.act(delta)
+
     viewport.apply()
     batch.projectionMatrix = camera.combined;
     stage.draw()
   }
+
+  override fun resize(width: Int, height: Int) {
+  }
 }
 
-class TileRenderLayer(val map: TiledMap, private val layer: TiledMapTileLayer, private val batch: Batch, private val viewport: Viewport, private val camera: OrthographicCamera) : RenderLayer {
+class TileRenderLayer(val map: TiledMap, private val layer: TiledMapTileLayer, args: RenderLayerArgs) : RenderLayer{
+  private val batch = args.batch
+  private val viewport = args.viewport
+  private val camera = args.camera
+
   private val renderer = OrthogonalTiledMapRenderer(map, batch)
   override fun render(delta: Float) {
     viewport.apply()
@@ -265,6 +311,9 @@ class TileRenderLayer(val map: TiledMap, private val layer: TiledMapTileLayer, p
 
   override fun dispose() {
     renderer.dispose()
+  }
+
+  override fun resize(width: Int, height: Int) {
   }
 }
 
@@ -293,6 +342,10 @@ class RenderWorld : Disposable {
 
   fun resize(width: Int, height:Int) {
     viewport.update(width, height)
+
+    for( layer in layers) {
+      layer.resize(width, height)
+    }
   }
 }
 
@@ -368,10 +421,6 @@ class PhysicalWorldObjectRenderer : Actor() {
 
   override fun act(delta: Float) {
     super.act(delta)
-    updatePosition()
-  }
-
-  private fun updatePosition() {
     val master = this.master
     if (master != null) {
       x = master.x
@@ -387,7 +436,6 @@ class PhysicalWorldObjectRenderer : Actor() {
   }
 
   override fun drawDebug(shapes: ShapeRenderer?) {
-    updatePosition()
     super.drawDebug(shapes)
     val master = this.master
     if( master == null ) throw Exception("master was null")

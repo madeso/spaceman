@@ -157,20 +157,22 @@ class SpacemanSuperGame(game:Game) : SuperGame(game) {
     setScreen(BasicLoaderScreen<SpacemanWorld>("test.tmx", worldCreators,
         object:WorldCreator<SpacemanWorld> {
           override fun createWorld(args: WorldArg): SpacemanWorld {
-            return SpacemanWorld(args)
+            val world = SpacemanWorld(args)
+            val bak = StaticRenderLayer(args.renderLayerArgs)
+            var background = ImageActor(assets.blue_grass)
+            background.setSize(HEIGHT, HEIGHT)
+            background.setPosition(0f, 0f, Align.bottomLeft)
+            bak.stage.addActor(background)
+            background = ImageActor(assets.blue_grass)
+            background.setSize(HEIGHT, HEIGHT)
+            background.setPosition(HEIGHT, 0f, Align.bottomLeft)
+            bak.stage.addActor(background)
+            world.addLayer(bak)
+            return world
           }
         },
         object:Loader<SpacemanWorld> {
           override fun worldLoaded(map: SpacemanWorld) {
-            var background = ImageActor(assets.blue_grass)
-            background.setSize(HEIGHT, HEIGHT)
-            background.setPosition(0f, 0f, Align.bottomLeft)
-            // map.renderWorld.back.addActor(background)
-            background = ImageActor(assets.blue_grass)
-            background.setSize(HEIGHT, HEIGHT)
-            background.setPosition(HEIGHT, 0f, Align.bottomLeft)
-            // map.renderWorld.back.addActor(background)
-
             self.setScreen(WorldScreen(map))
           }
         }
