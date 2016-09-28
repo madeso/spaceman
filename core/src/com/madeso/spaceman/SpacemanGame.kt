@@ -103,7 +103,7 @@ class Alien(assets:Assets, private val world: SpacemanWorld, private val startX 
       }
     }
 
-    // remote.debug = world.controls.jump.isClicked
+    remote.debug = remote.outside
   }
 
   override fun dispose() {
@@ -143,7 +143,7 @@ class SpacemanSuperGame(game:Game) : SuperGame(game) {
       .registerCreator("alien-body", object: ObjectCreator<SpacemanSuperGame, SpacemanWorld> {
         override fun create(game: SpacemanSuperGame, world: SpacemanWorld, map: ObjectCreatorDispatcher, x: Float, y: Float, tile: TiledMapTileMapObject) {
           val alien = Alien(assets, world, x, y)
-          map.addObject(alien.stand, alien)
+          map.addObject(alien.stand, world, alien)
         }
       })
       .registerNullCreator("alien-head")

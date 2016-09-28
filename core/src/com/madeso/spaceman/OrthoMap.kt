@@ -20,6 +20,7 @@ import com.badlogic.gdx.utils.Align
 import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.Disposable
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
+import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.utils.viewport.StretchViewport
 import com.badlogic.gdx.utils.viewport.Viewport
@@ -35,8 +36,10 @@ interface ObjectRemote {
   fun flicker(timer:Float)
   fun teleport(x:Float, y:Float)
   fun move(dx:Float, dy:Float)
+
   fun setRenderSize(width : Float, height : Float)
   var debug : Boolean
+  val outside : Boolean
 
   val lastCollision : CollisionFlags
 
@@ -49,7 +52,7 @@ interface ObjectController : Disposable {
 }
 
 interface ObjectCreatorDispatcher {
-  fun addObject(ani: Animation, obj: ObjectController)
+  fun addObject(ani: Animation, world: World, obj: ObjectController)
 }
 
 interface ObjectCreator<TGame : SuperGame, TWorld:World> {
@@ -121,10 +124,15 @@ class LoadingMap<TWorld:World>(private val assetManager: AssetManager, private v
     val renderLayerArgs = RenderLayerArgs(rw.batch, rw.viewport, rw.camera)
     val world = worldCreator.createWorld(WorldArg(rw, objects, "", renderLayerArgs))
 
+    var addedTiles = false
+
     for(layer in map.layers) {
       // cast layers
       if( layer is TiledMapTileLayer ) {
         // is tile layer...
+        world.width = Math.max(world.width, layer.width * layer.tileWidth)
+        world.height = Math.max(world.height, layer.height * layer.tileHeight)
+
         rw.layers.add(TileRenderLayer( map, layer, renderLayerArgs))
       }
       else {
@@ -133,9 +141,9 @@ class LoadingMap<TWorld:World>(private val assetManager: AssetManager, private v
         rw.layers.add(objectRenderLayer)
 
         val dispatcher = object : ObjectCreatorDispatcher {
-          override fun addObject(ani: Animation, controller: ObjectController) {
+          override fun addObject(ani: Animation, world: World, controller: ObjectController) {
             val rend = PhysicalWorldObjectRenderer()
-            val obj = PhysicalWorldObject(ani, controller, rend)
+            val obj = PhysicalWorldObject(ani, world, controller, rend)
             rend.master = obj
 
             objectRenderLayer.stage.addActor(rend)
@@ -173,6 +181,8 @@ class WorldArg(val renderWorld : RenderWorld, val updateWorld : UpdateWorld, val
 abstract class World(args:WorldArg) {
   val renderWorld = args.renderWorld
   val updateWorld = args.updateWorld
+  var width = 0f
+  var height = 0f
   protected val buttons = ButtonList()
 
   fun update(delta:Float) {
@@ -450,7 +460,7 @@ class CollisionRect {
   var height = 64f
 }
 
-class PhysicalWorldObject(private var animation : Animation, private var controller: ObjectController, val renderObject: PhysicalWorldObjectRenderer) : MoveableObject() {
+class PhysicalWorldObject(private var animation : Animation, private val world: World, private var controller: ObjectController, val renderObject: PhysicalWorldObjectRenderer) : MoveableObject() {
   var x = 0f
     private set
   var y = 0f
@@ -470,6 +480,14 @@ class PhysicalWorldObject(private var animation : Animation, private var control
   init {
     val self = this
     remote = object : ObjectRemote {
+      override val outside: Boolean
+        get() {
+          if( x+renderObject.width < 0 ) return true
+          if( x >  world.width ) return true
+          if( y+renderObject.height < 0 ) return true
+          if( y >  world.height) return true
+          return false
+        }
       override var debug : Boolean
         get() {
           return renderObject.debug
