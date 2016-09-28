@@ -317,12 +317,38 @@ class CollisionData {
 }
 
 class CollisionFlags {
+  companion object {
+    val LEFT : CollisionFlags get() {
+      val flags = CollisionFlags()
+      flags.left = true
+      return flags
+    }
+
+    val RIGHT : CollisionFlags get() {
+      val flags = CollisionFlags()
+      flags.right = true
+      return flags
+    }
+
+    val UP : CollisionFlags get() {
+      val flags = CollisionFlags()
+      flags.up = true
+      return flags
+    }
+
+    val DOWN : CollisionFlags get() {
+      val flags = CollisionFlags()
+      flags.down = true
+      return flags
+    }
+  }
+
   var down = false
   var up = false
   var right = false
   var left = false
 
-  val collided : Boolean get() = x || y
+  val any : Boolean get() = x || y
   val y: Boolean get() = up || down
   val x: Boolean get() = left || right
 }

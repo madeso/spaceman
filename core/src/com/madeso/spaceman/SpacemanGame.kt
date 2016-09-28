@@ -103,7 +103,7 @@ class Alien(assets:Assets, private val world: SpacemanWorld, private val startX 
       }
     }
 
-    remote.debug = remote.outside
+    remote.debug = remote.outside.up
   }
 
   override fun dispose() {

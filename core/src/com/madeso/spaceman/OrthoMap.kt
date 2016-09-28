@@ -39,7 +39,7 @@ interface ObjectRemote {
 
   fun setRenderSize(width : Float, height : Float)
   var debug : Boolean
-  val outside : Boolean
+  val outside : CollisionFlags
 
   val lastCollision : CollisionFlags
 
@@ -480,13 +480,13 @@ class PhysicalWorldObject(private var animation : Animation, private val world: 
   init {
     val self = this
     remote = object : ObjectRemote {
-      override val outside: Boolean
+      override val outside: CollisionFlags
         get() {
-          if( x+renderObject.width < 0 ) return true
-          if( x >  world.width ) return true
-          if( y+renderObject.height < 0 ) return true
-          if( y >  world.height) return true
-          return false
+          if( x+renderObject.width < 0 ) return CollisionFlags.LEFT
+          if( x >  world.width ) return CollisionFlags.RIGHT
+          if( y+renderObject.height < 0 ) return CollisionFlags.DOWN
+          if( y >  world.height) return CollisionFlags.UP
+          return CollisionFlags()
         }
       override var debug : Boolean
         get() {
