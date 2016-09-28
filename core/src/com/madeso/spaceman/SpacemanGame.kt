@@ -103,7 +103,7 @@ class Alien(assets:Assets, private val world: SpacemanWorld, private val startX 
       }
     }
 
-    remote.debug = world.controls.jump.isClicked
+    // remote.debug = world.controls.jump.isClicked
   }
 
   override fun dispose() {
@@ -165,11 +165,11 @@ class SpacemanSuperGame(game:Game) : SuperGame(game) {
             var background = ImageActor(assets.blue_grass)
             background.setSize(HEIGHT, HEIGHT)
             background.setPosition(0f, 0f, Align.bottomLeft)
-            map.renderWorld.back.addActor(background)
+            // map.renderWorld.back.addActor(background)
             background = ImageActor(assets.blue_grass)
             background.setSize(HEIGHT, HEIGHT)
             background.setPosition(HEIGHT, 0f, Align.bottomLeft)
-            map.renderWorld.back.addActor(background)
+            // map.renderWorld.back.addActor(background)
 
             self.setScreen(WorldScreen(map))
           }

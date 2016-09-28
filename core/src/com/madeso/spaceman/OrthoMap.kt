@@ -3,6 +3,8 @@ package com.madeso.engine
 import com.badlogic.gdx.ScreenAdapter
 import com.badlogic.gdx.assets.AssetManager
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver
+import com.badlogic.gdx.graphics.Camera
+import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.Animation
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
@@ -18,6 +20,9 @@ import com.badlogic.gdx.utils.Align
 import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.Disposable
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
+import com.badlogic.gdx.scenes.scene2d.Stage
+import com.badlogic.gdx.utils.viewport.StretchViewport
+import com.badlogic.gdx.utils.viewport.Viewport
 import com.madeso.engine.collision.CollisionFlags
 import com.madeso.engine.collision.CollisionMap
 import com.madeso.engine.collision.Collison_basic
@@ -104,7 +109,7 @@ class LoadingMap<TWorld:World>(private val assetManager: AssetManager, private v
     val map : TiledMap = this.assetManager.get(path)
     val unitScale = 1f
 
-    val rw = RenderWorld(OrthogonalTiledMapRenderer(map, unitScale), SpriteBatch())
+    val rw = RenderWorld()
     val collisionLayer = map.getLayers().get("col")
     val objects = UpdateWorld(
         if(collisionLayer != null )
@@ -114,29 +119,42 @@ class LoadingMap<TWorld:World>(private val assetManager: AssetManager, private v
     )
     val world = worldCreator.createWorld(WorldArg(rw, objects))
 
-    val dispatcher = object : ObjectCreatorDispatcher {
-      override fun addObject(ani: Animation, controller: ObjectController) {
-        val rend = PhysicalWorldObjectRenderer()
-        val obj = PhysicalWorldObject(ani, controller, rend)
-        rend.master = obj
-
-        rw.front.addActor(rend)
-        objects.add(obj)
+    for(layer in map.layers) {
+      // cast layers
+      if( layer is TiledMapTileLayer ) {
+        // is tile layer...
+        rw.layers.add(TileRenderLayer( map, layer, rw.batch, rw.viewport, rw.camera))
       }
-    }
+      else {
+        // is object layer
+        val objectRenderLayer = ObjectRenderLayer(rw.batch, rw.viewport, rw.camera)
+        rw.layers.add(objectRenderLayer)
 
-    val layer = map.layers.get("obj") ?: throw Exception("Failed to get obj layer")
-    val objs = layer.objects
-    for (i in 0..objs.count - 1) {
-      val obj = objs.get(i)
-      if( obj is TiledMapTileMapObject) {
-        var prop = obj.properties.get("type");
-        if( prop == null ) prop = obj.tile.properties.get("type")
-        if( prop != null ) {
-          val type = prop.toString()
-          creators.getCreator(type, world, dispatcher, obj.x, obj.y, obj)
+        val dispatcher = object : ObjectCreatorDispatcher {
+          override fun addObject(ani: Animation, controller: ObjectController) {
+            val rend = PhysicalWorldObjectRenderer()
+            val obj = PhysicalWorldObject(ani, controller, rend)
+            rend.master = obj
+
+            objectRenderLayer.stage.addActor(rend)
+            objects.add(obj)
+          }
+        }
+
+        val objs = layer.objects
+        for (i in 0..objs.count - 1) {
+          val obj = objs.get(i)
+          if( obj is TiledMapTileMapObject) {
+            var prop = obj.properties.get("type");
+            if( prop == null ) prop = obj.tile.properties.get("type")
+            if( prop != null ) {
+              val type = prop.toString()
+              creators.getCreator(type, world, dispatcher, obj.x, obj.y, obj)
+            }
+          }
         }
       }
+
     }
 
     return world
@@ -216,34 +234,65 @@ class BasicLoaderScreen<TWorld:World>(path: String, creators: CreatorMap<TWorld>
   }
 }
 
-class RenderWorld(private var worldRenderer: OrthogonalTiledMapRenderer, private var batch: Batch) : Disposable {
-  val layerBack = Layers(batch)
-  val layerFront = Layers(batch)
+interface RenderLayer : Disposable  {
+  fun render(delta:Float)
+}
 
-  val back = layerBack.newStage()
-  val front = layerFront.newStage()
+class ObjectRenderLayer(private val batch: Batch, private val viewport: Viewport, private val camera: OrthographicCamera) : RenderLayer{
+  override fun dispose() {
+    stage.dispose()
+  }
+
+  val stage = Stage(viewport, batch)
+
+  override fun render(delta: Float) {
+    viewport.apply()
+    batch.projectionMatrix = camera.combined;
+    stage.draw()
+  }
+}
+
+class TileRenderLayer(val map: TiledMap, private val layer: TiledMapTileLayer, private val batch: Batch, private val viewport: Viewport, private val camera: OrthographicCamera) : RenderLayer {
+  private val renderer = OrthogonalTiledMapRenderer(map, batch)
+  override fun render(delta: Float) {
+    viewport.apply()
+    batch.projectionMatrix = camera.combined;
+    renderer.setView(camera)
+    batch.begin()
+    renderer.renderTileLayer(layer)
+    batch.end()
+  }
 
   override fun dispose() {
-    back.dispose()
-    front.dispose()
+    renderer.dispose()
+  }
+}
+
+class RenderWorld : Disposable {
+  val layers = Array<RenderLayer>()
+
+  val camera = OrthographicCamera()
+  val viewport = StretchViewport(WIDTH, HEIGHT, camera)
+  val batch = SpriteBatch()
+
+  override fun dispose() {
+    for( layer in layers) {
+      layer.dispose()
+    }
   }
 
   fun render(delta:Float) {
     ClearScreen()
 
-    layerBack.act(delta)
-    layerFront.act(delta)
+    camera.update();
 
-    layerBack.render()
-    layerFront.apply()
-    worldRenderer.setView(layerFront.camera)
-    worldRenderer.render()
-    layerFront.render()
+    for( layer in layers) {
+      layer.render(delta)
+    }
   }
 
   fun resize(width: Int, height:Int) {
-    layerBack.resize(width, height)
-    layerFront.resize(width, height)
+    viewport.update(width, height)
   }
 }
 
@@ -319,8 +368,12 @@ class PhysicalWorldObjectRenderer : Actor() {
 
   override fun act(delta: Float) {
     super.act(delta)
+    updatePosition()
+  }
+
+  private fun updatePosition() {
     val master = this.master
-    if( master != null ) {
+    if (master != null) {
       x = master.x
       y = master.y
     }
@@ -334,6 +387,7 @@ class PhysicalWorldObjectRenderer : Actor() {
   }
 
   override fun drawDebug(shapes: ShapeRenderer?) {
+    updatePosition()
     super.drawDebug(shapes)
     val master = this.master
     if( master == null ) throw Exception("master was null")
