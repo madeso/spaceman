@@ -41,6 +41,8 @@ interface ObjectRemote {
   var debug : Boolean
   val outside : CollisionFlags
 
+  var keepWithinHorizontalWorld : Boolean
+
   val lastCollision : CollisionFlags
 
   var facingRight : Boolean
@@ -473,6 +475,8 @@ class PhysicalWorldObject(private var animation : Animation, private val world: 
   private val collideWithWorld = true
   var animationTime = 0f
 
+  private var keepWithinHorizontalWorld = false
+
   protected var collisionRect = CollisionRect()
 
   val remote : ObjectRemote
@@ -496,6 +500,12 @@ class PhysicalWorldObject(private var animation : Animation, private val world: 
         }
         set(value) {
           renderObject.debug = value
+        }
+
+      override var keepWithinHorizontalWorld: Boolean
+        get() = self.keepWithinHorizontalWorld
+        set(value) {
+          self.keepWithinHorizontalWorld = value
         }
 
       override val lastCollision: CollisionFlags
@@ -625,6 +635,17 @@ class PhysicalWorldObject(private var animation : Animation, private val world: 
     } else {
       this.x = targetX
       this.y = targetY
+    }
+
+    if( keepWithinHorizontalWorld) {
+      if( this.x < 0f ) {
+        this.x = 0f
+        this.latestFlags.left = true
+      }
+      if( this.x  + renderObject.width > world.width) {
+        this.x = world.width - renderObject.width
+        this.latestFlags.right = true
+      }
     }
 
     // update movement code

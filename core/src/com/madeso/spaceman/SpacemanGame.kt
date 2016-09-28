@@ -116,6 +116,7 @@ class Alien(assets:Assets, private val world: SpacemanWorld, private val startX 
 
   override fun init(remote: ObjectRemote) {
     remote.debug = true
+    remote.keepWithinHorizontalWorld = true
     remote.setRenderSize(70f, 70f * 2)
     remote.teleport(startX, startY)
     // setPosition(x, y, Align.bottomLeft)
