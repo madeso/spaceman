@@ -1,9 +1,11 @@
 package com.madeso.engine
 
+import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.ScreenAdapter
 import com.badlogic.gdx.assets.AssetManager
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver
 import com.badlogic.gdx.graphics.Camera
+import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.Animation
 import com.badlogic.gdx.graphics.g2d.Batch
@@ -40,6 +42,11 @@ interface ObjectRemote {
   fun setRenderSize(width : Float, height : Float)
   var debug : Boolean
   val outside : CollisionFlags
+
+  val x : Float
+  val y : Float
+  val width : Float
+  val height : Float
 
   var keepWithinHorizontalWorld : Boolean
 
@@ -187,8 +194,9 @@ abstract class World(args:WorldArg) {
   var height = 0f
   protected val buttons = ButtonList()
 
-  fun update(delta:Float) {
+  open fun update(delta:Float) {
     buttons.act(delta)
+    updateWorld.act(delta)
   }
 
   fun addLayer(layer:RenderLayer) {
@@ -205,7 +213,6 @@ class WorldScreen(private val world : World) : ScreenAdapter() {
   override fun render(delta: Float) {
     super.render(delta)
     world.update(delta)
-    world.updateWorld.act(delta)
     world.renderWorld.render(delta)
   }
 
@@ -329,6 +336,19 @@ class TileRenderLayer(val map: TiledMap, private val layer: TiledMapTileLayer, a
   }
 }
 
+private fun Smooth(dt: Float, now: Float, smoothTime: Float, next: Float): Float {
+  val distance = next - now
+  val speed = distance / smoothTime
+  return now + speed * dt
+}
+
+private fun NiceValue(x: Float): Float {
+  // hides the issue with ugly lines appearing between the tiles
+  // shamelessly stolen from: http://www.reddit.com/r/gamedev/comments/1euvrs/libgdx_tiledmap_linesgaps_between_tiles/
+  val smooth = 5.0f
+  return MathUtils.round(smooth * x) / smooth
+}
+
 class RenderWorld : Disposable {
   val layers = Array<RenderLayer>()
 
@@ -342,6 +362,42 @@ class RenderWorld : Disposable {
     }
   }
 
+  var cx = 0f
+  var cy = 0f
+
+  private val sprites = ShapeRenderer()
+  private var width = 0f
+  private var height = 0f
+
+  fun updateFreeformCamera(delta:Float, x:Float, y:Float, width:Float, height:Float) {
+    val SMOOTH_TIME = 0.25f
+
+    this.width = width
+    this.height = height
+
+    val tx =
+        if( Math.abs(x-cx) < width )
+          cx
+        else {
+          if( x > cx) x-width
+          else x+width
+        }
+    val ty =
+        if( Math.abs(y-cy) < height )
+          cy
+        else {
+          if( y > cy) y-height
+          else y+height
+        }
+
+
+    cx = Smooth(delta, cx, SMOOTH_TIME, tx)
+    cy = Smooth(delta, cy, SMOOTH_TIME, ty)
+
+    camera.position.x = NiceValue(cx)
+    camera.position.y = NiceValue(cy)
+  }
+
   fun render(delta:Float) {
     ClearScreen()
 
@@ -350,6 +406,13 @@ class RenderWorld : Disposable {
     for( layer in layers) {
       layer.render(delta)
     }
+
+    viewport.apply()
+    sprites.projectionMatrix = camera.projection
+    sprites.begin(ShapeRenderer.ShapeType.Line)
+    sprites.color = Color.BLACK
+    sprites.rect(-width, 0f, width*3, height)
+    sprites.end()
   }
 
   fun resize(width: Int, height:Int) {
@@ -484,6 +547,18 @@ class PhysicalWorldObject(private var animation : Animation, private val world: 
   init {
     val self = this
     remote = object : ObjectRemote {
+      override val x: Float
+        get() = self.x
+
+      override val y: Float
+        get() = self.y
+
+      override val width: Float
+        get() = self.renderObject.width
+
+      override val height: Float
+        get() = self.renderObject.height
+
       override val outside: CollisionFlags
         get() {
           val flags = CollisionFlags()

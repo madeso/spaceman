@@ -39,7 +39,18 @@ class Alien(assets:Assets, private val world: SpacemanWorld, private val startX 
   private var vy = 0f
   private var jumpTime = 0f
   private var curSpeed = 0f
+
+  var x = 0f
+  var y = 0f
+  var width = 0f
+  var height = 0f
+
   override fun act(delta: Float, remote: ObjectRemote) {
+    x = remote.x
+    y = remote.y
+    width = remote.width
+    height = remote.height
+
     if( remote.lastCollision.down && world.controls.jump.isDown == false) {
       vy = 0f
       jumpTime = 0f
@@ -141,6 +152,14 @@ class GameControls(buttons: ButtonList) : BaseGameControls() {
 
 class SpacemanWorld(args:WorldArg) : World(args) {
   val controls = GameControls(buttons)
+  var alien : Alien? = null
+
+  override fun update(delta: Float) {
+    super.update(delta)
+
+    val alien = this.alien ?: return
+    renderWorld.updateFreeformCamera(delta, alien.x, alien.y, alien.width, alien.height)
+  }
 }
 
 class SpacemanSuperGame(game:Game) : SuperGame(game) {
@@ -149,6 +168,7 @@ class SpacemanSuperGame(game:Game) : SuperGame(game) {
       .registerCreator("alien-body", object: ObjectCreator<SpacemanSuperGame, SpacemanWorld> {
         override fun create(game: SpacemanSuperGame, world: SpacemanWorld, map: ObjectCreatorDispatcher, x: Float, y: Float, tile: TiledMapTileMapObject) {
           val alien = Alien(assets, world, x, y)
+          world.alien = alien
           map.addObject(alien.stand, world, alien)
         }
       })
