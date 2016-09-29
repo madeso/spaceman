@@ -42,6 +42,7 @@ interface ObjectRemote {
   fun setRenderSize(width : Float, height : Float)
   var debug : Boolean
   val outside : CollisionFlags
+  var collisionRect : CollisionRect
 
   val x : Float
   val y : Float
@@ -354,8 +355,8 @@ private fun NiceValue(x: Float): Float {
 }
 
 private fun isWithin(x:Float, cx:Float, w:Float, cw: Float) : Boolean {
-  if( x < cx ) return false
-  else if( x > cx+cw-w) return false
+  if( x <= cx ) return false
+  else if( x >= cx+cw-w) return false
   else return true
 }
 
@@ -370,12 +371,17 @@ class CameraCode(private var camera: OrthographicCamera) {
   private var trapWidth = 0f
   private var trapHeigtht = 0f
 
+  private var trapX = 0f
+
+  private val SMOOTH_TIME = 0.25f
+
   fun updatePlatformCamera(delta:Float, x:Float, y:Float, width:Float, height:Float) {
-    val SMOOTH_TIME = 0.25f
 
     // debugging
     this.width = width
     this.height = height
+    trapWidth = width * 2f
+    trapHeigtht = height * 2f
 
     val (targetX, targetY) = getFreeformCameraTarget(height, width, x, y)
 
@@ -387,15 +393,20 @@ class CameraCode(private var camera: OrthographicCamera) {
   }
 
   private fun getFreeformCameraTarget(height: Float, width: Float, x: Float, y: Float): Pair<Float, Float> {
-    trapWidth = width * 2f
-    trapHeigtht = height * 2f
+    val lookAhead = width*3
 
     val targetX =
-        if ( isWithin(x, cameraX, width, trapWidth) )
+        if ( isWithin(x, trapX, width, trapWidth) )
           cameraX
         else {
-          if (x > cameraX) x - width
-          else x
+          if (x > trapX) {
+            trapX = x - width
+            trapX + lookAhead
+          }
+          else {
+            trapX = x
+            trapX - lookAhead
+          }
         }
     val targetY =
         if (isWithin(y, cameraY, height, trapHeigtht))
@@ -414,7 +425,7 @@ class CameraCode(private var camera: OrthographicCamera) {
   fun debugRender(sprites: ShapeRenderer) {
     sprites.begin(ShapeRenderer.ShapeType.Line)
     sprites.color = Color.BLACK
-    sprites.rect(0f, 0f, trapWidth, trapHeigtht)
+    sprites.rect(trapX-cameraX, 0f, trapWidth, trapHeigtht)
     sprites.end()
   }
 }
@@ -583,6 +594,11 @@ class PhysicalWorldObject(private var animation : Animation, private val world: 
   init {
     val self = this
     remote = object : ObjectRemote {
+      override var collisionRect: CollisionRect
+        get() = self.collisionRect
+        set(value) {
+          self.collisionRect = value
+        }
       override val x: Float
         get() = self.x
 

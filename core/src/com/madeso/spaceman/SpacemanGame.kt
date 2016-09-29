@@ -109,7 +109,7 @@ class Alien(assets:Assets, private val world: SpacemanWorld, private val startX 
       remote.teleport(startX, startY)
     }
 
-    world.renderWorld.cameraLogic.updatePlatformCamera(delta, remote.x, remote.y, remote.width, remote.height)
+    world.renderWorld.cameraLogic.updatePlatformCamera(delta, remote.x+remote.collisionRect.dx, remote.y+remote.collisionRect.dy, remote.collisionRect.width, remote.collisionRect.height)
 
     // remote.debug = remote.outside.up
   }
