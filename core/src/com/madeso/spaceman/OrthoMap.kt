@@ -342,11 +342,81 @@ private fun Smooth(dt: Float, now: Float, smoothTime: Float, next: Float): Float
   return now + speed * dt
 }
 
+enum class CameraMode {
+  FREEFORM, ZERO, PLATFORM
+}
+
 private fun NiceValue(x: Float): Float {
   // hides the issue with ugly lines appearing between the tiles
   // shamelessly stolen from: http://www.reddit.com/r/gamedev/comments/1euvrs/libgdx_tiledmap_linesgaps_between_tiles/
   val smooth = 5.0f
   return MathUtils.round(smooth * x) / smooth
+}
+
+private fun isWithin(x:Float, cx:Float, w:Float, cw: Float) : Boolean {
+  if( x < cx ) return false
+  else if( x > cx+cw-w) return false
+  else return true
+}
+
+class CameraCode(private var camera: OrthographicCamera) {
+  private var cameraX = 0f
+  private var cameraY = 0f
+  private var cameraMode = CameraMode.FREEFORM
+
+  private var width = 0f
+  private var height = 0f
+
+  private var trapWidth = 0f
+  private var trapHeigtht = 0f
+
+  fun updatePlatformCamera(delta:Float, x:Float, y:Float, width:Float, height:Float) {
+    val SMOOTH_TIME = 0.25f
+
+    // debugging
+    this.width = width
+    this.height = height
+
+    val (targetX, targetY) = getFreeformCameraTarget(height, width, x, y)
+
+    cameraX = Smooth(delta, cameraX, SMOOTH_TIME, targetX)
+    cameraY = Smooth(delta, cameraY, SMOOTH_TIME, targetY)
+
+    camera.position.x = NiceValue(cameraX)
+    camera.position.y = NiceValue(cameraY)
+  }
+
+  private fun getFreeformCameraTarget(height: Float, width: Float, x: Float, y: Float): Pair<Float, Float> {
+    trapWidth = width * 2f
+    trapHeigtht = height * 2f
+
+    val targetX =
+        if ( isWithin(x, cameraX, width, trapWidth) )
+          cameraX
+        else {
+          if (x > cameraX) x - width
+          else x
+        }
+    val targetY =
+        if (isWithin(y, cameraY, height, trapHeigtht))
+          cameraY
+        else {
+          if (y > cameraY) y - height
+          else y
+        }
+
+    // store trap position
+    // make the trap stay behind
+
+    return Pair(targetX, targetY)
+  }
+
+  fun debugRender(sprites: ShapeRenderer) {
+    sprites.begin(ShapeRenderer.ShapeType.Line)
+    sprites.color = Color.BLACK
+    sprites.rect(0f, 0f, trapWidth, trapHeigtht)
+    sprites.end()
+  }
 }
 
 class RenderWorld : Disposable {
@@ -362,41 +432,9 @@ class RenderWorld : Disposable {
     }
   }
 
-  var cx = 0f
-  var cy = 0f
-
   private val sprites = ShapeRenderer()
-  private var width = 0f
-  private var height = 0f
 
-  fun updateFreeformCamera(delta:Float, x:Float, y:Float, width:Float, height:Float) {
-    val SMOOTH_TIME = 0.25f
-
-    this.width = width
-    this.height = height
-
-    val tx =
-        if( Math.abs(x-cx) < width )
-          cx
-        else {
-          if( x > cx) x-width
-          else x+width
-        }
-    val ty =
-        if( Math.abs(y-cy) < height )
-          cy
-        else {
-          if( y > cy) y-height
-          else y+height
-        }
-
-
-    cx = Smooth(delta, cx, SMOOTH_TIME, tx)
-    cy = Smooth(delta, cy, SMOOTH_TIME, ty)
-
-    camera.position.x = NiceValue(cx)
-    camera.position.y = NiceValue(cy)
-  }
+  val cameraLogic = CameraCode(camera)
 
   fun render(delta:Float) {
     ClearScreen()
@@ -409,10 +447,8 @@ class RenderWorld : Disposable {
 
     viewport.apply()
     sprites.projectionMatrix = camera.projection
-    sprites.begin(ShapeRenderer.ShapeType.Line)
-    sprites.color = Color.BLACK
-    sprites.rect(-width, 0f, width*3, height)
-    sprites.end()
+
+    cameraLogic.debugRender(sprites)
   }
 
   fun resize(width: Int, height:Int) {

@@ -40,17 +40,7 @@ class Alien(assets:Assets, private val world: SpacemanWorld, private val startX 
   private var jumpTime = 0f
   private var curSpeed = 0f
 
-  var x = 0f
-  var y = 0f
-  var width = 0f
-  var height = 0f
-
   override fun act(delta: Float, remote: ObjectRemote) {
-    x = remote.x
-    y = remote.y
-    width = remote.width
-    height = remote.height
-
     if( remote.lastCollision.down && world.controls.jump.isDown == false) {
       vy = 0f
       jumpTime = 0f
@@ -119,7 +109,9 @@ class Alien(assets:Assets, private val world: SpacemanWorld, private val startX 
       remote.teleport(startX, startY)
     }
 
-    remote.debug = remote.outside.up
+    world.renderWorld.cameraLogic.updatePlatformCamera(delta, remote.x, remote.y, remote.width, remote.height)
+
+    // remote.debug = remote.outside.up
   }
 
   override fun dispose() {
@@ -130,7 +122,6 @@ class Alien(assets:Assets, private val world: SpacemanWorld, private val startX 
     remote.keepWithinHorizontalWorld = true
     remote.setRenderSize(70f, 70f * 2)
     remote.teleport(startX, startY)
-    // setPosition(x, y, Align.bottomLeft)
   }
 
   val stand = Animation(1.0f, assets.pack.newSprite("player/alienGreen_stand"))
@@ -156,9 +147,6 @@ class SpacemanWorld(args:WorldArg) : World(args) {
 
   override fun update(delta: Float) {
     super.update(delta)
-
-    val alien = this.alien ?: return
-    renderWorld.updateFreeformCamera(delta, alien.x, alien.y, alien.width, alien.height)
   }
 }
 
