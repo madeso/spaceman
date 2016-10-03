@@ -43,7 +43,9 @@ class Ui {
   val batch = SpriteBatch()
   val stage = Stage(viewport, batch)
 
-  var scale = 1.5f
+  var scale = 2.0f
+  var spacing = 10f
+  var bounds = 15f
 
   fun act(delta: Float) {
     stage.act(delta)
@@ -94,18 +96,18 @@ class GfxButton(private val ui: Ui, atlas: TextureAtlas, style:String, type:Stri
     get() = isTouched
 }
 
-fun align(left: Boolean, middle: Boolean, right: Boolean, x:Float, w:Float) : Float {
+fun align(left: Boolean, middle: Boolean, right: Boolean, x:Float, w:Float, m: Float, b: Float) : Float {
   if( left ) {
     assert(middle == false && right == false)
-    return x
+    return x + b
   }
   else if ( middle ) {
     assert(right == false)
-    return x - w / 2f
+    return m/2f + (x - w / 2f)
   }
   else {
     assert(right == true)
-    return x - w
+    return m - x - w - b
   }
 }
 
@@ -136,12 +138,12 @@ class Button {
           AnyOf(alignment, Alignment.BOTTOM_LEFT, Alignment.CENTER_LEFT, Alignment.TOP_LEFT),
           AnyOf(alignment, Alignment.BOTTOM_CENTER, Alignment.CENTER_CENTER, Alignment.TOP_CENTER),
           AnyOf(alignment, Alignment.BOTTOM_RIGHT, Alignment.CENTER_RIGHT, Alignment.TOP_RIGHT),
-        x, button.width)
+        x*ui.scale, button.width, WIDTH, ui.bounds)
     button.y = align(
         AnyOf(alignment, Alignment.BOTTOM_LEFT, Alignment.BOTTOM_CENTER, Alignment.BOTTOM_RIGHT),
         AnyOf(alignment, Alignment.CENTER_LEFT, Alignment.CENTER_CENTER, Alignment.CENTER_RIGHT),
         AnyOf(alignment, Alignment.TOP_LEFT, Alignment.TOP_CENTER, Alignment.TOP_RIGHT),
-        y, button.height)
+        y*ui.scale, button.height, HEIGHT, ui.bounds)
     keyboardButtons.add(button)
     return this
   }

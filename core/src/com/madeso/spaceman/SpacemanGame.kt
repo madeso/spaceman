@@ -131,11 +131,11 @@ class Alien(assets:Assets, private val world: SpacemanWorld, private val startX 
 }
 
 class GameControls(assets: Assets, ui: Ui, buttons: ButtonList) : BaseGameControls() {
-  val left = buttons.newButton().addKeyboard(Input.Keys.LEFT).addKeyboard(Input.Keys.A)
-  val right = buttons.newButton().addKeyboard(Input.Keys.RIGHT).addKeyboard(Input.Keys.D)
+  val left = buttons.newButton().addKeyboard(Input.Keys.LEFT).addKeyboard(Input.Keys.A).addGfx(ui, assets.touch, "flat", "action-left", Alignment.BOTTOM_LEFT, 0f, 0f)
+  val right = buttons.newButton().addKeyboard(Input.Keys.RIGHT).addKeyboard(Input.Keys.D).addGfx(ui, assets.touch, "flat", "action-right", Alignment.BOTTOM_LEFT, 80f + ui.spacing, 0f)
   val up = buttons.newButton().addKeyboard(Input.Keys.UP).addKeyboard(Input.Keys.W)
   val down = buttons.newButton().addKeyboard(Input.Keys.DOWN).addKeyboard(Input.Keys.S)
-  val jump = buttons.newButton().addKeyboard(Input.Keys.X).addKeyboard(Input.Keys.SPACE).addGfx(ui, assets.touch, "flat", "action-x", Alignment.BOTTOM_LEFT, 0f, 0f)
+  val jump = buttons.newButton().addKeyboard(Input.Keys.X).addKeyboard(Input.Keys.SPACE).addGfx(ui, assets.touch, "flat", "action-x", Alignment.BOTTOM_RIGHT, 0f, 0f)
 }
 
 class SpacemanWorld(assets: Assets, args:WorldArg) : World(args) {
