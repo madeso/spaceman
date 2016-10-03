@@ -193,15 +193,27 @@ abstract class World(args:WorldArg) {
   val updateWorld = args.updateWorld
   var width = 0f
   var height = 0f
+  val ui = Ui()
   protected val buttons = ButtonList()
 
   open fun update(delta:Float) {
+    ui.act(delta)
     buttons.act(delta)
     updateWorld.act(delta)
   }
 
   fun addLayer(layer:RenderLayer) {
     renderWorld.layers.add(layer)
+  }
+
+  fun render(delta: Float) {
+    renderWorld.render(delta)
+    ui.render(delta)
+  }
+
+  fun resize(width: Int, height: Int) {
+    ui.resize(width, height)
+    renderWorld.resize(width, height)
   }
 }
 
@@ -214,12 +226,12 @@ class WorldScreen(private val world : World) : ScreenAdapter() {
   override fun render(delta: Float) {
     super.render(delta)
     world.update(delta)
-    world.renderWorld.render(delta)
+    world.render(delta)
   }
 
   override fun resize(width: Int, height: Int) {
     super.resize(width, height)
-    world.renderWorld.resize(width, height)
+    world.resize(width, height)
   }
 
 }

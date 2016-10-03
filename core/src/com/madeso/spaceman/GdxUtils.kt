@@ -6,6 +6,7 @@ import com.badlogic.gdx.Screen
 import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.Texture
+import com.badlogic.gdx.graphics.g2d.Animation
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.graphics.g2d.TextureAtlas
 import com.badlogic.gdx.scenes.scene2d.Actor
@@ -22,44 +23,13 @@ fun ClearScreen() {
   Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
 }
 
-class Layers(val batch : Batch) {
-  var camera = OrthographicCamera()
-  var viewport = StretchViewport(WIDTH, HEIGHT, camera);
-  var stages = Array<Stage>()
-
-  fun newStage(): Stage {
-    val stage = Stage(viewport, batch)
-    stages.add(stage)
-    return stage
-  }
-
-  fun act(delta: Float) {
-    for(stage in stages) {
-      stage.act(delta)
-    }
-  }
-
-  fun apply() {
-    viewport.apply()
-    camera.update();
-    batch.projectionMatrix = camera.combined;
-  }
-
-  fun render() {
-    apply()
-
-    for( stage in stages) {
-      stage.draw()
-    }
-  }
-
-  fun resize(width: Int, height: Int) {
-    viewport.update(width, height)
-  }
-}
-
 fun TextureAtlas.newSprite(path : String): TextureAtlas.AtlasRegion {
   return this.findRegion(path) ?: throw Exception("Unable to load " + path)
+}
+
+fun Animation.setLooping() : Animation {
+  this.playMode = Animation.PlayMode.LOOP
+  return this
 }
 
 class ImageActor(var img: Texture) : Actor() {

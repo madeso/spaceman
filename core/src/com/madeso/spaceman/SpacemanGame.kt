@@ -16,8 +16,9 @@ import com.madeso.engine.*
 class Assets : Disposable {
   var dest = Destructor()
 
-  var blue_grass = dest.ret(Texture(Gdx.files.internal("blue_grass.png")))
-  var pack = dest.ret(TextureAtlas(Gdx.files.internal("pack.atlas")))
+  val blue_grass = dest.ret(Texture(Gdx.files.internal("blue_grass.png")))
+  val pack = dest.ret(TextureAtlas(Gdx.files.internal("pack.atlas")))
+  val touch = dest.ret(TextureAtlas(Gdx.files.internal("touch/pack.atlas")))
 
   override fun dispose() {
     dest.dispose()
@@ -126,23 +127,19 @@ class Alien(assets:Assets, private val world: SpacemanWorld, private val startX 
 
   val stand = Animation(1.0f, assets.pack.newSprite("player/alienGreen_stand"))
   val jump = Animation(1.0f, assets.pack.newSprite("player/alienGreen_jump"))
-  val walk = Animation(0.1f, assets.pack.newSprite("player/alienGreen_walk1"), assets.pack.newSprite("player/alienGreen_walk2"))
-
-  init {
-    walk.playMode = Animation.PlayMode.LOOP
-  }
+  val walk = Animation(0.1f, assets.pack.newSprite("player/alienGreen_walk1"), assets.pack.newSprite("player/alienGreen_walk2")).setLooping()
 }
 
-class GameControls(buttons: ButtonList) : BaseGameControls() {
+class GameControls(assets: Assets, ui: Ui, buttons: ButtonList) : BaseGameControls() {
   val left = buttons.newButton().addKeyboard(Input.Keys.LEFT).addKeyboard(Input.Keys.A)
   val right = buttons.newButton().addKeyboard(Input.Keys.RIGHT).addKeyboard(Input.Keys.D)
   val up = buttons.newButton().addKeyboard(Input.Keys.UP).addKeyboard(Input.Keys.W)
   val down = buttons.newButton().addKeyboard(Input.Keys.DOWN).addKeyboard(Input.Keys.S)
-  val jump = buttons.newButton().addKeyboard(Input.Keys.X).addKeyboard(Input.Keys.SPACE)
+  val jump = buttons.newButton().addKeyboard(Input.Keys.X).addKeyboard(Input.Keys.SPACE).addGfx(ui, assets.touch, "flat", "action-x", Alignment.BOTTOM_LEFT, 0f, 0f)
 }
 
-class SpacemanWorld(args:WorldArg) : World(args) {
-  val controls = GameControls(buttons)
+class SpacemanWorld(assets: Assets, args:WorldArg) : World(args) {
+  val controls = GameControls(assets, ui, buttons)
   var alien : Alien? = null
 
   override fun update(delta: Float) {
@@ -171,7 +168,7 @@ class SpacemanSuperGame(game:Game) : SuperGame(game) {
     setScreen(BasicLoaderScreen<SpacemanWorld>("test.tmx", worldCreators,
         object:WorldCreator<SpacemanWorld> {
           override fun createWorld(args: WorldArg): SpacemanWorld {
-            val world = SpacemanWorld(args)
+            val world = SpacemanWorld(assets, args)
             val bak = StaticRenderLayer(args.renderLayerArgs)
             var background = ImageActor(assets.blue_grass)
             background.setSize(HEIGHT, HEIGHT)
