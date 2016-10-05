@@ -142,6 +142,10 @@ class SpacemanWorld(assets: Assets, args:WorldArg) : World(args) {
   val controls = GameControls(assets, ui, buttons)
   var alien : Alien? = null
 
+  init {
+    renderWorld.camera.zoom = 0.6f
+  }
+
   override fun update(delta: Float) {
     super.update(delta)
   }

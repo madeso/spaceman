@@ -43,9 +43,9 @@ class Ui {
   val batch = SpriteBatch()
   val stage = Stage(viewport, batch)
 
-  var scale = 2.0f
+  var scale = 3.0f
   var spacing = 10f
-  var bounds = 15f
+  var bounds = 25f
 
   fun act(delta: Float) {
     stage.act(delta)
@@ -75,11 +75,13 @@ class GfxButton(private val ui: Ui, atlas: TextureAtlas, style:String, type:Stri
   override fun act(delta: Float) {
     isTouched = false
     for(i in 0..MAX_TOUCHES) {
-      val screen = Vector3(Gdx.input.getX(i).toFloat(), Gdx.input.getY(i).toFloat(), 0f)
-      val world = ui.camera.unproject(screen)
-      val contains = Rectangle(x, y, width, height).contains(world.x, world.y)
-      if( contains ) {
-        isTouched = true
+      if( Gdx.input.isTouched(i) ) {
+        val screen = Vector3(Gdx.input.getX(i).toFloat(), Gdx.input.getY(i).toFloat(), 0f)
+        val world = ui.camera.unproject(screen)
+        val contains = Rectangle(x, y, width, height).contains(world.x, world.y)
+        if (contains) {
+          isTouched = true
+        }
       }
     }
   }
