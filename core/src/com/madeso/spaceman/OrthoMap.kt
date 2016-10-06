@@ -22,6 +22,7 @@ import com.badlogic.gdx.utils.Align
 import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.Disposable
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
+import com.badlogic.gdx.maps.tiled.tiles.AnimatedTiledMapTile
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.utils.viewport.StretchViewport
@@ -463,6 +464,8 @@ class RenderWorld : Disposable {
     ClearScreen()
 
     camera.update();
+
+    AnimatedTiledMapTile.updateAnimationBaseTime()
 
     for( layer in layers) {
       layer.render(delta)
