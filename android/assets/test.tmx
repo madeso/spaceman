@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="60" height="10" tilewidth="70" tileheight="70" nextobjectid="15">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="60" height="10" tilewidth="70" tileheight="70" nextobjectid="31">
  <tileset firstgid="1" name="new-tiles" tilewidth="70" tileheight="70" tilecount="841">
   <image source="../../../kenney-platformer/new-tiles.png" width="2048" height="2048"/>
   <terraintypes>
@@ -24,6 +24,11 @@
   <tile id="91" terrain=",3,,"/>
   <tile id="92" terrain="3,3,,"/>
   <tile id="93" terrain="3,,,"/>
+  <tile id="113">
+   <properties>
+    <property name="type" value="gold-coin"/>
+   </properties>
+  </tile>
   <tile id="120" terrain=",,,4"/>
   <tile id="121" terrain=",,4,4"/>
   <tile id="122" terrain=",,4,"/>
@@ -182,6 +187,21 @@
  <objectgroup name="obj">
   <object id="13" gid="332" x="700" y="210" width="70" height="70"/>
   <object id="14" gid="303" x="700" y="140" width="70" height="70"/>
+  <object id="16" gid="114" x="490" y="140" width="70" height="70"/>
+  <object id="17" gid="114" x="560" y="140" width="70" height="70"/>
+  <object id="18" gid="114" x="70" y="70" width="70" height="70"/>
+  <object id="19" gid="114" x="140" y="70" width="70" height="70"/>
+  <object id="20" gid="114" x="210" y="70" width="70" height="70"/>
+  <object id="21" gid="114" x="280" y="70" width="70" height="70"/>
+  <object id="22" gid="114" x="350" y="70" width="70" height="70"/>
+  <object id="23" gid="114" x="1890" y="560" width="70" height="70"/>
+  <object id="24" gid="114" x="1960" y="560" width="70" height="70"/>
+  <object id="25" gid="114" x="2030" y="560" width="70" height="70"/>
+  <object id="26" gid="114" x="2100" y="560" width="70" height="70"/>
+  <object id="27" gid="114" x="2170" y="560" width="70" height="70"/>
+  <object id="28" gid="114" x="2240" y="560" width="70" height="70"/>
+  <object id="29" gid="114" x="2940" y="350" width="70" height="70"/>
+  <object id="30" gid="114" x="2730" y="420" width="70" height="70"/>
  </objectgroup>
  <layer name="world-front" width="60" height="10">
   <data encoding="csv">

@@ -130,6 +130,21 @@ class Alien(assets:Assets, private val world: SpacemanWorld, private val startX 
   val walk = Animation(0.1f, assets.pack.newSprite("player/alienGreen_walk1"), assets.pack.newSprite("player/alienGreen_walk2")).setLooping()
 }
 
+class Coin(assets: Assets, world: SpacemanWorld, private val startX: Float, private val startY: Float) : ObjectController {
+  override fun init(remote: ObjectRemote) {
+    remote.teleport(startX, startY)
+    remote.setRenderSize(70f, 70f)
+  }
+
+  override fun act(delta: Float, remote: ObjectRemote) {
+  }
+
+  override fun dispose() {
+  }
+
+  val basic = Animation(1.0f, assets.pack.newSprite("items/coinGold"))
+}
+
 class GameControls(assets: Assets, ui: Ui, buttons: ButtonList) : BaseGameControls() {
   val left = buttons.newButton().addKeyboard(Input.Keys.LEFT).addKeyboard(Input.Keys.A).addGfx(ui, assets.touch, "flat", "action-left", Alignment.BOTTOM_LEFT, 0f, 0f)
   val right = buttons.newButton().addKeyboard(Input.Keys.RIGHT).addKeyboard(Input.Keys.D).addGfx(ui, assets.touch, "flat", "action-right", Alignment.BOTTOM_LEFT, 80f + ui.spacing, 0f)
@@ -154,7 +169,7 @@ class SpacemanWorld(assets: Assets, args:WorldArg) : World(args) {
 class SpacemanSuperGame(game:Game) : SuperGame(game) {
   private val assets = Assets()
   private val worldCreators = CreatorList<SpacemanSuperGame, SpacemanWorld>(this)
-      .registerCreator("alien-body", object: ObjectCreator<SpacemanSuperGame, SpacemanWorld> {
+      .registerCreator("alien-body", object : ObjectCreator<SpacemanSuperGame, SpacemanWorld> {
         override fun create(game: SpacemanSuperGame, world: SpacemanWorld, map: ObjectCreatorDispatcher, x: Float, y: Float, tile: TiledMapTileMapObject) {
           val alien = Alien(assets, world, x, y)
           world.alien = alien
@@ -162,6 +177,12 @@ class SpacemanSuperGame(game:Game) : SuperGame(game) {
         }
       })
       .registerNullCreator("alien-head")
+      .registerCreator("gold-coin", object : ObjectCreator<SpacemanSuperGame, SpacemanWorld> {
+        override fun create(game: SpacemanSuperGame, world: SpacemanWorld, map: ObjectCreatorDispatcher, x: Float, y: Float, tile: TiledMapTileMapObject) {
+          val coin = Coin(assets, world, x, y)
+          map.addObject(coin.basic, world, coin)
+        }
+      })
 
   init {
     loadWorld("test.tmx")
