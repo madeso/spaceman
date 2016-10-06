@@ -5,10 +5,13 @@ import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.g2d.TextureAtlas
+import com.badlogic.gdx.math.Interpolation
 import com.badlogic.gdx.math.Rectangle
 import com.badlogic.gdx.math.Vector3
 import com.badlogic.gdx.scenes.scene2d.Actor
 import com.badlogic.gdx.scenes.scene2d.Stage
+import com.badlogic.gdx.scenes.scene2d.actions.Actions
+import com.badlogic.gdx.utils.Align
 import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.viewport.StretchViewport
 
@@ -68,11 +71,15 @@ class GfxButton(private val ui: Ui, atlas: TextureAtlas, style:String, type:Stri
     ui.stage.addActor(this)
     width = up.originalWidth.toFloat()
     height = up.originalHeight.toFloat()
+
+    // setOrigin(Align.center) // doesnt work with scaling
   }
 
   private var isTouched = false
 
   override fun act(delta: Float) {
+    super.act(delta)
+    val lastTouched = isTouched
     isTouched = false
     for(i in 0..MAX_TOUCHES) {
       if( Gdx.input.isTouched(i) ) {
@@ -84,14 +91,22 @@ class GfxButton(private val ui: Ui, atlas: TextureAtlas, style:String, type:Stri
         }
       }
     }
+
+    if (lastTouched != isTouched ) {
+      val scale = if (isTouched) 0.8f else 1.0f
+      clearActions()
+      addAction(Actions.scaleTo(scale, scale, 0.3f, Interpolation.circleOut))
+    }
   }
 
   override fun draw(batch: Batch?, parentAlpha: Float) {
     super.draw(batch, parentAlpha)
-    val img =
-        if(isTouched) { down }
-        else { up }
-    batch!!.draw(img, x, y, width, height)
+    val img = up
+        // if(isTouched) { down }
+        // else { up }
+    val dx = width*(0.5f-scaleX/2f)
+    val dy = height*(0.5f-scaleY/2f)
+    batch!!.draw(img, x+dx, y+dy, width*scaleX, height*scaleY)
   }
 
   override val isDown: Boolean
