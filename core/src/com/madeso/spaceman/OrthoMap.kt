@@ -24,6 +24,7 @@ import com.badlogic.gdx.utils.Disposable
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.maps.tiled.tiles.AnimatedTiledMapTile
 import com.badlogic.gdx.math.MathUtils
+import com.badlogic.gdx.math.Vector3
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.utils.viewport.StretchViewport
 import com.badlogic.gdx.utils.viewport.Viewport
@@ -143,6 +144,7 @@ class LoadingMap<TWorld:World>(private val assetManager: AssetManager, private v
         // is tile layer...
         world.width = Math.max(world.width, layer.width * layer.tileWidth)
         world.height = Math.max(world.height, layer.height * layer.tileHeight)
+        rw.updateWidthAndHeight(world.width, world.height)
 
         rw.layers.add(TileRenderLayer( map, layer, renderLayerArgs))
       }
@@ -399,6 +401,9 @@ class CameraCode(private var camera: OrthographicCamera) {
   private var cameraY = 0f
   private var cameraMode = CameraMode.FREEFORM
 
+  var worldWidth = 0f
+  var worldHeight = 0f
+
   private var width = 0f
   private var height = 0f
 
@@ -424,6 +429,26 @@ class CameraCode(private var camera: OrthographicCamera) {
 
     camera.position.x = NiceValue(cameraX)
     camera.position.y = NiceValue(cameraY)
+
+    camera.update()
+    val cameraLeft = camera.unproject(Vector3(0f, 0f, 0f)).x
+    if( cameraLeft < 0f ) camera.position.x -= cameraLeft
+
+    if( worldWidth > 1f ) {
+      camera.update()
+      val cameraRight = camera.unproject(Vector3(Gdx.graphics.width.toFloat(), 0f, 0f)).x
+      // Gdx.app.log("log", "$cameraRight > $worldWidth")
+      if (cameraRight > worldWidth) {
+        camera.position.x -= cameraRight - worldWidth
+      }
+    }
+
+    camera.update()
+    val cameraBottom = camera.unproject(Vector3(0f, Gdx.graphics.height.toFloat(), 0f)).y
+    // Gdx.app.log("log", "$cameraBottom > $worldHeight")
+    if( cameraBottom < 0f ) {
+      camera.position.y -= cameraBottom
+    }
   }
 
   private fun getFreeformCameraTarget(height: Float, width: Float, x: Float, y: Float): Pair<Float, Float> {
@@ -477,7 +502,7 @@ class RenderWorld : Disposable {
     }
   }
 
-  private val sprites = ShapeRenderer()
+  //private val sprites = ShapeRenderer()
 
   val cameraLogic = CameraCode(camera)
 
@@ -493,9 +518,9 @@ class RenderWorld : Disposable {
     }
 
     viewport.apply()
-    sprites.projectionMatrix = camera.projection
 
-    cameraLogic.debugRender(sprites)
+    //sprites.projectionMatrix = camera.projection
+    //cameraLogic.debugRender(sprites)
   }
 
   fun resize(width: Int, height:Int) {
@@ -504,6 +529,11 @@ class RenderWorld : Disposable {
     for( layer in layers) {
       layer.resize(width, height)
     }
+  }
+
+  fun  updateWidthAndHeight(width: Float, height: Float) {
+    cameraLogic.worldWidth = width
+    cameraLogic.worldHeight = height
   }
 }
 

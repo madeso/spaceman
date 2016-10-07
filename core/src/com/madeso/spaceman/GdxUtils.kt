@@ -49,3 +49,9 @@ abstract class SuperGame(private var game: Game) {
     game.screen = screen;
   }
 }
+
+fun Within(min:Float, v:Float, max:Float) : Float {
+  if( v < min ) return min
+  if( v > max ) return max
+  return v
+}
