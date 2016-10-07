@@ -134,6 +134,10 @@ class Coin(assets: Assets, world: SpacemanWorld, private val startX: Float, priv
   override fun init(remote: ObjectRemote) {
     remote.teleport(startX, startY)
     remote.setRenderSize(70f, 70f)
+    remote.collisionRect.height =36f
+    remote.collisionRect.width =36f
+    remote.collisionRect.dx = (70f - remote.collisionRect.width) / 2f
+    remote.collisionRect.dy = (70f - remote.collisionRect.height) / 2f
   }
 
   override fun act(delta: Float, remote: ObjectRemote) {
@@ -159,6 +163,12 @@ class SpacemanWorld(assets: Assets, args:WorldArg) : World(args) {
 
   init {
     renderWorld.camera.zoom = 0.6f
+
+    addCollision(object: Collision<Alien, Coin>() {
+      override fun onCollided(alien: Alien, alienRemote: ObjectRemote, coin: Coin, coinRemote: ObjectRemote) {
+        coinRemote.removeSelf()
+      }
+    })
   }
 
   override fun update(delta: Float) {

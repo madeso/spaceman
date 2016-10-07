@@ -189,6 +189,23 @@ class LoadingMap<TWorld:World>(private val assetManager: AssetManager, private v
 class WorldArg(val renderWorld : RenderWorld, val updateWorld : UpdateWorld, val backgroundName : String, val renderLayerArgs:RenderLayerArgs) {
 }
 
+interface CollisionCallback {
+  fun onCollision(lhs:PhysicalWorldObject, rhs:PhysicalWorldObject)
+}
+
+
+
+abstract class Collision<in Lhs : ObjectController, in Rhs: ObjectController> : CollisionCallback {
+  override fun onCollision(lhs: PhysicalWorldObject, rhs: PhysicalWorldObject) {
+    try {
+      onCollided(lhs.controller as Lhs, lhs.remote, rhs.controller as Rhs, rhs.remote)
+    }
+    catch (a:ClassCastException) {
+    }
+  }
+  abstract fun onCollided(lhs:Lhs, lhsRemote: ObjectRemote, rhs:Rhs, rhsRemote: ObjectRemote)
+}
+
 abstract class World(args:WorldArg) {
   val renderWorld = args.renderWorld
   val updateWorld = args.updateWorld
@@ -196,6 +213,10 @@ abstract class World(args:WorldArg) {
   var height = 0f
   val ui = Ui()
   protected val buttons = ButtonList()
+
+  fun addCollision(cb : CollisionCallback) {
+    updateWorld.collisions.add(cb)
+  }
 
   open fun update(delta:Float) {
     ui.act(delta)
@@ -526,6 +547,8 @@ class UpdateWorld(private val collision: CollisionMap) : Disposable {
   private val objects = Array<WorldObject>()
   private val moveables = Array<MoveableObject>()
 
+  val collisions = Array<CollisionCallback>()
+
   fun act(delta: Float) {
     for(o in objects) {
       o.act(delta)
@@ -537,6 +560,27 @@ class UpdateWorld(private val collision: CollisionMap) : Disposable {
 
     objects.removeAll { obj -> obj.shouldBeRemoved }
     moveables.removeAll { mov -> mov.shouldBeRemoved }
+
+    for(c in collisions) {
+      reactOnCollision(c)
+    }
+  }
+
+  private fun reactOnCollision(c: CollisionCallback) {
+    val numberOfMoveables = moveables.size
+    for(lhsi in 0..numberOfMoveables-1) {
+      val lhs = moveables[lhsi]
+      if (lhs is PhysicalWorldObject) {
+        for(rhsi in 0..numberOfMoveables-1) {
+          val rhs = moveables[rhsi]
+          if (lhsi != rhsi && rhs is PhysicalWorldObject) {
+            if (lhs.globalCollisionRect.overlaps(rhs.globalCollisionRect)) {
+              c.onCollision(lhs, rhs)
+            }
+          }
+        }
+      }
+    }
   }
 
   fun add(o : MoveableObject) {
@@ -587,7 +631,7 @@ class CollisionRect {
   var height = 64f
 }
 
-class PhysicalWorldObject(private var animation : Animation, private val world: World, private var controller: ObjectController, val renderObject: PhysicalWorldObjectRenderer) : MoveableObject() {
+class PhysicalWorldObject(private var animation : Animation, private val world: World, var controller: ObjectController, val renderObject: PhysicalWorldObjectRenderer) : MoveableObject() {
   var x = 0f
     private set
   var y = 0f
@@ -603,6 +647,9 @@ class PhysicalWorldObject(private var animation : Animation, private val world: 
   private var keepWithinHorizontalWorld = false
 
   protected var collisionRect = CollisionRect()
+
+  val globalCollisionRect : Rectangle
+    get() = Rectangle(x+collisionRect.dx, y+collisionRect.dy, collisionRect.width, collisionRect.height)
 
   val remote : ObjectRemote
 
