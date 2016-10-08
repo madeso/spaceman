@@ -45,11 +45,13 @@ interface ObjectRemote {
   var debug : Boolean
   val outside : CollisionFlags
   var collisionRect : CollisionRect
+  val worldCollisionRect : Rectangle
 
   val x : Float
   val y : Float
   val width : Float
   val height : Float
+  val isFlickering : Boolean
 
   var keepWithinHorizontalWorld : Boolean
 
@@ -686,6 +688,10 @@ class PhysicalWorldObject(private var animation : Animation, private val world: 
   init {
     val self = this
     remote = object : ObjectRemote {
+      override val isFlickering: Boolean
+        get() = self.isFlickering
+      override val worldCollisionRect: Rectangle
+        get() = globalCollisionRect
       override var collisionRect: CollisionRect
         get() = self.collisionRect
         set(value) {
@@ -876,6 +882,6 @@ class PhysicalWorldObject(private var animation : Animation, private val world: 
     this.flickertimer = time
   }
 
-  private val FLICKER = 0.02f
+  private val FLICKER = 0.05f
 }
 

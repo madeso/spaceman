@@ -25,10 +25,14 @@ class Assets : Disposable {
   }
 }
 
-val MOVE_SPEED = 70f * 6f
+val DMG_SPEED = 70f * 12f
+val DMG_TIME = 0.1f
+val FLICKER_TIME = 2.0f
 
+val MOVE_SPEED = 70f * 6f
 val JUMP_SPEED = 70f * 6
 val GRAVITY = 70f * 32
+val JUMP_KILL = 700f
 val MAX_JUMP_TIME = 0.5f
 val GHOST_JUMP = 0.1f
 val MOVEMENT_ACCELERATION_GROUND = 0.6f
@@ -41,6 +45,28 @@ class Alien(assets:Assets, private val world: SpacemanWorld, private val startX 
   private var jumpTime = 0f
   private var curSpeed = 0f
 
+  fun jumpKill() {
+    vy = JUMP_KILL
+  }
+
+  val isFalling : Boolean
+    get() = vy < -40f
+
+  var damageDir = 0
+  var damageTime = 0f
+
+  fun damage(otherX:Float, remote:ObjectRemote) {
+    damageDir =
+      if( otherX < remote.x ) {
+        1
+      }
+      else {
+        -1
+      }
+
+    damageTime = DMG_TIME
+  }
+
   override fun act(delta: Float, remote: ObjectRemote) {
     if( remote.lastCollision.down && world.controls.jump.isDown == false) {
       vy = 0f
@@ -51,11 +77,14 @@ class Alien(assets:Assets, private val world: SpacemanWorld, private val startX 
       curSpeed = 0f
     }
 
-    if( world.controls.jump.isClicked && jumpTime < GHOST_JUMP ) {
+    if( damageTime > 0f ) damageTime -= delta
+    val isTakingDamage = damageTime > 0f
+
+    if( isTakingDamage == false && world.controls.jump.isClicked && jumpTime < GHOST_JUMP ) {
       vy = JUMP_SPEED
     }
 
-    if( vy > 0f && world.controls.jump.isDown && jumpTime < MAX_JUMP_TIME) {
+    if( isTakingDamage == false && vy > 0f && world.controls.jump.isDown && jumpTime < MAX_JUMP_TIME) {
       // val exp = ( MAX_JUMP_TIME - jumpTime ) / MAX_JUMP_TIME
       // vy = JUMP_SPEED * exp*exp
       vy -= GRAVITY * delta * (jumpTime / MAX_JUMP_TIME) * (jumpTime / MAX_JUMP_TIME)
@@ -68,11 +97,11 @@ class Alien(assets:Assets, private val world: SpacemanWorld, private val startX 
 
     jumpTime += delta
 
-    val hor_move = PlusMinus(world.controls.right.isDown, world.controls.left.isDown)
+    val hor_move = if( isTakingDamage ) damageDir else PlusMinus(world.controls.right.isDown, world.controls.left.isDown)
 
-    val targetSpeed = hor_move.toFloat() * MOVE_SPEED
+    val targetSpeed = hor_move.toFloat() * if(isTakingDamage) DMG_SPEED else MOVE_SPEED
 
-    val acc = if (remote.lastCollision.down) {
+    val acc = if (isTakingDamage || remote.lastCollision.down) {
       MOVEMENT_ACCELERATION_GROUND
     }
     else {
@@ -86,7 +115,10 @@ class Alien(assets:Assets, private val world: SpacemanWorld, private val startX 
 
     remote.move(curSpeed * delta, vy * delta)
 
-    if( remote.lastCollision.down == false) {
+    if( isTakingDamage ) {
+      remote.setAnimation(hurt)
+    }
+    else if( remote.lastCollision.down == false) {
       remote.setAnimation(jump)
     }
     else if (hor_move != 0 && !remote.lastCollision.x) {
@@ -96,7 +128,7 @@ class Alien(assets:Assets, private val world: SpacemanWorld, private val startX 
       remote.setAnimation(stand)
     }
 
-    if( !remote.lastCollision.x ) {
+    if( !remote.lastCollision.x && isTakingDamage==false ) {
       if( hor_move == 1 ) {
         remote.facingRight = true
       }
@@ -111,8 +143,6 @@ class Alien(assets:Assets, private val world: SpacemanWorld, private val startX 
     }
 
     world.renderWorld.cameraLogic.updatePlatformCamera(delta, remote.x+remote.collisionRect.dx, remote.y+remote.collisionRect.dy, remote.collisionRect.width, remote.collisionRect.height)
-
-    // remote.debug = remote.outside.up
   }
 
   override fun dispose() {
@@ -126,6 +156,7 @@ class Alien(assets:Assets, private val world: SpacemanWorld, private val startX 
   }
 
   val stand = Animation(1.0f, assets.pack.newSprite("player/alienGreen_stand"))
+  val hurt = Animation(1.0f, assets.pack.newSprite("player/alienGreen_hit"))
   val jump = Animation(1.0f, assets.pack.newSprite("player/alienGreen_jump"))
   val walk = Animation(0.1f, assets.pack.newSprite("player/alienGreen_walk1"), assets.pack.newSprite("player/alienGreen_walk2")).setLooping()
 }
@@ -149,6 +180,45 @@ class Coin(assets: Assets, world: SpacemanWorld, private val startX: Float, priv
   val basic = Animation(1.0f, assets.pack.newSprite("items/coinGold"))
 }
 
+class Slime(assets: Assets, world: SpacemanWorld, private val startX: Float, private val startY: Float) : ObjectController {
+  override fun init(remote: ObjectRemote) {
+    remote.debug
+    remote.teleport(startX, startY)
+    remote.setRenderSize(49f, 34f)
+    remote.collisionRect.height =49f
+    remote.collisionRect.width =34f
+    remote.collisionRect.dx = (70f - remote.collisionRect.width) / 2f
+    remote.collisionRect.dy = 0f
+  }
+
+  var squashTimer = 0f
+
+  fun smash() {
+    squashTimer = 0.5f
+  }
+
+  override fun act(delta: Float, remote: ObjectRemote) {
+    if( squashTimer > 0f ) {
+      squashTimer -= delta
+
+      if( squashTimer > 0f ) {
+        remote.setRenderSize(57f, 13f)
+        remote.setAnimation(squashed)
+      }
+      else {
+        remote.setRenderSize(49f, 34f)
+        remote.setAnimation(basic)
+      }
+    }
+  }
+
+  override fun dispose() {
+  }
+
+  val basic = Animation(0.5f, assets.pack.newSprite("enemies/slime"), assets.pack.newSprite("enemies/slime_walk")).setLooping()
+  val squashed = Animation(1.0f, assets.pack.newSprite("enemies/slime_squashed"))
+}
+
 class GameControls(assets: Assets, ui: Ui, buttons: ButtonList) : BaseGameControls() {
   val left = buttons.newButton().addKeyboard(Input.Keys.LEFT).addKeyboard(Input.Keys.A).addGfx(ui, assets.touch, "flat", "action-left", Alignment.BOTTOM_LEFT, 0f, 0f)
   val right = buttons.newButton().addKeyboard(Input.Keys.RIGHT).addKeyboard(Input.Keys.D).addGfx(ui, assets.touch, "flat", "action-right", Alignment.BOTTOM_LEFT, 80f + ui.spacing, 0f)
@@ -167,6 +237,23 @@ class SpacemanWorld(assets: Assets, args:WorldArg) : World(args) {
     addCollision(object: Collision<Alien, Coin>() {
       override fun onCollided(alien: Alien, alienRemote: ObjectRemote, coin: Coin, coinRemote: ObjectRemote) {
         coinRemote.removeSelf()
+      }
+    })
+
+    addCollision(object: Collision<Alien, Slime>() {
+      override fun onCollided(alien: Alien, alienRemote: ObjectRemote, slime: Slime, slimeRemote: ObjectRemote) {
+        if( alienRemote.worldCollisionRect.y > slimeRemote.worldCollisionRect.y + slimeRemote.worldCollisionRect.height/2f ) {
+          if( alien.isFalling ) {
+            alien.jumpKill()
+            slime.smash()
+          }
+        }
+        else {
+          if( alienRemote.isFlickering == false ) {
+            alienRemote.flicker(FLICKER_TIME)
+            alien.damage(slimeRemote.x, alienRemote)
+          }
+        }
       }
     })
   }
@@ -193,6 +280,12 @@ class SpacemanSuperGame(game:Game) : SuperGame(game) {
           map.addObject(coin.basic, world, coin)
         }
       })
+    .registerCreator("slime",object: ObjectCreator<SpacemanSuperGame, SpacemanWorld> {
+      override fun create(game: SpacemanSuperGame, world: SpacemanWorld, map: ObjectCreatorDispatcher, x: Float, y: Float, tile: TiledMapTileMapObject) {
+        val slime = Slime(assets, world, x, y)
+        map.addObject(slime.basic, world, slime)
+      }
+    })
 
   init {
     loadWorld("test.tmx")
