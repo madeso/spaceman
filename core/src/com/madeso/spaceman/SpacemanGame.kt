@@ -311,6 +311,8 @@ class SpacemanSuperGame(game:Game) : SuperGame(game) {
         }
       })
       .registerNullCreator("alien-head")
+      .registerNullCreator("springboard")
+      .registerNullCreator("spikes")
       .registerCreator("gold-coin", object : ObjectCreator<SpacemanSuperGame, SpacemanWorld> {
         override fun create(game: SpacemanSuperGame, world: SpacemanWorld, map: ObjectCreatorDispatcher, x: Float, y: Float, tile: TiledMapTileMapObject) {
           val coin = Coin(assets, world, x, y)
