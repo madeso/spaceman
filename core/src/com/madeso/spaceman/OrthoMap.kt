@@ -47,6 +47,8 @@ interface ObjectRemote {
   var collisionRect : CollisionRect
   val worldCollisionRect : Rectangle
 
+  var visible : Boolean
+
   val x : Float
   val y : Float
   val width : Float
@@ -676,6 +678,8 @@ class PhysicalWorldObject(private var animation : Animation, private val world: 
   private val collideWithWorld = true
   var animationTime = 0f
 
+  private var visible = true
+
   private var keepWithinHorizontalWorld = false
 
   protected var collisionRect = CollisionRect()
@@ -688,6 +692,11 @@ class PhysicalWorldObject(private var animation : Animation, private val world: 
   init {
     val self = this
     remote = object : ObjectRemote {
+      override var visible: Boolean
+        get() = self.visible
+        set(value) {
+          self.visible = value
+        }
       override val isFlickering: Boolean
         get() = self.isFlickering
       override val worldCollisionRect: Rectangle
@@ -818,6 +827,9 @@ class PhysicalWorldObject(private var animation : Animation, private val world: 
   }
 
   fun render(batch: Batch, width: Float, height: Float) {
+    if( visible == false ) {
+      return
+    }
     if (isFlickering) {
       if (this.ftimer > FLICKER) {
         return

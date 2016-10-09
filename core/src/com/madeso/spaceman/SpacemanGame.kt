@@ -186,7 +186,6 @@ class Slime(assets: Assets, world: SpacemanWorld, private val startX: Float, pri
   var moveRight = true
 
   override fun init(remote: ObjectRemote) {
-    remote.debug
     remote.teleport(startX, startY)
     remote.setRenderSize(49f, 34f)
     remote.collisionRect.height =49f
@@ -233,8 +232,8 @@ class Slime(assets: Assets, world: SpacemanWorld, private val startX: Float, pri
 
 class SetDir(assets: Assets, world: SpacemanWorld, private val startX: Float, private val startY: Float, val isRight : Boolean) : ObjectController {
   override fun init(remote: ObjectRemote) {
-    remote.debug
     remote.teleport(startX, startY)
+    remote.visible = false
     remote.setRenderSize(70f, 70f)
     remote.collisionRect.height =70f
     remote.collisionRect.width =70f
