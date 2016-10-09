@@ -38,7 +38,7 @@ val GHOST_JUMP = 0.1f
 val MOVEMENT_ACCELERATION_GROUND = 0.6f
 val MOVEMENT_ACCELERATION_AIR = 0.1f
 
-val MAX_Y_SPEED = JUMP_SPEED * 2
+val MAX_Y_SPEED = JUMP_SPEED * 4
 
 class Alien(assets:Assets, private val world: SpacemanWorld, private val startX : Float, private val startY : Float) : ObjectController {
   private var vy = 0f
@@ -47,6 +47,14 @@ class Alien(assets:Assets, private val world: SpacemanWorld, private val startX 
 
   fun jumpKill() {
     vy = JUMP_KILL
+  }
+
+  fun  springBoardJump(alienRemote: ObjectRemote) {
+    val test = -vy
+    vy = Within(JUMP_KILL, test *
+        if( world.controls.jump.isDown ) 1.4f
+        else 0.8f
+        , JUMP_KILL * 2.5f)
   }
 
   val isFalling : Boolean
@@ -230,6 +238,42 @@ class Slime(assets: Assets, world: SpacemanWorld, private val startX: Float, pri
   val squashed = Animation(1.0f, assets.pack.newSprite("enemies/slime_squashed"))
 }
 
+class SpringBoard(assets: Assets, world: SpacemanWorld, private val startX: Float, private val startY: Float) : ObjectController {
+  override fun init(remote: ObjectRemote) {
+    remote.teleport(startX, startY)
+    remote.setRenderSize(70f, 70f)
+    remote.collisionRect.height =70f
+    remote.collisionRect.width =70f
+    remote.collisionRect.dx = 0f
+    remote.collisionRect.dy = 0f
+  }
+
+  var squashTimer = 0f
+
+  fun smash() {
+    squashTimer = 0.5f
+  }
+
+  override fun act(delta: Float, remote: ObjectRemote) {
+    if( squashTimer > 0f ) {
+      squashTimer -= delta
+
+      if( squashTimer > 0f ) {
+        remote.setAnimation(squashed)
+      }
+      else {
+        remote.setAnimation(basic)
+      }
+    }
+  }
+
+  override fun dispose() {
+  }
+
+  val basic = Animation(1.0f, assets.pack.newSprite("items/springboardUp"))
+  val squashed = Animation(1.0f, assets.pack.newSprite("items/springboardDown"))
+}
+
 class SetDir(assets: Assets, world: SpacemanWorld, private val startX: Float, private val startY: Float, val isRight : Boolean) : ObjectController {
   override fun init(remote: ObjectRemote) {
     remote.teleport(startX, startY)
@@ -293,6 +337,17 @@ class SpacemanWorld(assets: Assets, args:WorldArg) : World(args) {
         slime.moveRight = setDir.isRight
       }
     })
+
+    addCollision(object: Collision<Alien, SpringBoard>() {
+      override fun onCollided(alien: Alien, alienRemote: ObjectRemote, slime: SpringBoard, slimeRemote: ObjectRemote) {
+        if( alienRemote.worldCollisionRect.y > slimeRemote.worldCollisionRect.y + slimeRemote.worldCollisionRect.height/2f ) {
+          if( alien.isFalling ) {
+            alien.springBoardJump(alienRemote)
+            slime.smash()
+          }
+        }
+      }
+    })
   }
 
   override fun update(delta: Float) {
@@ -311,7 +366,6 @@ class SpacemanSuperGame(game:Game) : SuperGame(game) {
         }
       })
       .registerNullCreator("alien-head")
-      .registerNullCreator("springboard")
       .registerNullCreator("spikes")
       .registerCreator("gold-coin", object : ObjectCreator<SpacemanSuperGame, SpacemanWorld> {
         override fun create(game: SpacemanSuperGame, world: SpacemanWorld, map: ObjectCreatorDispatcher, x: Float, y: Float, tile: TiledMapTileMapObject) {
@@ -334,6 +388,12 @@ class SpacemanSuperGame(game:Game) : SuperGame(game) {
     .registerCreator("dir-right",object: ObjectCreator<SpacemanSuperGame, SpacemanWorld> {
       override fun create(game: SpacemanSuperGame, world: SpacemanWorld, map: ObjectCreatorDispatcher, x: Float, y: Float, tile: TiledMapTileMapObject) {
         val slime = SetDir(assets, world, x, y, true)
+        map.addObject(slime.basic, world, slime)
+      }
+    })
+    .registerCreator("springboard",object: ObjectCreator<SpacemanSuperGame, SpacemanWorld> {
+      override fun create(game: SpacemanSuperGame, world: SpacemanWorld, map: ObjectCreatorDispatcher, x: Float, y: Float, tile: TiledMapTileMapObject) {
+        val slime = SpringBoard(assets, world, x, y)
         map.addObject(slime.basic, world, slime)
       }
     })
