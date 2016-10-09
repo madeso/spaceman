@@ -63,16 +63,17 @@ class Alien(assets:Assets, private val world: SpacemanWorld, private val startX 
   var damageDir = 0
   var damageTime = 0f
 
-  fun damage(otherX:Float, remote:ObjectRemote) {
-    damageDir =
-      if( otherX < remote.x ) {
-        1
-      }
-      else {
-        -1
-      }
+  fun damage(otherX:Float?, remote:ObjectRemote) {
+    if( otherX != null ) {
+      damageDir =
+          if (otherX < remote.x) {
+            1
+          } else {
+            -1
+          }
 
-    damageTime = DMG_TIME
+      damageTime = DMG_TIME
+    }
   }
 
   override fun act(delta: Float, remote: ObjectRemote) {
@@ -274,6 +275,25 @@ class SpringBoard(assets: Assets, world: SpacemanWorld, private val startX: Floa
   val squashed = Animation(1.0f, assets.pack.newSprite("items/springboardDown"))
 }
 
+class Spikes(assets: Assets, world: SpacemanWorld, private val startX: Float, private val startY: Float) : ObjectController {
+  override fun init(remote: ObjectRemote) {
+    remote.teleport(startX, startY)
+    remote.setRenderSize(70f, 70f)
+    remote.collisionRect.height =35f
+    remote.collisionRect.width =70f
+    remote.collisionRect.dx = 0f
+    remote.collisionRect.dy = 0f
+  }
+
+  override fun act(delta: Float, remote: ObjectRemote) {
+  }
+
+  override fun dispose() {
+  }
+
+  val basic = Animation(1.0f, assets.pack.newSprite("items/spikes"))
+}
+
 class SetDir(assets: Assets, world: SpacemanWorld, private val startX: Float, private val startY: Float, val isRight : Boolean) : ObjectController {
   override fun init(remote: ObjectRemote) {
     remote.teleport(startX, startY)
@@ -332,6 +352,18 @@ class SpacemanWorld(assets: Assets, args:WorldArg) : World(args) {
       }
     })
 
+    addCollision(object: Collision<Alien, Spikes>() {
+      override fun onCollided(alien: Alien, alienRemote: ObjectRemote, spikes: Spikes, spikesRemote: ObjectRemote) {
+        if( alienRemote.worldCollisionRect.y > spikesRemote.worldCollisionRect.y + spikesRemote.worldCollisionRect.height/2f ) {
+          alien.jumpKill()
+          if( alienRemote.isFlickering == false ) {
+            alienRemote.flicker(FLICKER_TIME)
+            alien.damage(null, alienRemote)
+          }
+        }
+      }
+    })
+
     addCollision(object: Collision<SetDir, Slime>() {
       override fun onCollided(setDir: SetDir, setDirRemote: ObjectRemote, slime: Slime, slimeRemote: ObjectRemote) {
         slime.moveRight = setDir.isRight
@@ -366,37 +398,42 @@ class SpacemanSuperGame(game:Game) : SuperGame(game) {
         }
       })
       .registerNullCreator("alien-head")
-      .registerNullCreator("spikes")
       .registerCreator("gold-coin", object : ObjectCreator<SpacemanSuperGame, SpacemanWorld> {
         override fun create(game: SpacemanSuperGame, world: SpacemanWorld, map: ObjectCreatorDispatcher, x: Float, y: Float, tile: TiledMapTileMapObject) {
           val coin = Coin(assets, world, x, y)
           map.addObject(coin.basic, world, coin)
         }
       })
-    .registerCreator("slime",object: ObjectCreator<SpacemanSuperGame, SpacemanWorld> {
-      override fun create(game: SpacemanSuperGame, world: SpacemanWorld, map: ObjectCreatorDispatcher, x: Float, y: Float, tile: TiledMapTileMapObject) {
-        val slime = Slime(assets, world, x, y)
-        map.addObject(slime.basic, world, slime)
-      }
-    })
-    .registerCreator("dir-left",object: ObjectCreator<SpacemanSuperGame, SpacemanWorld> {
-      override fun create(game: SpacemanSuperGame, world: SpacemanWorld, map: ObjectCreatorDispatcher, x: Float, y: Float, tile: TiledMapTileMapObject) {
-        val slime = SetDir(assets, world, x, y, false)
-        map.addObject(slime.basic, world, slime)
-      }
-    })
-    .registerCreator("dir-right",object: ObjectCreator<SpacemanSuperGame, SpacemanWorld> {
-      override fun create(game: SpacemanSuperGame, world: SpacemanWorld, map: ObjectCreatorDispatcher, x: Float, y: Float, tile: TiledMapTileMapObject) {
-        val slime = SetDir(assets, world, x, y, true)
-        map.addObject(slime.basic, world, slime)
-      }
-    })
-    .registerCreator("springboard",object: ObjectCreator<SpacemanSuperGame, SpacemanWorld> {
-      override fun create(game: SpacemanSuperGame, world: SpacemanWorld, map: ObjectCreatorDispatcher, x: Float, y: Float, tile: TiledMapTileMapObject) {
-        val slime = SpringBoard(assets, world, x, y)
-        map.addObject(slime.basic, world, slime)
-      }
-    })
+      .registerCreator("spikes", object : ObjectCreator<SpacemanSuperGame, SpacemanWorld> {
+        override fun create(game: SpacemanSuperGame, world: SpacemanWorld, map: ObjectCreatorDispatcher, x: Float, y: Float, tile: TiledMapTileMapObject) {
+          val coin = Spikes(assets, world, x, y)
+          map.addObject(coin.basic, world, coin)
+        }
+      })
+      .registerCreator("slime",object: ObjectCreator<SpacemanSuperGame, SpacemanWorld> {
+        override fun create(game: SpacemanSuperGame, world: SpacemanWorld, map: ObjectCreatorDispatcher, x: Float, y: Float, tile: TiledMapTileMapObject) {
+          val slime = Slime(assets, world, x, y)
+          map.addObject(slime.basic, world, slime)
+        }
+      })
+      .registerCreator("dir-left",object: ObjectCreator<SpacemanSuperGame, SpacemanWorld> {
+        override fun create(game: SpacemanSuperGame, world: SpacemanWorld, map: ObjectCreatorDispatcher, x: Float, y: Float, tile: TiledMapTileMapObject) {
+          val slime = SetDir(assets, world, x, y, false)
+          map.addObject(slime.basic, world, slime)
+        }
+      })
+      .registerCreator("dir-right",object: ObjectCreator<SpacemanSuperGame, SpacemanWorld> {
+        override fun create(game: SpacemanSuperGame, world: SpacemanWorld, map: ObjectCreatorDispatcher, x: Float, y: Float, tile: TiledMapTileMapObject) {
+          val slime = SetDir(assets, world, x, y, true)
+          map.addObject(slime.basic, world, slime)
+        }
+      })
+      .registerCreator("springboard",object: ObjectCreator<SpacemanSuperGame, SpacemanWorld> {
+        override fun create(game: SpacemanSuperGame, world: SpacemanWorld, map: ObjectCreatorDispatcher, x: Float, y: Float, tile: TiledMapTileMapObject) {
+          val slime = SpringBoard(assets, world, x, y)
+          map.addObject(slime.basic, world, slime)
+        }
+      })
 
   init {
     loadWorld("test.tmx")
