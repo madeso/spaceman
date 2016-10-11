@@ -90,23 +90,23 @@ enemies/blockerMad
   index: -1
 enemies/fishGreen
   rotate: false
-  xy: 1840, 977
+  xy: 1914, 949
   size: 60, 45
   orig: 60, 45
   offset: 0, 0
   index: -1
 enemies/fishGreen_dead
   rotate: false
-  xy: 1914, 949
+  xy: 1914, 902
   size: 60, 45
   orig: 60, 45
   offset: 0, 0
   index: -1
-enemies/fishPink
+enemies/fly
   rotate: false
-  xy: 1914, 902
-  size: 60, 45
-  orig: 60, 45
+  xy: 1840, 977
+  size: 67, 45
+  orig: 67, 45
   offset: 0, 0
   index: -1
 enemies/frog_dead
@@ -501,7 +501,7 @@ enemies/robot/tracks_short2
   orig: 103, 66
   offset: 0, 0
   index: -1
-enemies/slime
+enemies/slimeBlue
   rotate: false
   xy: 1728, 438
   size: 49, 34
@@ -518,13 +518,6 @@ enemies/slimeBlue_squashed
 enemies/slimeGreen_squashed
   rotate: false
   xy: 968, 614
-  size: 57, 13
-  orig: 57, 13
-  offset: 0, 0
-  index: -1
-enemies/slime_squashed
-  rotate: false
-  xy: 1100, 510
   size: 57, 13
   orig: 57, 13
   offset: 0, 0
@@ -2483,77 +2476,77 @@ enemies/barnacle_hit
   index: -1
 enemies/blockerSad
   rotate: false
-  xy: 365, 19
+  xy: 316, 3
   size: 51, 51
   orig: 51, 51
   offset: 0, 0
   index: -1
 enemies/fishGreen_hit
   rotate: false
-  xy: 775, 82
+  xy: 827, 82
   size: 57, 44
   orig: 57, 44
   offset: 0, 0
   index: -1
 enemies/fishPink_hit
   rotate: false
-  xy: 775, 82
+  xy: 827, 82
   size: 57, 44
   orig: 57, 44
   offset: 0, 0
   index: -1
 enemies/fishGreen_swim
   rotate: false
-  xy: 834, 82
+  xy: 886, 82
   size: 57, 44
   orig: 57, 44
   offset: 0, 0
   index: -1
+enemies/fishPink
+  rotate: false
+  xy: 254, 9
+  size: 60, 45
+  orig: 60, 45
+  offset: 0, 0
+  index: -1
 enemies/fishPink_dead
   rotate: false
-  xy: 185, 9
+  xy: 647, 81
   size: 60, 45
   orig: 60, 45
   offset: 0, 0
   index: -1
 enemies/fishPink_swim
   rotate: false
-  xy: 893, 82
+  xy: 945, 82
   size: 57, 44
   orig: 57, 44
   offset: 0, 0
   index: -1
-enemies/fly
-  rotate: false
-  xy: 247, 9
-  size: 57, 45
-  orig: 57, 45
-  offset: 0, 0
-  index: -1
 enemies/fly_dead
   rotate: false
-  xy: 306, 9
+  xy: 709, 81
   size: 57, 45
   orig: 57, 45
   offset: 0, 0
   index: -1
 enemies/fly_fly
   rotate: false
-  xy: 647, 87
-  size: 65, 39
-  orig: 65, 39
+  xy: 185, 9
+  size: 67, 45
+  orig: 67, 45
   offset: 0, 0
   index: -1
 enemies/fly_hit
   rotate: false
-  xy: 952, 81
+  xy: 768, 81
   size: 57, 45
   orig: 57, 45
   offset: 0, 0
   index: -1
 enemies/frog
   rotate: false
-  xy: 1176, 87
+  xy: 1065, 87
   size: 58, 39
   orig: 58, 39
   offset: 0, 0
@@ -2574,322 +2567,329 @@ enemies/frog_leap
   index: -1
 enemies/ladyBug
   rotate: false
-  xy: 1479, 92
+  xy: 1368, 92
   size: 58, 34
   orig: 58, 34
   offset: 0, 0
   index: -1
 enemies/ladyBug_fly
   rotate: false
-  xy: 714, 84
+  xy: 1004, 84
   size: 59, 42
   orig: 59, 42
   offset: 0, 0
   index: -1
 enemies/ladyBug_hit
   rotate: false
-  xy: 1539, 92
+  xy: 1428, 92
   size: 58, 34
   orig: 58, 34
   offset: 0, 0
   index: -1
 enemies/mouse
   rotate: false
-  xy: 1236, 91
+  xy: 1125, 91
   size: 59, 35
   orig: 59, 35
   offset: 0, 0
   index: -1
 enemies/mouse_dead
   rotate: false
-  xy: 1297, 91
+  xy: 1186, 91
   size: 59, 35
   orig: 59, 35
   offset: 0, 0
   index: -1
 enemies/mouse_hit
   rotate: false
-  xy: 1358, 91
+  xy: 1247, 91
   size: 59, 35
   orig: 59, 35
   offset: 0, 0
   index: -1
 enemies/mouse_walk
   rotate: false
-  xy: 1419, 91
+  xy: 1308, 91
   size: 58, 35
   orig: 58, 35
   offset: 0, 0
   index: -1
+enemies/slime
+  rotate: false
+  xy: 1488, 92
+  size: 57, 34
+  orig: 57, 34
+  offset: 0, 0
+  index: -1
 enemies/slimeBlock
   rotate: false
-  xy: 418, 20
+  xy: 369, 20
   size: 51, 50
   orig: 51, 50
   offset: 0, 0
   index: -1
 enemies/slimeBlock_dead
   rotate: false
-  xy: 471, 16
+  xy: 422, 20
   size: 51, 50
   orig: 51, 50
   offset: 0, 0
   index: -1
 enemies/slimeBlock_hit
   rotate: false
-  xy: 761, 30
+  xy: 1964, 51
   size: 51, 50
   orig: 51, 50
   offset: 0, 0
   index: -1
-enemies/slimeBlue
-  rotate: false
-  xy: 951, 45
-  size: 49, 34
-  orig: 49, 34
-  offset: 0, 0
-  index: -1
 enemies/slimeBlue_blue
   rotate: false
-  xy: 1725, 96
+  xy: 1791, 96
   size: 57, 30
   orig: 57, 30
   offset: 0, 0
   index: -1
 enemies/slimeBlue_dead
   rotate: false
-  xy: 1002, 45
+  xy: 1125, 55
   size: 49, 34
   orig: 49, 34
   offset: 0, 0
   index: -1
 enemies/slimeBlue_hit
   rotate: false
-  xy: 1053, 45
+  xy: 1176, 55
   size: 49, 34
   orig: 49, 34
   offset: 0, 0
   index: -1
 enemies/slimeGreen_hit
   rotate: false
-  xy: 1053, 45
+  xy: 1176, 55
   size: 49, 34
   orig: 49, 34
   offset: 0, 0
   index: -1
 enemies/slime_hit
   rotate: false
-  xy: 1053, 45
+  xy: 1176, 55
   size: 49, 34
   orig: 49, 34
   offset: 0, 0
   index: -1
 enemies/slimeGreen
   rotate: false
-  xy: 1104, 45
+  xy: 1227, 55
   size: 49, 34
   orig: 49, 34
   offset: 0, 0
   index: -1
 enemies/slimeGreen_dead
   rotate: false
-  xy: 1902, 67
+  xy: 1278, 55
   size: 49, 34
   orig: 49, 34
   offset: 0, 0
   index: -1
 enemies/slimeGreen_walk
   rotate: false
-  xy: 1784, 96
+  xy: 1850, 96
   size: 57, 30
   orig: 57, 30
   offset: 0, 0
   index: -1
 enemies/slime_dead
   rotate: false
-  xy: 1953, 67
+  xy: 1377, 56
   size: 49, 34
   orig: 49, 34
   offset: 0, 0
   index: -1
+enemies/slime_squashed
+  rotate: false
+  xy: 1547, 92
+  size: 57, 34
+  orig: 57, 34
+  offset: 0, 0
+  index: -1
 enemies/slime_walk
   rotate: false
-  xy: 1843, 96
-  size: 57, 30
-  orig: 57, 30
+  xy: 1606, 92
+  size: 57, 34
+  orig: 57, 34
   offset: 0, 0
   index: -1
 enemies/snail
   rotate: false
-  xy: 647, 45
+  xy: 647, 39
   size: 55, 40
   orig: 55, 40
   offset: 0, 0
   index: -1
 enemies/snail_hit
   rotate: false
-  xy: 704, 42
+  xy: 704, 39
   size: 55, 40
   orig: 55, 40
   offset: 0, 0
   index: -1
 enemies/spinnerHalf_hit
   rotate: false
-  xy: 1599, 96
+  xy: 1665, 96
   size: 61, 30
   orig: 61, 30
   offset: 0, 0
   index: -1
 enemies/spinnerHalf_spin
   rotate: false
-  xy: 1662, 96
+  xy: 1728, 96
   size: 61, 30
   orig: 61, 30
   offset: 0, 0
   index: -1
 enemies/worm_dead
   rotate: false
-  xy: 1902, 103
+  xy: 1909, 103
   size: 63, 23
   orig: 63, 23
   offset: 0, 0
   index: -1
 enemies/worm_walk
   rotate: false
-  xy: 1967, 103
+  xy: 1974, 103
   size: 63, 23
   orig: 63, 23
   offset: 0, 0
   index: -1
 hud/hud_gem_blue
   rotate: false
-  xy: 1155, 43
+  xy: 1329, 53
   size: 46, 36
   orig: 46, 36
   offset: 0, 0
   index: -1
 hud/hud_gem_green
   rotate: false
-  xy: 1142, 5
+  xy: 1428, 54
   size: 46, 36
   orig: 46, 36
   offset: 0, 0
   index: -1
 hud/hud_gem_red
   rotate: false
-  xy: 1390, 53
+  xy: 1476, 54
   size: 46, 36
   orig: 46, 36
   offset: 0, 0
   index: -1
 hud/hud_gem_yellow
   rotate: false
-  xy: 1438, 53
+  xy: 1524, 54
   size: 46, 36
   orig: 46, 36
   offset: 0, 0
   index: -1
 hud/hud_heartEmpty
   rotate: false
-  xy: 1011, 81
+  xy: 475, 21
   size: 53, 45
   orig: 53, 45
   offset: 0, 0
   index: -1
 hud/hud_heartFull
   rotate: false
-  xy: 1066, 81
+  xy: 761, 34
   size: 53, 45
   orig: 53, 45
   offset: 0, 0
   index: -1
 hud/hud_heartHalf
   rotate: false
-  xy: 1121, 81
+  xy: 1909, 56
   size: 53, 45
   orig: 53, 45
   offset: 0, 0
   index: -1
 hud/hud_keyBlue
   rotate: false
-  xy: 912, 2
+  xy: 1572, 50
   size: 44, 40
   orig: 44, 40
   offset: 0, 0
   index: -1
 hud/hud_keyBlue_disabled
   rotate: false
-  xy: 958, 3
+  xy: 1618, 50
   size: 44, 40
   orig: 44, 40
   offset: 0, 0
   index: -1
 hud/hud_keyGreem_disabled
   rotate: false
-  xy: 1004, 3
+  xy: 530, 26
   size: 44, 40
   orig: 44, 40
   offset: 0, 0
   index: -1
 hud/hud_keyGreen
   rotate: false
-  xy: 1050, 3
+  xy: 576, 27
   size: 44, 40
   orig: 44, 40
   offset: 0, 0
   index: -1
 hud/hud_keyRed
   rotate: false
-  xy: 1096, 3
+  xy: 1665, 54
   size: 44, 40
   orig: 44, 40
   offset: 0, 0
   index: -1
 hud/hud_keyRed_disabled
   rotate: false
-  xy: 1252, 49
+  xy: 1711, 54
   size: 44, 40
   orig: 44, 40
   offset: 0, 0
   index: -1
 hud/hud_keyYellow
   rotate: false
-  xy: 1298, 49
+  xy: 1757, 54
   size: 44, 40
   orig: 44, 40
   offset: 0, 0
   index: -1
 hud/hud_keyYellow_disabled
   rotate: false
-  xy: 1344, 49
+  xy: 1803, 54
   size: 44, 40
   orig: 44, 40
   offset: 0, 0
   index: -1
 hud/hud_p1Alt
   rotate: false
-  xy: 863, 33
+  xy: 865, 2
   size: 47, 47
   orig: 47, 47
   offset: 0, 0
   index: -1
 hud/hud_p2Alt
   rotate: false
-  xy: 570, 20
+  xy: 914, 2
   size: 47, 47
   orig: 47, 47
   offset: 0, 0
   index: -1
 hud/hud_p3
   rotate: false
-  xy: 814, 33
+  xy: 816, 2
   size: 47, 47
   orig: 47, 47
   offset: 0, 0
   index: -1
 hud/hud_p3Alt
   rotate: false
-  xy: 1203, 38
+  xy: 963, 2
   size: 47, 47
   orig: 47, 47
   offset: 0, 0
@@ -2952,15 +2952,15 @@ items/weightChained
   index: -1
 smoke/spaceEffects
   rotate: false
-  xy: 912, 44
-  size: 37, 36
-  orig: 37, 36
-  offset: 0, 0
-  index: 13
-smoke/spaceEffects
-  rotate: false
-  xy: 524, 16
+  xy: 1012, 32
   size: 44, 50
   orig: 44, 50
   offset: 0, 0
   index: 15
+smoke/spaceEffects
+  rotate: false
+  xy: 1849, 58
+  size: 37, 36
+  orig: 37, 36
+  offset: 0, 0
+  index: 13

@@ -41,7 +41,7 @@ interface ObjectRemote {
   fun teleport(x:Float, y:Float)
   fun move(dx:Float, dy:Float)
 
-  fun setRenderSize(width : Float, height : Float)
+  fun setRenderScale(scale : Float)
   var debug : Boolean
   val outside : CollisionFlags
   var collisionRect : CollisionRect
@@ -647,7 +647,7 @@ class PhysicalWorldObjectRenderer : Actor() {
     super.draw(batch, parentAlpha)
     val master = this.master
     if( master == null ) throw Exception("master was null")
-    master.render(batch ?: throw Exception("batch was null"), width, height)
+    master.render(batch ?: throw Exception("batch was null"), scaleX, scaleY)
   }
 
   override fun drawDebug(shapes: ShapeRenderer?) {
@@ -674,7 +674,6 @@ class PhysicalWorldObject(private var animation : Animation, private val world: 
   private var targetY = 0f
   private var suggestedX = 0f
   private var suggestedY = 0f
-  private val drawSuggested = false
   private val collideWithWorld = true
   var animationTime = 0f
 
@@ -745,9 +744,9 @@ class PhysicalWorldObject(private var animation : Animation, private val world: 
       override val lastCollision: CollisionFlags
         get() = latestFlags
 
-      override fun setRenderSize(width: Float, height: Float) {
-        self.renderObject.width = width
-        self.renderObject.height = height
+      override fun setRenderScale(scale: Float) {
+        self.renderObject.scaleX = scale
+        self.renderObject.scaleY = scale
       }
 
       override fun removeSelf() {
@@ -826,7 +825,7 @@ class PhysicalWorldObject(private var animation : Animation, private val world: 
     controller.dispose()
   }
 
-  fun render(batch: Batch, width: Float, height: Float) {
+  fun render(batch: Batch, sx:Float, sy:Float) {
     if( visible == false ) {
       return
     }
@@ -838,17 +837,13 @@ class PhysicalWorldObject(private var animation : Animation, private val world: 
 
     val animationFrame = animation.getKeyFrame(animationTime)
 
+    val w =animationFrame.regionWidth.toFloat()
+    val h =animationFrame.regionHeight.toFloat()
+
     if (this.isFacingRight) {
-      batch.draw(animationFrame, x, y, width, height)
+      batch.draw(animationFrame, x, y, w/2, 0f, w, h, sx, sy, 0f)
     } else {
-      batch.draw(animationFrame, x + width, y, -width, height)
-    }
-
-
-    if (this.drawSuggested) {
-      batch.setColor(1f, 0f, 0f, 0.5f)
-      batch.draw(animationFrame, suggestedX, suggestedY, width, width)
-      batch.setColor(1f, 1f, 1f, 1f)
+      batch.draw(animationFrame, x + w*sx, y, w/2, 0f, -w, h, sx, sy, 0f)
     }
   }
 

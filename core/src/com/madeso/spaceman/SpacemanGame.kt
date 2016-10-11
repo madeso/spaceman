@@ -158,10 +158,11 @@ class Alien(assets:Assets, private val world: SpacemanWorld, private val startX 
   }
 
   override fun init(remote: ObjectRemote) {
-    remote.debug = false
+    remote.debug = true
     remote.keepWithinHorizontalWorld = true
-    remote.setRenderSize(70f, 70f * 2)
     remote.teleport(startX, startY)
+    remote.collisionRect.dx = remote.collisionRect.width / 2f
+    remote.setRenderScale(0.6f)
   }
 
   val stand = Animation(1.0f, assets.pack.newSprite("player/alienGreen_stand"))
@@ -173,7 +174,6 @@ class Alien(assets:Assets, private val world: SpacemanWorld, private val startX 
 class Coin(assets: Assets, world: SpacemanWorld, private val startX: Float, private val startY: Float) : ObjectController {
   override fun init(remote: ObjectRemote) {
     remote.teleport(startX, startY)
-    remote.setRenderSize(70f, 70f)
     remote.collisionRect.height =36f
     remote.collisionRect.width =36f
     remote.collisionRect.dx = (70f - remote.collisionRect.width) / 2f
@@ -196,10 +196,9 @@ class Slime(assets: Assets, world: SpacemanWorld, private val startX: Float, pri
 
   override fun init(remote: ObjectRemote) {
     remote.teleport(startX, startY)
-    remote.setRenderSize(49f, 34f)
-    remote.collisionRect.height =49f
-    remote.collisionRect.width =34f
-    remote.collisionRect.dx = (70f - remote.collisionRect.width) / 2f
+    remote.collisionRect.height =34f
+    remote.collisionRect.width =49f
+    remote.collisionRect.dx = 0f
     remote.collisionRect.dy = 0f
   }
 
@@ -216,11 +215,9 @@ class Slime(assets: Assets, world: SpacemanWorld, private val startX: Float, pri
       squashTimer -= delta
 
       if( squashTimer > 0f ) {
-        remote.setRenderSize(57f, 13f)
         remote.setAnimation(squashed)
       }
       else {
-        remote.setRenderSize(49f, 34f)
         remote.setAnimation(basic)
       }
     }
@@ -242,8 +239,7 @@ class Slime(assets: Assets, world: SpacemanWorld, private val startX: Float, pri
 class SpringBoard(assets: Assets, world: SpacemanWorld, private val startX: Float, private val startY: Float) : ObjectController {
   override fun init(remote: ObjectRemote) {
     remote.teleport(startX, startY)
-    remote.setRenderSize(70f, 70f)
-    remote.collisionRect.height =70f
+    remote.collisionRect.height =49f
     remote.collisionRect.width =70f
     remote.collisionRect.dx = 0f
     remote.collisionRect.dy = 0f
@@ -278,7 +274,6 @@ class SpringBoard(assets: Assets, world: SpacemanWorld, private val startX: Floa
 class Spikes(assets: Assets, world: SpacemanWorld, private val startX: Float, private val startY: Float) : ObjectController {
   override fun init(remote: ObjectRemote) {
     remote.teleport(startX, startY)
-    remote.setRenderSize(70f, 70f)
     remote.collisionRect.height =35f
     remote.collisionRect.width =70f
     remote.collisionRect.dx = 0f
@@ -294,11 +289,29 @@ class Spikes(assets: Assets, world: SpacemanWorld, private val startX: Float, pr
   val basic = Animation(1.0f, assets.pack.newSprite("items/spikes"))
 }
 
+class EnemyFly(assets: Assets, world: SpacemanWorld, private val startX: Float, private val startY: Float) : ObjectController {
+  override fun init(remote: ObjectRemote) {
+    remote.debug = true
+    remote.teleport(startX, startY)
+    remote.collisionRect.height =34f
+    remote.collisionRect.width =49f
+    remote.collisionRect.dx = 0f
+    remote.collisionRect.dy = 0f
+  }
+
+  override fun act(delta: Float, remote: ObjectRemote) {
+  }
+
+  override fun dispose() {
+  }
+
+  val basic = Animation(0.2f, assets.pack.newSprite("enemies/fly"), assets.pack.newSprite("enemies/fly_fly")).setLooping()
+}
+
 class SetDir(assets: Assets, world: SpacemanWorld, private val startX: Float, private val startY: Float, val isRight : Boolean) : ObjectController {
   override fun init(remote: ObjectRemote) {
     remote.teleport(startX, startY)
     remote.visible = false
-    remote.setRenderSize(70f, 70f)
     remote.collisionRect.height =70f
     remote.collisionRect.width =70f
     remote.collisionRect.dx = 0f
@@ -413,6 +426,12 @@ class SpacemanSuperGame(game:Game) : SuperGame(game) {
       .registerCreator("slime",object: ObjectCreator<SpacemanSuperGame, SpacemanWorld> {
         override fun create(game: SpacemanSuperGame, world: SpacemanWorld, map: ObjectCreatorDispatcher, x: Float, y: Float, tile: TiledMapTileMapObject) {
           val slime = Slime(assets, world, x, y)
+          map.addObject(slime.basic, world, slime)
+        }
+      })
+      .registerCreator("fly",object: ObjectCreator<SpacemanSuperGame, SpacemanWorld> {
+        override fun create(game: SpacemanSuperGame, world: SpacemanWorld, map: ObjectCreatorDispatcher, x: Float, y: Float, tile: TiledMapTileMapObject) {
+          val slime = EnemyFly(assets, world, x, y)
           map.addObject(slime.basic, world, slime)
         }
       })
