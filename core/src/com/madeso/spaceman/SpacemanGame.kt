@@ -308,7 +308,7 @@ class EnemyFly(assets: Assets, world: SpacemanWorld, private val startX: Float, 
     current = path.moveCurrent(current, delta * FLY_SPEED)
     //Gdx.app.log("move", "current is $current")
     val p = path.getPosition(current)
-    remote.moveTo(p.x, p.y)
+    remote.moveTo(p.x, p.y, true)
   }
 
   override fun dispose() {
@@ -317,10 +317,14 @@ class EnemyFly(assets: Assets, world: SpacemanWorld, private val startX: Float, 
   val basic = Animation(0.2f, assets.pack.newSprite("enemies/fly"), assets.pack.newSprite("enemies/fly_fly")).setLooping()
 }
 
-private fun ObjectRemote.moveTo(tx: Float, ty: Float) {
+private fun ObjectRemote.moveTo(tx: Float, ty: Float, updateDirection:Boolean) {
   val dx = tx - this.x
   val dy = ty - this.y
   this.move(dx, dy)
+  if( updateDirection ) {
+    if( dx > 0 ) this.facingRight = false
+    else if ( dx < 0 ) this.facingRight = true
+  }
   //Gdx.app.log("move", "moved to $tx $ty")
 }
 

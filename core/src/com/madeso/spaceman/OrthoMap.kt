@@ -146,13 +146,13 @@ class PathWrap(v: FloatArray) {
   fun moveCurrent(current: Float, fl: Float): Float {
     val next = current + fl
     if( next > totalLength ) {
-      return next - totalLength
+      return next - 2 * totalLength
     }
     else return next
   }
   
   fun getPosition(current: Float): Vector2 {
-    var c = current
+    var c = Math.abs(current)
     for( p in points ) {
       if( c < p.length ) {
         val d = c / p.length
