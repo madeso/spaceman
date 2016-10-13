@@ -45,6 +45,7 @@ interface ObjectRemote {
   val outside : CollisionFlags
   var collisionRect : CollisionRect
   val worldCollisionRect : Rectangle
+  var collideWithWorld : Boolean
 
   var visible : Boolean
 
@@ -59,6 +60,8 @@ interface ObjectRemote {
   val lastCollision : CollisionFlags
 
   var facingRight : Boolean
+
+  fun newObject(ani: Animation, controller: ObjectController)
 }
 
 interface ObjectController : Disposable {
@@ -213,7 +216,7 @@ class LoadingMap<TWorld:World>(private val assetManager: AssetManager, private v
         val dispatcher = object : ObjectCreatorDispatcher {
           override fun addObject(ani: Animation, world: World, controller: ObjectController) {
             val rend = PhysicalWorldObjectRenderer()
-            val obj = PhysicalWorldObject(ani, world, controller, rend)
+            val obj = PhysicalWorldObject(ani, this, world, controller, rend)
             rend.master = obj
 
             objectRenderLayer.stage.addActor(rend)
@@ -746,7 +749,7 @@ class CollisionRect {
   var height = 64f
 }
 
-class PhysicalWorldObject(private var animation : Animation, private val world: World, var controller: ObjectController, val renderObject: PhysicalWorldObjectRenderer) : MoveableObject() {
+class PhysicalWorldObject(private var animation : Animation, private val map: ObjectCreatorDispatcher, private val world: World, var controller: ObjectController, val renderObject: PhysicalWorldObjectRenderer) : MoveableObject() {
   var x = 0f
     private set
   var y = 0f
@@ -755,7 +758,7 @@ class PhysicalWorldObject(private var animation : Animation, private val world: 
   private var targetY = 0f
   private var suggestedX = 0f
   private var suggestedY = 0f
-  private val collideWithWorld = true
+  private var collideWithWorld = true
   var animationTime = 0f
 
   private var visible = true
@@ -772,6 +775,16 @@ class PhysicalWorldObject(private var animation : Animation, private val world: 
   init {
     val self = this
     remote = object : ObjectRemote {
+      override var collideWithWorld: Boolean
+        get() = self.collideWithWorld
+        set(value) {
+          self.collideWithWorld = value
+        }
+
+      override fun newObject(ani: Animation, controller: ObjectController) {
+        self.map.addObject(ani, self.world, controller)
+      }
+
       override var visible: Boolean
         get() = self.visible
         set(value) {

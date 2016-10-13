@@ -291,6 +291,32 @@ class Spikes(assets: Assets, world: SpacemanWorld, private val startX: Float, pr
 
 val FLY_SPEED = 70f
 
+class EnemyDead(private val startX: Float, private val startY: Float, private val facingRight: Boolean) : ObjectController {
+  override fun dispose() {
+  }
+
+  override fun init(remote: ObjectRemote) {
+    remote.teleport(startX, startY)
+    remote.collisionRect.height =34f
+    remote.collisionRect.width =49f
+    remote.collisionRect.dx = 0f
+    remote.collisionRect.dy = 0f
+    remote.keepWithinHorizontalWorld = false
+    remote.collideWithWorld = false
+  }
+
+  private var vy = 400f
+
+  override fun act(delta: Float, remote: ObjectRemote) {
+    remote.facingRight = facingRight
+    remote.move(0f, Within(-64f, vy * delta, 64f))
+    vy -= delta * GRAVITY
+    if( remote.y < 0.0f ) {
+      remote.removeSelf()
+    }
+  }
+}
+
 class EnemyFly(assets: Assets, world: SpacemanWorld, private val startX: Float, private val startY: Float, private val path: PathWrap?) : ObjectController {
   override fun init(remote: ObjectRemote) {
     remote.debug = true
@@ -311,10 +337,16 @@ class EnemyFly(assets: Assets, world: SpacemanWorld, private val startX: Float, 
     remote.moveTo(p.x, p.y, true)
   }
 
+  fun smash(remote: ObjectRemote) {
+    remote.removeSelf()
+    remote.newObject(dead, EnemyDead(remote.x, remote.y, remote.facingRight))
+  }
+
   override fun dispose() {
   }
 
   val basic = Animation(0.2f, assets.pack.newSprite("enemies/fly"), assets.pack.newSprite("enemies/fly_fly")).setLooping()
+  val dead = Animation(0.2f, assets.pack.newSprite("enemies/fly_dead"))
 }
 
 private fun ObjectRemote.moveTo(tx: Float, ty: Float, updateDirection:Boolean) {
@@ -374,6 +406,23 @@ class SpacemanWorld(assets: Assets, args:WorldArg) : World(args) {
           if( alien.isFalling ) {
             alien.jumpKill()
             slime.smash()
+          }
+        }
+        else {
+          if( alienRemote.isFlickering == false ) {
+            alienRemote.flicker(FLICKER_TIME)
+            alien.damage(slimeRemote.x, alienRemote)
+          }
+        }
+      }
+    })
+
+    addCollision(object: Collision<Alien, EnemyFly>() {
+      override fun onCollided(alien: Alien, alienRemote: ObjectRemote, slime: EnemyFly, slimeRemote: ObjectRemote) {
+        if( alienRemote.worldCollisionRect.y > slimeRemote.worldCollisionRect.y + slimeRemote.worldCollisionRect.height/2f ) {
+          if( alien.isFalling ) {
+            alien.jumpKill()
+            slime.smash(slimeRemote)
           }
         }
         else {
