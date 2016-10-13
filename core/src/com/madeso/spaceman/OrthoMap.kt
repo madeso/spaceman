@@ -16,15 +16,14 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer
 import com.badlogic.gdx.maps.tiled.TmxMapLoader
 import com.badlogic.gdx.maps.tiled.objects.TiledMapTileMapObject
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer
-import com.badlogic.gdx.math.Rectangle
 import com.badlogic.gdx.scenes.scene2d.Actor
 import com.badlogic.gdx.utils.Align
 import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.Disposable
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
+import com.badlogic.gdx.maps.objects.PolylineMapObject
 import com.badlogic.gdx.maps.tiled.tiles.AnimatedTiledMapTile
-import com.badlogic.gdx.math.MathUtils
-import com.badlogic.gdx.math.Vector3
+import com.badlogic.gdx.math.*
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.utils.viewport.StretchViewport
 import com.badlogic.gdx.utils.viewport.Viewport
@@ -72,19 +71,19 @@ interface ObjectCreatorDispatcher {
 }
 
 interface ObjectCreator<TGame : SuperGame, TWorld:World> {
-  fun create(game: TGame, world: TWorld, map: ObjectCreatorDispatcher, x: Float, y: Float, tile: TiledMapTileMapObject)
+  fun create(game: TGame, world: TWorld, map: ObjectCreatorDispatcher, x: Float, y: Float, tile: TiledMapTileMapObject, path: PathWrap?)
 }
 
 interface CreatorMap<TWorld:World> {
-  fun getCreator(tileName: String, world: TWorld, map: ObjectCreatorDispatcher, x: Float, y: Float, tile: TiledMapTileMapObject)
+  fun getCreator(tileName: String, world: TWorld, map: ObjectCreatorDispatcher, x: Float, y: Float, tile: TiledMapTileMapObject, path: PathWrap?)
 }
 
 class CreatorList<TGame : SuperGame, TWorld:World>(private var game: TGame) : CreatorMap<TWorld> {
   private var creators = HashMap<String, ObjectCreator<TGame, TWorld>>()
 
-  override fun getCreator(tileName: String, world: TWorld, map: ObjectCreatorDispatcher, x: Float, y: Float, tile: TiledMapTileMapObject) {
+  override fun getCreator(tileName: String, world: TWorld, map: ObjectCreatorDispatcher, x: Float, y: Float, tile: TiledMapTileMapObject, path: PathWrap?) {
     val creator = creators.get(tileName) ?: throw NullPointerException("Missing creator for " + tileName)
-    creator.create(game, world, map, x, y, tile)
+    creator.create(game, world, map, x, y, tile, path)
   }
 
   fun registerCreator(tile: String, creator: ObjectCreator<TGame, TWorld>) : CreatorList<TGame, TWorld> {
@@ -94,7 +93,7 @@ class CreatorList<TGame : SuperGame, TWorld:World>(private var game: TGame) : Cr
 
   fun registerNullCreator(tile: String) : CreatorList<TGame, TWorld> {
     return registerCreator(tile, object : ObjectCreator<TGame, TWorld> {
-      override fun create(game: TGame, world: TWorld, map: ObjectCreatorDispatcher, x: Float, y: Float, tile: TiledMapTileMapObject) {
+      override fun create(game: TGame, world: TWorld, map: ObjectCreatorDispatcher, x: Float, y: Float, tile: TiledMapTileMapObject, path: PathWrap?) {
       }
     })
   }
@@ -116,6 +115,57 @@ interface WorldCreator<TWorld:World> {
   fun createWorld(args:WorldArg) : TWorld
 }
 
+class PathPoint(val from: Vector2, val to:Vector2) {
+  val dir = to - from
+  val length = dir.len()
+}
+
+fun MakePoints(v: FloatArray) = kotlin.Array<Vector2>( (v.size/2).toInt()) {
+  i ->
+  Vector2(v[i * 2], v[i * 2 + 1])
+}
+
+fun MakePathPoints(points:kotlin.Array<Vector2>) = kotlin.Array<PathPoint>(points.size-1) {
+  i ->
+  PathPoint(points[i], points[i+1])
+}
+
+class PathWrap(v: FloatArray) {
+  private val points = MakePathPoints(MakePoints(v))
+  private val totalLength = points.sumByDouble{ p -> p.length.toDouble() }.toFloat()
+
+  fun match(x:Float, y:Float, epsilon: Float) : Boolean {
+    for (p in points) {
+      if( p.from.epsilonEquals(x, y, epsilon)) {
+        return true
+      }
+    }
+    return false
+  }
+
+  fun moveCurrent(current: Float, fl: Float): Float {
+    val next = current + fl
+    if( next > totalLength ) {
+      return next - totalLength
+    }
+    else return next
+  }
+  
+  fun getPosition(current: Float): Vector2 {
+    var c = current
+    for( p in points ) {
+      if( c < p.length ) {
+        val d = c / p.length
+        return p.from + p.dir * d
+      }
+      else {
+        c -= p.length
+      }
+    }
+    return points[0].from
+  }
+}
+
 /**
  * The is responsible for loading the map and passing its data along to the world renderer and updator
  */
@@ -129,7 +179,7 @@ class LoadingMap<TWorld:World>(private val assetManager: AssetManager, private v
     val unitScale = 1f
 
     val rw = RenderWorld()
-    val collisionLayer = map.getLayers().get("col")
+    val collisionLayer = map.layers.get("col")
     val objects = UpdateWorld(
         if(collisionLayer != null )
           TiledCollisionMap(collisionLayer)
@@ -154,6 +204,9 @@ class LoadingMap<TWorld:World>(private val assetManager: AssetManager, private v
       }
       else {
         // is object layer
+
+        val paths = Array<PathWrap>()
+
         val objectRenderLayer = ObjectRenderLayer(renderLayerArgs)
         rw.layers.add(objectRenderLayer)
 
@@ -169,15 +222,43 @@ class LoadingMap<TWorld:World>(private val assetManager: AssetManager, private v
         }
 
         val objs = layer.objects
+
+        for (i in 0..objs.count - 1) {
+          val obj = objs.get(i)
+          if (obj is PolylineMapObject) {
+            val p = PathWrap(obj.polyline.transformedVertices)
+            paths.add(p)
+          }
+        }
+
+
         for (i in 0..objs.count - 1) {
           val obj = objs.get(i)
           if( obj is TiledMapTileMapObject) {
             var prop = obj.properties.get("type");
             if( prop == null ) prop = obj.tile.properties.get("type")
             if( prop != null ) {
+              val EPSILON = 5.0f
+              var foundPath : PathWrap?= null
+              for( path in paths) {
+                if( path.match(obj.x, obj.y, EPSILON) ) {
+                  foundPath = path
+                }
+              }
+
               val type = prop.toString()
-              creators.getCreator(type, world, dispatcher, obj.x, obj.y, obj)
+              creators.getCreator(type, world, dispatcher, obj.x, obj.y, obj, foundPath)
+
+              if( foundPath != null ) {
+                Gdx.app.log("load", "Found path for $type")
+              }
             }
+          }
+          else if(obj is PolylineMapObject) {
+            // ignored
+          }
+          else {
+            Gdx.app.log("object-load", obj.toString())
           }
         }
       }

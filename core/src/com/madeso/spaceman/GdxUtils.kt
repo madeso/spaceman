@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.Animation
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.graphics.g2d.TextureAtlas
+import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.scenes.scene2d.Actor
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.utils.Align
@@ -25,6 +26,21 @@ fun ClearScreen() {
 
 fun TextureAtlas.newSprite(path : String): TextureAtlas.AtlasRegion {
   return this.findRegion(path) ?: throw Exception("Unable to load " + path)
+}
+
+operator fun Vector2.minus(rhs: Vector2) : Vector2 {
+  var self = Vector2(this.x, this.y)
+  return self.sub(rhs.x, rhs.y)
+}
+
+operator fun Vector2.plus(rhs: Vector2) : Vector2 {
+  var self = Vector2(this.x, this.y)
+  return self.add(rhs.x, rhs.y)
+}
+
+operator fun Vector2.times(rhs: Float) : Vector2 {
+  var self = Vector2(this.x, this.y)
+  return self.scl(rhs)
 }
 
 fun Animation.setLooping() : Animation {
