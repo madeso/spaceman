@@ -95,8 +95,19 @@ interface ObjectCreatorDispatcher {
   fun addObject(ani: Animation, world: World, obj: ObjectController)
 }
 
+class ObjectCreateData<TGame : SuperGame, TWorld:World>(val game: TGame, val world: TWorld, val map: ObjectCreatorDispatcher, val startX: Float, val startY: Float, val tile: TiledMapTileMapObject, val path: PathWrap?) {
+}
+
+interface ObjectControllerAnim : ObjectController {
+  val basic : Animation
+}
+
+fun<TGame : SuperGame, TWorld:World> AddObject(d: ObjectCreateData<TGame, TWorld>, obj: ObjectControllerAnim) {
+  d.map.addObject(obj.basic, d.world, obj)
+}
+
 interface ObjectCreator<TGame : SuperGame, TWorld:World> {
-  fun create(game: TGame, world: TWorld, map: ObjectCreatorDispatcher, x: Float, y: Float, tile: TiledMapTileMapObject, path: PathWrap?)
+  fun create(d: ObjectCreateData<TGame, TWorld>)
 }
 
 interface CreatorMap<TWorld:World> {
@@ -108,7 +119,7 @@ class CreatorList<TGame : SuperGame, TWorld:World>(private var game: TGame) : Cr
 
   override fun getCreator(tileName: String, world: TWorld, map: ObjectCreatorDispatcher, x: Float, y: Float, tile: TiledMapTileMapObject, path: PathWrap?) {
     val creator = creators.get(tileName) ?: throw NullPointerException("Missing creator for " + tileName)
-    creator.create(game, world, map, x, y, tile, path)
+    creator.create( ObjectCreateData(game, world, map, x, y, tile, path) )
   }
 
   fun registerCreator(tile: String, creator: ObjectCreator<TGame, TWorld>) : CreatorList<TGame, TWorld> {
@@ -118,7 +129,7 @@ class CreatorList<TGame : SuperGame, TWorld:World>(private var game: TGame) : Cr
 
   fun registerNullCreator(tile: String) : CreatorList<TGame, TWorld> {
     return registerCreator(tile, object : ObjectCreator<TGame, TWorld> {
-      override fun create(game: TGame, world: TWorld, map: ObjectCreatorDispatcher, x: Float, y: Float, tile: TiledMapTileMapObject, path: PathWrap?) {
+      override fun create(d: ObjectCreateData<TGame, TWorld>) {
       }
     })
   }
