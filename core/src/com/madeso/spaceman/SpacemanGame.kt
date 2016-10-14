@@ -191,14 +191,14 @@ class Coin(assets: Assets, world: SpacemanWorld, private val startX: Float, priv
 
 val SLIME_SPEED = 50f
 
-class WalkingBehaviour(private var direction: Direction) : Behaviour() {
+class WalkingBehaviour(private var direction: Direction, private val speed : Float) : Behaviour() {
 
 
   override fun act(delta: Float, remote: ObjectRemote) {
     remote.facingRight = !direction.moveRight
 
     remote.move(
-          (if (direction.moveRight) 1.0f else -1.0f) * SLIME_SPEED * delta
+          (if (direction.moveRight) 1.0f else -1.0f) * speed * delta
           , 0.0f
       )
   }
@@ -215,9 +215,13 @@ interface HasDirection : ObjectController {
   val direction : Direction
 }
 
-class Slime(assets: Assets, world: SpacemanWorld, private val startX: Float, private val startY: Float) : HasDirection {
+interface Jumpable : ObjectController {
+  fun smash(remote: ObjectRemote)
+}
+
+class Slime(assets: Assets, world: SpacemanWorld, private val startX: Float, private val startY: Float) : HasDirection, Jumpable {
   override val direction = Direction()
-  val walking = WalkingBehaviour(direction)
+  val walking = WalkingBehaviour(direction, SLIME_SPEED)
 
   override fun init(remote: ObjectRemote) {
     remote.teleport(startX, startY)
@@ -229,7 +233,7 @@ class Slime(assets: Assets, world: SpacemanWorld, private val startX: Float, pri
 
   var squashTimer = 0f
 
-  fun smash() {
+  override fun smash(remote: ObjectRemote) {
     squashTimer = 0.5f
   }
 
@@ -337,7 +341,7 @@ class EnemyDead(private val startX: Float, private val startY: Float, private va
   }
 }
 
-class EnemyFly(assets: Assets, world: SpacemanWorld, private val startX: Float, private val startY: Float, private val path: PathWrap?) : ObjectController {
+class EnemyFly(assets: Assets, world: SpacemanWorld, private val startX: Float, private val startY: Float, private val path: PathWrap?) : ObjectController, Jumpable {
   override fun init(remote: ObjectRemote) {
     remote.debug = true
     remote.teleport(startX, startY)
@@ -357,7 +361,7 @@ class EnemyFly(assets: Assets, world: SpacemanWorld, private val startX: Float, 
     remote.moveTo(p.x, p.y, true)
   }
 
-  fun smash(remote: ObjectRemote) {
+  override fun smash(remote: ObjectRemote) {
     remote.removeSelf()
     remote.newObject(dead, EnemyDead(remote.x, remote.y, remote.facingRight))
   }
@@ -420,25 +424,8 @@ class SpacemanWorld(assets: Assets, args:WorldArg) : World(args) {
       }
     })
 
-    addCollision(object: Collision<Alien, Slime>() {
-      override fun onCollided(alien: Alien, alienRemote: ObjectRemote, slime: Slime, slimeRemote: ObjectRemote) {
-        if( alienRemote.worldCollisionRect.y > slimeRemote.worldCollisionRect.y + slimeRemote.worldCollisionRect.height/2f ) {
-          if( alien.isFalling ) {
-            alien.jumpKill()
-            slime.smash()
-          }
-        }
-        else {
-          if( alienRemote.isFlickering == false ) {
-            alienRemote.flicker(FLICKER_TIME)
-            alien.damage(slimeRemote.x, alienRemote)
-          }
-        }
-      }
-    })
-
-    addCollision(object: Collision<Alien, EnemyFly>() {
-      override fun onCollided(alien: Alien, alienRemote: ObjectRemote, slime: EnemyFly, slimeRemote: ObjectRemote) {
+    addCollision(object: Collision<Alien, Jumpable>() {
+      override fun onCollided(alien: Alien, alienRemote: ObjectRemote, slime: Jumpable, slimeRemote: ObjectRemote) {
         if( alienRemote.worldCollisionRect.y > slimeRemote.worldCollisionRect.y + slimeRemote.worldCollisionRect.height/2f ) {
           if( alien.isFalling ) {
             alien.jumpKill()
