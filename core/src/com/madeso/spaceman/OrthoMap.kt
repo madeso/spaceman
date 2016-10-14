@@ -64,6 +64,28 @@ interface ObjectRemote {
   fun newObject(ani: Animation, controller: ObjectController)
 }
 
+abstract class Behaviour {
+  var remove = false
+  abstract fun act(delta: Float, remote: ObjectRemote)
+}
+
+class BehaviourList {
+  private val items = Array<Behaviour>()
+  fun add(b:Behaviour) : BehaviourList {
+    items.add(b)
+    return this
+  }
+  fun act(delta:Float, remote:ObjectRemote) {
+    for(b in items) {
+      b.act(delta, remote)
+    }
+    items.removeAll() {
+      b -> b.remove
+    }
+  }
+}
+
+
 interface ObjectController : Disposable {
   fun init(remote: ObjectRemote)
   fun act(delta:Float, remote:ObjectRemote)

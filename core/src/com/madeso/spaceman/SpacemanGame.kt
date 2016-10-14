@@ -191,8 +191,33 @@ class Coin(assets: Assets, world: SpacemanWorld, private val startX: Float, priv
 
 val SLIME_SPEED = 50f
 
-class Slime(assets: Assets, world: SpacemanWorld, private val startX: Float, private val startY: Float) : ObjectController {
+class WalkingBehaviour(private var direction: Direction) : Behaviour() {
+
+
+  override fun act(delta: Float, remote: ObjectRemote) {
+    remote.facingRight = !direction.moveRight
+
+    remote.move(
+          (if (direction.moveRight) 1.0f else -1.0f) * SLIME_SPEED * delta
+          , 0.0f
+      )
+  }
+}
+
+class Direction : Behaviour() {
+  override fun act(delta: Float, remote: ObjectRemote) {
+  }
+
   var moveRight = true
+}
+
+interface HasDirection : ObjectController {
+  val direction : Direction
+}
+
+class Slime(assets: Assets, world: SpacemanWorld, private val startX: Float, private val startY: Float) : HasDirection {
+  override val direction = Direction()
+  val walking = WalkingBehaviour(direction)
 
   override fun init(remote: ObjectRemote) {
     remote.teleport(startX, startY)
@@ -209,8 +234,6 @@ class Slime(assets: Assets, world: SpacemanWorld, private val startX: Float, pri
   }
 
   override fun act(delta: Float, remote: ObjectRemote) {
-    remote.facingRight = !moveRight
-
     if( squashTimer > 0f ) {
       squashTimer -= delta
 
@@ -222,10 +245,7 @@ class Slime(assets: Assets, world: SpacemanWorld, private val startX: Float, pri
       }
     }
     else {
-      remote.move(
-          (if (moveRight) 1.0f else -1.0f) * SLIME_SPEED * delta
-          , 0.0f
-      )
+      walking.act(delta, remote)
     }
   }
 
@@ -446,9 +466,9 @@ class SpacemanWorld(assets: Assets, args:WorldArg) : World(args) {
       }
     })
 
-    addCollision(object: Collision<SetDir, Slime>() {
-      override fun onCollided(setDir: SetDir, setDirRemote: ObjectRemote, slime: Slime, slimeRemote: ObjectRemote) {
-        slime.moveRight = setDir.isRight
+    addCollision(object: Collision<SetDir, HasDirection>() {
+      override fun onCollided(setDir: SetDir, setDirRemote: ObjectRemote, slime: HasDirection, slimeRemote: ObjectRemote) {
+        slime.direction.moveRight = setDir.isRight
       }
     })
 
@@ -480,6 +500,8 @@ class SpacemanSuperGame(game:Game) : SuperGame(game) {
         }
       })
       .registerNullCreator("alien-head")
+      .registerNullCreator("worm")
+      .registerNullCreator("snake")
       .registerCreator("gold-coin", object : ObjectCreator<SpacemanSuperGame, SpacemanWorld> {
         override fun create(game: SpacemanSuperGame, world: SpacemanWorld, map: ObjectCreatorDispatcher, x: Float, y: Float, tile: TiledMapTileMapObject, path: PathWrap?) {
           val coin = Coin(assets, world, x, y)
