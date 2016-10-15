@@ -201,6 +201,7 @@ class Coin(assets: Assets, d: ObjectCreateData<SpacemanSuperGame, SpacemanWorld>
 }
 
 val SLIME_SPEED = 50f
+val SPIDER_SPEED = 180f
 val WORM_SPEED = 30f
 val WORM_ANIM_SPEED = 0.8f
 
@@ -337,6 +338,53 @@ class Snake(assets: Assets, d: ObjectCreateData<SpacemanSuperGame, SpacemanWorld
 
   override val basic = Animation(WORM_ANIM_SPEED, assets.pack.newSprite("enemies/snake"), assets.pack.newSprite("enemies/snake_walk")).setLooping()
   val dead = Animation(1.0f, assets.pack.newSprite("enemies/snake_dead"))
+}
+
+class Spider(assets: Assets, d: ObjectCreateData<SpacemanSuperGame, SpacemanWorld>) : ObjectControllerAnim, Jumpable, HasDirection {
+  private val startX = d.startX
+  private val startY = d.startY
+
+  override val direction = Direction()
+  val walking = WalkingBehaviour(direction, SPIDER_SPEED)
+
+  var isWalking = false
+  var timer = 0f
+
+  override fun init(remote: ObjectRemote) {
+    remote.teleport(startX, startY)
+    remote.collisionRect.height =23f
+    remote.collisionRect.width =63f
+    remote.collisionRect.dx = 0f
+    remote.collisionRect.dy = 0f
+  }
+
+  override fun smash(remote: ObjectRemote) {
+    KillEnemy(remote, dead)
+  }
+
+  override fun act(delta: Float, remote: ObjectRemote) {
+    timer -= delta
+    if( timer < 0.0f ) {
+      isWalking = !isWalking
+      timer =
+          if( isWalking ) MathUtils.random(2.2f, 2.9f)
+          else MathUtils.random(0.6f, 0.9f)
+    }
+    if( isWalking ) {
+      walking.act(delta, remote)
+      remote.setAnimation(basic)
+    }
+    else {
+      remote.setAnimation(idle)
+    }
+  }
+
+  override fun dispose() {
+  }
+
+  override val basic = Animation(0.1f, assets.pack.newSprite("enemies/spider_walk1"), assets.pack.newSprite("enemies/spider_walk2")).setLooping()
+  val idle = Animation(0.5f, assets.pack.newSprite("enemies/spider")).setLooping()
+  val dead = Animation(1.0f, assets.pack.newSprite("enemies/spider_dead"))
 }
 
 class SpringBoard(assets: Assets, d: ObjectCreateData<SpacemanSuperGame, SpacemanWorld>) : ObjectControllerAnim  {
@@ -595,6 +643,11 @@ class SpacemanSuperGame(game:Game) : SuperGame(game) {
       .registerCreator("snake", object : ObjectCreator<SpacemanSuperGame, SpacemanWorld> {
         override fun create(d: ObjectCreateData<SpacemanSuperGame, SpacemanWorld>) {
           AddObject(d, Snake(assets, d))
+        }
+      })
+      .registerCreator("spider", object : ObjectCreator<SpacemanSuperGame, SpacemanWorld> {
+        override fun create(d: ObjectCreateData<SpacemanSuperGame, SpacemanWorld>) {
+          AddObject(d, Spider(assets, d))
         }
       })
       .registerCreator("gold-coin", object : ObjectCreator<SpacemanSuperGame, SpacemanWorld> {
