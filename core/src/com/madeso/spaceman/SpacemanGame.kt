@@ -204,6 +204,8 @@ val SLIME_SPEED = 50f
 val SPIDER_SPEED = 180f
 val WORM_SPEED = 30f
 val WORM_ANIM_SPEED = 0.8f
+val FROG_JUMP = 550.0f
+val FROG_SPEED = 320.0f
 
 class WalkingBehaviour(private var direction: Direction, private val speed : Float) : Behaviour() {
   override fun act(delta: Float, remote: ObjectRemote) {
@@ -278,6 +280,62 @@ class Slime(assets: Assets, d: ObjectCreateData<SpacemanSuperGame, SpacemanWorld
 
   override val basic = Animation(0.5f, assets.pack.newSprite("enemies/slime"), assets.pack.newSprite("enemies/slime_walk")).setLooping()
   val squashed = Animation(1.0f, assets.pack.newSprite("enemies/slime_squashed"))
+}
+
+class Frog(assets: Assets, d: ObjectCreateData<SpacemanSuperGame, SpacemanWorld>) : ObjectControllerAnim, Jumpable, HasDirection {
+  private val world = d.world
+  private val startX = d.startX
+  private val startY = d.startY
+
+  override val direction = Direction()
+
+  override fun init(remote: ObjectRemote) {
+    remote.teleport(startX, startY)
+    remote.collisionRect.height =34f
+    remote.collisionRect.width =49f
+    remote.collisionRect.dx = 0f
+    remote.collisionRect.dy = 0f
+  }
+
+  override fun smash(remote: ObjectRemote) {
+    KillEnemy(remote, dead)
+  }
+
+  var vy = 0f
+  var timer = 0f
+
+  override fun act(delta: Float, remote: ObjectRemote) {
+    if( remote.lastCollision.left) direction.moveRight = true
+    if( remote.lastCollision.right) direction.moveRight = false
+    remote.facingRight = !direction.moveRight
+
+    if( timer > 0f ) {
+      timer -= delta
+      if( timer <= 0f ) {
+        vy = FROG_JUMP
+      }
+      remote.setAnimation(basic)
+    }
+    else {
+      remote.setAnimation(leaping)
+      vy -= GRAVITY * delta
+
+      if( remote.lastCollision.down ) {
+        Gdx.app.log("frog", "landed $vy")
+        vy = 0f
+        timer = 1.0f
+      }
+    }
+
+    remote.move( if(timer > 0f) 0f else delta * FROG_SPEED * if( direction.moveRight) 1.0f else -1.0f, vy * delta)
+  }
+
+  override fun dispose() {
+  }
+
+  override val basic = Animation(0.5f, assets.pack.newSprite("enemies/frog"))
+  val leaping = Animation(1.0f, assets.pack.newSprite("enemies/frog_leap"))
+  val dead = Animation(1.0f, assets.pack.newSprite("enemies/frog_dead"))
 }
 
 class Worm(assets: Assets, d: ObjectCreateData<SpacemanSuperGame, SpacemanWorld>) : ObjectControllerAnim, Jumpable, HasDirection {
@@ -653,6 +711,11 @@ class SpacemanSuperGame(game:Game) : SuperGame(game) {
       .registerCreator("gold-coin", object : ObjectCreator<SpacemanSuperGame, SpacemanWorld> {
         override fun create(d: ObjectCreateData<SpacemanSuperGame, SpacemanWorld>) {
           AddObject(d, Coin(assets, d))
+        }
+      })
+      .registerCreator("frog", object : ObjectCreator<SpacemanSuperGame, SpacemanWorld> {
+        override fun create(d: ObjectCreateData<SpacemanSuperGame, SpacemanWorld>) {
+          AddObject(d, Frog(assets, d))
         }
       })
       .registerCreator("spikes", object : ObjectCreator<SpacemanSuperGame, SpacemanWorld> {
