@@ -201,9 +201,15 @@ class Coin(assets: Assets, d: ObjectCreateData<SpacemanSuperGame, SpacemanWorld>
 }
 
 val SLIME_SPEED = 50f
+val WORM_SPEED = 30f
+val WORM_ANIM_SPEED = 0.8f
 
 class WalkingBehaviour(private var direction: Direction, private val speed : Float) : Behaviour() {
   override fun act(delta: Float, remote: ObjectRemote) {
+    if (remote.lastCollision.x) {
+      direction.moveRight = !direction.moveRight
+    }
+
     remote.facingRight = !direction.moveRight
 
     remote.move(
@@ -234,7 +240,7 @@ class Slime(assets: Assets, d: ObjectCreateData<SpacemanSuperGame, SpacemanWorld
   private val startY = d.startY
 
   override val direction = Direction()
-  val walking = WalkingBehaviour(direction, SLIME_SPEED)
+  val walking = WalkingBehaviour(direction, WORM_SPEED)
 
   override fun init(remote: ObjectRemote) {
     remote.teleport(startX, startY)
@@ -271,6 +277,66 @@ class Slime(assets: Assets, d: ObjectCreateData<SpacemanSuperGame, SpacemanWorld
 
   override val basic = Animation(0.5f, assets.pack.newSprite("enemies/slime"), assets.pack.newSprite("enemies/slime_walk")).setLooping()
   val squashed = Animation(1.0f, assets.pack.newSprite("enemies/slime_squashed"))
+}
+
+class Worm(assets: Assets, d: ObjectCreateData<SpacemanSuperGame, SpacemanWorld>) : ObjectControllerAnim, Jumpable, HasDirection {
+  private val startX = d.startX
+  private val startY = d.startY
+
+  override val direction = Direction()
+  val walking = WalkingBehaviour(direction, SLIME_SPEED)
+
+  override fun init(remote: ObjectRemote) {
+    remote.teleport(startX, startY)
+    remote.collisionRect.height =23f
+    remote.collisionRect.width =63f
+    remote.collisionRect.dx = 0f
+    remote.collisionRect.dy = 0f
+  }
+
+  override fun smash(remote: ObjectRemote) {
+    KillEnemy(remote, dead)
+  }
+
+  override fun act(delta: Float, remote: ObjectRemote) {
+    walking.act(delta, remote)
+  }
+
+  override fun dispose() {
+  }
+
+  override val basic = Animation(WORM_ANIM_SPEED, assets.pack.newSprite("enemies/worm"), assets.pack.newSprite("enemies/worm_walk")).setLooping()
+  val dead = Animation(1.0f, assets.pack.newSprite("enemies/worm_dead"))
+}
+
+class Snake(assets: Assets, d: ObjectCreateData<SpacemanSuperGame, SpacemanWorld>) : ObjectControllerAnim, Jumpable, HasDirection {
+  private val startX = d.startX
+  private val startY = d.startY
+
+  override val direction = Direction()
+  val walking = WalkingBehaviour(direction, SLIME_SPEED)
+
+  override fun init(remote: ObjectRemote) {
+    remote.teleport(startX, startY)
+    remote.collisionRect.height =23f
+    remote.collisionRect.width =63f
+    remote.collisionRect.dx = 0f
+    remote.collisionRect.dy = 0f
+  }
+
+  override fun smash(remote: ObjectRemote) {
+    KillEnemy(remote, dead)
+  }
+
+  override fun act(delta: Float, remote: ObjectRemote) {
+    walking.act(delta, remote)
+  }
+
+  override fun dispose() {
+  }
+
+  override val basic = Animation(WORM_ANIM_SPEED, assets.pack.newSprite("enemies/snake"), assets.pack.newSprite("enemies/snake_walk")).setLooping()
+  val dead = Animation(1.0f, assets.pack.newSprite("enemies/snake_dead"))
 }
 
 class SpringBoard(assets: Assets, d: ObjectCreateData<SpacemanSuperGame, SpacemanWorld>) : ObjectControllerAnim  {
@@ -362,6 +428,11 @@ class EnemyDead(private val startX: Float, private val startY: Float, private va
   }
 }
 
+fun KillEnemy(remote: ObjectRemote, dead: Animation) {
+  remote.removeSelf()
+  remote.newObject(dead, EnemyDead(remote.x, remote.y, remote.facingRight))
+}
+
 class EnemyFly(assets: Assets, d: ObjectCreateData<SpacemanSuperGame, SpacemanWorld>) : ObjectControllerAnim, Jumpable {
   private val world = d.world
   private val startX = d.startX
@@ -388,8 +459,7 @@ class EnemyFly(assets: Assets, d: ObjectCreateData<SpacemanSuperGame, SpacemanWo
   }
 
   override fun smash(remote: ObjectRemote) {
-    remote.removeSelf()
-    remote.newObject(dead, EnemyDead(remote.x, remote.y, remote.facingRight))
+    KillEnemy(remote, dead)
   }
 
   override fun dispose() {
@@ -517,8 +587,16 @@ class SpacemanSuperGame(game:Game) : SuperGame(game) {
         }
       })
       .registerNullCreator("alien-head")
-      .registerNullCreator("worm")
-      .registerNullCreator("snake")
+      .registerCreator("worm", object : ObjectCreator<SpacemanSuperGame, SpacemanWorld> {
+        override fun create(d: ObjectCreateData<SpacemanSuperGame, SpacemanWorld>) {
+          AddObject(d, Worm(assets, d))
+        }
+      })
+      .registerCreator("snake", object : ObjectCreator<SpacemanSuperGame, SpacemanWorld> {
+        override fun create(d: ObjectCreateData<SpacemanSuperGame, SpacemanWorld>) {
+          AddObject(d, Snake(assets, d))
+        }
+      })
       .registerCreator("gold-coin", object : ObjectCreator<SpacemanSuperGame, SpacemanWorld> {
         override fun create(d: ObjectCreateData<SpacemanSuperGame, SpacemanWorld>) {
           AddObject(d, Coin(assets, d))
@@ -531,8 +609,7 @@ class SpacemanSuperGame(game:Game) : SuperGame(game) {
       })
       .registerCreator("slime",object: ObjectCreator<SpacemanSuperGame, SpacemanWorld> {
         override fun create(d: ObjectCreateData<SpacemanSuperGame, SpacemanWorld>) {
-          val slime = Slime(assets, d)
-          AddObject(d, slime)
+          AddObject(d, Slime(assets, d))
         }
       })
       .registerCreator("fly",object: ObjectCreator<SpacemanSuperGame, SpacemanWorld> {
