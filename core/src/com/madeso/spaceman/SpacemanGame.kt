@@ -204,8 +204,6 @@ val SLIME_SPEED = 50f
 val SPIDER_SPEED = 180f
 val WORM_SPEED = 30f
 val WORM_ANIM_SPEED = 0.8f
-val FROG_JUMP = 550.0f
-val FROG_SPEED = 320.0f
 
 class WalkingBehaviour(private var direction: Direction, private val speed : Float) : Behaviour() {
   override fun act(delta: Float, remote: ObjectRemote) {
@@ -282,6 +280,9 @@ class Slime(assets: Assets, d: ObjectCreateData<SpacemanSuperGame, SpacemanWorld
   val squashed = Animation(1.0f, assets.pack.newSprite("enemies/slime_squashed"))
 }
 
+val FROG_JUMP = 550.0f
+val FROG_SPEED = 320.0f
+
 class Frog(assets: Assets, d: ObjectCreateData<SpacemanSuperGame, SpacemanWorld>) : ObjectControllerAnim, Jumpable, HasDirection {
   private val world = d.world
   private val startX = d.startX
@@ -303,16 +304,18 @@ class Frog(assets: Assets, d: ObjectCreateData<SpacemanSuperGame, SpacemanWorld>
 
   var vy = 0f
   var timer = 0f
+  var right = false
 
   override fun act(delta: Float, remote: ObjectRemote) {
     if( remote.lastCollision.left) direction.moveRight = true
     if( remote.lastCollision.right) direction.moveRight = false
-    remote.facingRight = !direction.moveRight
+    remote.facingRight = !right
 
     if( timer > 0f ) {
       timer -= delta
       if( timer <= 0f ) {
         vy = FROG_JUMP
+        right = direction.moveRight
       }
       remote.setAnimation(basic)
     }
@@ -321,13 +324,17 @@ class Frog(assets: Assets, d: ObjectCreateData<SpacemanSuperGame, SpacemanWorld>
       vy -= GRAVITY * delta
 
       if( remote.lastCollision.down ) {
-        Gdx.app.log("frog", "landed $vy")
         vy = 0f
         timer = 1.0f
       }
     }
 
-    remote.move( if(timer > 0f) 0f else delta * FROG_SPEED * if( direction.moveRight) 1.0f else -1.0f, vy * delta)
+    if( remote.y < 0f) {
+      Gdx.app.log("frog", "jumped out of the world ${startX/70f}, ${startY/70f}")
+      remote.removeSelf()
+    }
+
+    remote.move( if(timer > 0f) 0f else delta * FROG_SPEED * if( right ) 1.0f else -1.0f, vy * delta)
   }
 
   override fun dispose() {
@@ -575,6 +582,60 @@ class EnemyFly(assets: Assets, d: ObjectCreateData<SpacemanSuperGame, SpacemanWo
   val dead = Animation(0.2f, assets.pack.newSprite("enemies/fly_dead"))
 }
 
+class SnakeSlime(assets: Assets, d: ObjectCreateData<SpacemanSuperGame, SpacemanWorld>) : ObjectControllerAnim, Jumpable {
+  private val world = d.world
+  private val startX = d.startX
+  private val attackHeight = 147f - 5f
+  private val startY = d.startY - attackHeight - 70f
+
+  override fun init(remote: ObjectRemote) {
+    remote.collideWithWorld = false
+    remote.teleport(startX, startY)
+    remote.collisionRect.height =147f
+    remote.collisionRect.width =53f
+    remote.collisionRect.dx = 0f
+    remote.collisionRect.dy = 0f
+  }
+
+  var dy = 0f
+  var up = false
+  var sleeping = 0f
+
+  override fun act(delta: Float, remote: ObjectRemote) {
+    if( sleeping > 0f) {
+      sleeping -= delta
+    }
+    else {
+      if (up) {
+        dy += delta * 2f
+        if (dy > 1.0f) {
+          dy = 1.0f
+          up = false
+          sleeping = MathUtils.random(0.2f, 0.8f)
+        }
+      } else {
+        dy -= delta * 0.1f
+        if (dy < 0.0f) {
+          dy = 0.0f
+          up = true
+          sleeping = MathUtils.random(0.8f, 2.0f)
+        }
+      }
+    }
+    remote.moveTo(startX, startY + dy * attackHeight, false)
+  }
+
+  override fun smash(remote: ObjectRemote) {
+    //KillEnemy(remote, dead)
+  }
+
+  override fun dispose() {
+  }
+
+  override val basic = Animation(0.4f, assets.pack.newSprite("enemies/snakeSlime"), assets.pack.newSprite("enemies/snakeSlime_ani")).setLooping()
+  val dead = Animation(0.2f, assets.pack.newSprite("enemies/snakeSlime_dead"))
+}
+
 private fun ObjectRemote.moveTo(tx: Float, ty: Float, updateDirection:Boolean) {
   val dx = tx - this.x
   val dy = ty - this.y
@@ -693,6 +754,13 @@ class SpacemanSuperGame(game:Game) : SuperGame(game) {
         }
       })
       .registerNullCreator("alien-head")
+      .registerNullCreator("snakeSlime-middle")
+      .registerNullCreator("snakeSlime-bottom")
+      .registerCreator("snakeSlime-top", object : ObjectCreator<SpacemanSuperGame, SpacemanWorld> {
+        override fun create(d: ObjectCreateData<SpacemanSuperGame, SpacemanWorld>) {
+          AddObject(d, SnakeSlime(assets, d))
+        }
+      })
       .registerCreator("worm", object : ObjectCreator<SpacemanSuperGame, SpacemanWorld> {
         override fun create(d: ObjectCreateData<SpacemanSuperGame, SpacemanWorld>) {
           AddObject(d, Worm(assets, d))
